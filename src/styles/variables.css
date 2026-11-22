@@ -1,0 +1,86 @@
+/* ==========================================================================
+   Design Tokens & CSS Variables
+   Strict constraints:
+   - Pure white background: #FFFFFF
+   - Primary text: #111827
+   - Secondary text: #64748B
+   - Border: #E5E7EB
+   - Surface muted: #F8FAFC
+   - Primary action: #2563EB
+   - Success: #16A34A
+   - Warning: #D97706
+   - Error: #DC2626
+   - No harsh gradients. No emojis. No em dashes. No colored left-border stripes.
+   - 8px modular spacing system.
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --color-background: #ffffff;
+  --color-surface-muted: #f8fafc;
+  --color-surface-hover: #f1f5f9;
+  --color-text: #111827;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-border: #e5e7eb;
+  --color-border-focus: #2563eb;
+  
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-active: #1e40af;
+  --color-primary-light: #eff6ff;
+  
+  --color-success: #16a34a;
+  --color-success-bg: #f0fdf4;
+  --color-success-border: #bbf7d0;
+  
+  --color-warning: #d97706;
+  --color-warning-bg: #fffbeb;
+  --color-warning-border: #fde68a;
+  
+  --color-error: #dc2626;
+  --color-error-bg: #fef2f2;
+  --color-error-border: #fecaca;
+  
+  --color-info: #2563eb;
+  --color-info-bg: #eff6ff;
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12.5px;
+  --font-size-base: 14px;
+  --font-size-md: 15px;
+  --font-size-lg: 18px;
+  --font-size-xl: 22px;
+
+  /* 8px Modular Spacing System */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+
+  /* Corner Radii (strictly between 6px and 10px) */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+
+  /* Layout Dimensions */
+  --sidebar-width: 250px;
+  --sidebar-collapsed-width: 68px;
+  --header-height: 58px;
+  --bottom-nav-height: 60px;
+
+  /* Subtle Shadows (No heavy decorative drop shadows) */
+  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+
+  /* Animation Timings (Subtle, purposeful, 150ms-250ms) */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}

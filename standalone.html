@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MetroTransit | Smart Public Transport & Traffic Platform</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="app-container">
+    <!-- PERSISTENT LEFT SIDEBAR -->
+    <aside class="sidebar" id="sidebar" aria-label="Main Navigation">
+      <div class="sidebar-header">
+        <a href="#" class="sidebar-logo" onclick="navigateToPage('overview'); return false;">
+          <div class="sidebar-logo-icon">
+            <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4c-1.1 0-2.1.8-2.4 1.8l-1.4 5c-.1.4-.2.8-.2 1.2 0 .4.1.8.2 1.2.3 1.1.8 2.8.8 2.8h3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+          </div>
+          <div class="sidebar-logo-info">
+            <div class="sidebar-logo-text">MetroTransit</div>
+            <div class="sidebar-logo-sub">Mobility Intelligence</div>
+          </div>
+        </a>
+        <button class="sidebar-collapse-btn" id="sidebarCollapseBtn" aria-label="Toggle sidebar collapse" title="Collapse sidebar">
+          <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-content">
+        <nav class="sidebar-nav-group" aria-label="Primary Navigation">
+          <div class="sidebar-nav-label">Navigation</div>
+          
+          <button class="nav-item active" data-page="overview" aria-label="Overview Dashboard">
+            <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+            <span class="nav-text">Overview</span>
+          </button>
+
+          <button class="nav-item" data-page="journey" aria-label="Journey Planner">
+            <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+            <span class="nav-text">Journey Planner</span>
+          </button>
+
+          <button class="nav-item" data-page="live-map" aria-label="Live Map">
+            <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15"/><path d="M15 6v15"/></svg>
+            <span class="nav-text">Live Map</span>
+          </button>
+
+          <button class="nav-item" data-page="routes" aria-label="Bus Routes">
+            <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4c-1.1 0-2.1.8-2.4 1.8l-1.4 5c-.1.4-.2.8-.2 1.2 0 .4.1.8.2 1.2.3 1.1.8 2.8.8 2.8h3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+            <span class="nav-text">Bus Routes</span>
+            <span class="badge-count">42</span>
+          </button>
+
+          <button class="nav-item" data-page="analytics" aria-label="Traffic Analytics">
+            <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+            <span class="nav-text">Traffic Analytics</span>
+          </button>
+
+          <button class="nav-item" data-page="alerts" aria-label="Alerts and Incidents">
+            <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            <span class="nav-text">Alerts</span>
+            <span class="badge-count" style="color:var(--status-warning);">3</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="nav-item" data-page="settings" aria-label="Settings">
+          <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="nav-text">Settings</span>
+        </button>
+
+        <button class="nav-item" data-page="help" aria-label="Help and Documentation">
+          <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+          <span class="nav-text">Help</span>
+        </button>
+
+        <div style="padding: 8px 12px; margin-top: 4px; display: flex; align-items: center; gap: 10px; border-top: 1px solid var(--border-color);">
+          <div class="user-avatar-sm">AT</div>
+          <div class="sidebar-logo-info">
+            <div style="font-size: 12px; font-weight: 600; color: var(--text-primary);">Transit Operator</div>
+            <div style="font-size: 11px; color: var(--text-secondary);">Demo Session</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN SHELL -->
+    <div class="main-wrapper">
+      <!-- TOP NAVIGATION BAR -->
+      <header class="top-header" role="banner">
+        <div class="header-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open mobile navigation">
+            <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </button>
+          
+          <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <span>Platform</span>
+            <span>/</span>
+            <span class="breadcrumb-active">Overview</span>
+          </nav>
+
+          <!-- Live Backend DuckDB Status -->
+          <div class="sim-indicator" id="headerBackendStatus" title="Connected to DuckDB in-memory analytical backend" style="cursor:pointer;" onclick="openProofModal()">
+            <span class="sim-indicator-dot" style="background:#16A34A;"></span>
+            <span id="backendStatusText">Live: DuckDB (2.55M tickets)</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <!-- Data Grounding Proof Button -->
+          <button type="button" class="btn btn-secondary btn-sm" onclick="openProofModal()" style="font-size:11.5px; height:28px; padding:4px 10px; margin-right:8px; background:#F1F5F9; font-weight:600;">
+            Grounding Proof
+          </button>
+
+          <!-- Global Search -->
+          <div class="global-search-container">
+            <svg class="lucide search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" class="search-input" id="globalSearch" placeholder="Search routes, buses, stops..." aria-label="Global search">
+            <span class="search-shortcut">/</span>
+          </div>
+
+          <!-- Notifications Trigger -->
+          <div style="position: relative;">
+            <button class="header-action-btn" id="notifBtn" aria-label="View notifications">
+              <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+              <span class="notif-badge"></span>
+            </button>
+
+            <!-- Notifications Popover -->
+            <div class="popover-menu" id="notifPopover" role="dialog" aria-label="Notifications panel">
+              <div class="popover-header">
+                <span>System Notifications</span>
+                <span class="status-pill warning" style="font-size:11px;">3 Unread</span>
+              </div>
+              <div class="popover-list">
+                <div class="popover-item" onclick="navigateToPage('alerts');">
+                  <div class="popover-item-title">
+                    <span>Route 104 Detour Active</span>
+                    <span class="status-pill warning" style="font-size:10px;">Moderate</span>
+                  </div>
+                  <div class="popover-item-desc">Utility maintenance on Main St. 2 stops skipped, rerouted via 4th Ave.</div>
+                  <div class="popover-item-time">12 min ago</div>
+                </div>
+
+                <div class="popover-item" onclick="navigateToPage('live-map');">
+                  <div class="popover-item-title">
+                    <span>Bus 101A Delay Alert</span>
+                    <span class="status-pill warning" style="font-size:10px;">+3 min</span>
+                  </div>
+                  <div class="popover-item-desc">Corridor congestion near 5th Ave & Pine St. Schedule adjustment applied.</div>
+                  <div class="popover-item-time">24 min ago</div>
+                </div>
+
+                <div class="popover-item" onclick="navigateToPage('alerts');">
+                  <div class="popover-item-title">
+                    <span>Harbor Bridge Lane Restriction</span>
+                    <span class="status-pill error" style="font-size:10px;">Severe</span>
+                  </div>
+                  <div class="popover-item-desc">Outer lane closure westbound. Route 104 variance elevated.</div>
+                  <div class="popover-item-time">45 min ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- User Profile Trigger -->
+          <div style="position: relative;">
+            <button class="user-profile-btn" id="profileBtn" aria-label="User account menu">
+              <div class="user-avatar-sm">AT</div>
+              <span>Operator</span>
+              <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            <!-- Profile Popover -->
+            <div class="popover-menu" id="profilePopover" role="dialog" aria-label="Account details">
+              <div class="popover-header">
+                <span>Operator Account</span>
+              </div>
+              <div style="padding:14px 16px; border-bottom:1px solid var(--border-color); display:flex; flex-direction:column; gap:4px;">
+                <div style="font-weight:600; font-size:13px;">Transit Controller</div>
+                <div style="font-size:12px; color:var(--text-secondary);">Municipal Transit Hub Session</div>
+                <span class="status-pill success" style="margin-top:6px; width:fit-content;">Role: Dispatcher</span>
+              </div>
+              <div style="padding:8px 0; display:flex; flex-direction:column;">
+                <button class="nav-item" onclick="navigateToPage('settings');" style="border-radius:0;">Account Preferences</button>
+                <button class="nav-item" onclick="navigateToPage('help');" style="border-radius:0;">User Guide</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- MAIN CONTENT VIEWPORTS -->
+      <main id="main-content" role="main">
+        
+        <!-- ==========================================================================
+             PAGE 1: OVERVIEW DASHBOARD
+             ========================================================================== -->
+        <section class="page-view active" id="page-overview" aria-label="Overview Dashboard">
+          <div class="page-header">
+            <div class="page-header-info">
+              <h1 class="page-title">Network Overview</h1>
+              <p class="page-subtitle">Real-time transit operations, network health metrics, and quick journey lookup.</p>
+            </div>
+            <div class="page-header-actions">
+              <button class="btn btn-secondary btn-sm" onclick="showToast('Refreshing simulated telemetry...'); startTelemetrySimulation();">
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+                <span>Refresh Telemetry</span>
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="navigateToPage('journey');">
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+                <span>Plan Journey</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Journey Search Box -->
+          <div class="card" style="padding:16px;">
+            <div style="font-size:13.5px; font-weight:600; margin-bottom:12px; color:var(--text-primary); display:flex; align-items:center; gap:8px;">
+              <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+              <span>Quick Journey Planner</span>
+            </div>
+            <div class="quick-search-box">
+              <div class="form-group">
+                <label class="form-label" for="quickOrigin">Origin Station or Address</label>
+                <input type="text" class="form-input" id="quickOrigin" value="Central Station" placeholder="Enter starting stop...">
+              </div>
+
+              <button class="swap-btn" id="quickSwapBtn" type="button" aria-label="Swap starting location and destination" title="Swap locations">
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+              </button>
+
+              <div class="form-group">
+                <label class="form-label" for="quickDest">Destination Station or Address</label>
+                <input type="text" class="form-input" id="quickDest" value="West Technology Park" placeholder="Enter destination...">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="quickDate">Departure Date</label>
+                <input type="date" class="form-input" id="quickDate" value="2026-11-22">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="quickTime">Time</label>
+                <input type="time" class="form-input" id="quickTime" value="12:15">
+              </div>
+
+              <button class="btn btn-primary" id="quickSearchBtn" type="button" style="height:38px;">
+                <span>Find Routes</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Network Summary Metrics (Structured Grid, Not Bento) -->
+          <div class="metrics-grid">
+            <div class="metric-item">
+              <div class="metric-header">
+                <span>Active Buses Monitored</span>
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4c-1.1 0-2.1.8-2.4 1.8l-1.4 5c-.1.4-.2.8-.2 1.2 0 .4.1.8.2 1.2.3 1.1.8 2.8.8 2.8h3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+              </div>
+              <div class="metric-value">248</div>
+              <div class="metric-footer">
+                <span class="metric-trend-up">+12</span>
+                <span>vehicles in peak service</span>
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-header">
+                <span>Routes Monitored</span>
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+              </div>
+              <div class="metric-value">42</div>
+              <div class="metric-footer">
+                <span>100% of network tracked</span>
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-header">
+                <span>Active Incidents</span>
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              </div>
+              <div class="metric-value" style="color:var(--status-warning);">3</div>
+              <div class="metric-footer">
+                <span>2 moderate, 1 severe</span>
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-header">
+                <span>Network On-Time Rate</span>
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="metric-value" style="color:var(--status-success);">94.2%</div>
+              <div class="metric-footer">
+                <span class="metric-trend-up">+0.8%</span>
+                <span>compared to yesterday</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map Preview & Network Status -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Live Transit Network Map Preview</div>
+                <div class="card-subtitle">Active bus positions, route trajectories and current congestion levels.</div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="navigateToPage('live-map');">
+                <span>Open Full Map</span>
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+            </div>
+            
+            <div class="map-preview-container" id="overviewMapSvgContainer">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <!-- Bottom Section: Recent Incidents & Nearby Stops -->
+          <div class="overview-grid">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Recent Service Incidents</div>
+                  <div class="card-subtitle">Active corridor alerts requiring passenger or dispatch attention.</div>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="navigateToPage('alerts');">View All Alerts</button>
+              </div>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Incident</th>
+                      <th>Corridor</th>
+                      <th>Severity</th>
+                      <th>Reported</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewIncidentsTbody">
+                    <!-- Populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Key Station Departures</div>
+                  <div class="card-subtitle">Estimated departures from major interchanges.</div>
+                </div>
+              </div>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Station</th>
+                      <th>Lines</th>
+                      <th>Departure</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewNearbyTbody">
+                    <!-- Populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             PAGE 2: JOURNEY PLANNER
+             ========================================================================== -->
+        <section class="page-view" id="page-journey" aria-label="Journey Planner">
+          <div class="page-header">
+            <div class="page-header-info">
+              <h1 class="page-title">Journey Planner</h1>
+              <p class="page-subtitle">Compare transit alternatives, transfer details, walking links and step-by-step itineraries.</p>
+            </div>
+            <div class="page-header-actions">
+              <button class="btn btn-secondary btn-sm" onclick="window.print()" type="button">
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="margin-right:4px;"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                <span>Print Itinerary</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Search Criteria Bar -->
+          <div class="card" style="padding:16px;">
+            <div class="quick-search-box planner-search-grid">
+              <div class="form-group">
+                <label class="form-label" for="plannerOrigin">Origin Stop</label>
+                <input type="text" class="form-input" id="plannerOrigin" value="Anand Vihar">
+              </div>
+
+              <button class="swap-btn" id="plannerSwapBtn" type="button" aria-label="Swap origin and destination" title="Swap locations">
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+              </button>
+
+              <div class="form-group">
+                <label class="form-label" for="plannerDest">Destination Stop</label>
+                <input type="text" class="form-input" id="plannerDest" value="Connaught Place">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="plannerDate">Date</label>
+                <input type="date" class="form-input" id="plannerDate" value="2026-11-22">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="plannerTime">Departure Time (IST)</label>
+                <input type="time" class="form-input" id="plannerTime" value="18:00">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Sort Priority</label>
+                <div style="display:flex; gap:4px;">
+                  <button class="btn btn-secondary btn-sm planner-pref-btn active" type="button">Fastest</button>
+                  <button class="btn btn-secondary btn-sm planner-pref-btn" type="button">Direct</button>
+                  <button class="btn btn-secondary btn-sm planner-pref-btn" type="button">Min Walk</button>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" id="plannerSearchBtn" type="button" style="height:38px;">
+                <span>Update Search</span>
+              </button>
+            </div>
+
+            <!-- Station Suggestion Quick Chips & Demo Preset -->
+            <div class="journey-search-secondary">
+              <div class="station-chips-group">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="applyDemoPreset()" style="font-weight:700; font-size:11px; padding:4px 10px; height:26px; border-color:var(--primary-color); color:var(--primary-color); background:#EFF6FF;">
+                  1-Click Demo Preset
+                </button>
+                <span class="chips-label">Delhi Hubs:</span>
+                <div class="station-chips-list">
+                  <button type="button" class="station-chip" onclick="setPlannerStation('Anand Vihar')">Anand Vihar</button>
+                  <button type="button" class="station-chip" onclick="setPlannerStation('Connaught Place')">Connaught Place</button>
+                  <button type="button" class="station-chip" onclick="setPlannerStation('Kapashera Border')">Kapashera Border</button>
+                  <button type="button" class="station-chip" onclick="setPlannerStation('Nehru Place Terminal')">Nehru Place</button>
+                  <button type="button" class="station-chip" onclick="setPlannerStation('Lajpat Nagar')">Lajpat Nagar</button>
+                  <button type="button" class="station-chip" onclick="setPlannerStation('Rohini Sector 21')">Rohini</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-Panel Results Layout -->
+          <div class="planner-layout">
+            <!-- Left Panel: Alternatives & Itinerary Details -->
+            <div class="planner-sidebar">
+              <div style="font-size:13px; font-weight:600; color:var(--text-secondary);">3 Recommended Route Options</div>
+              <div class="route-options-list" id="journeyResultsList">
+                <!-- Rendered by JS -->
+              </div>
+
+              <div id="journeyItineraryContainer">
+                <!-- Step by step details rendered by JS -->
+              </div>
+            </div>
+
+            <!-- Right Panel: Interactive Route Map -->
+            <div class="planner-map-container" id="journeyMapSvg">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             PAGE 3: LIVE MAP
+             ========================================================================== -->
+        <section class="page-view" id="page-live-map" aria-label="Live Transit Map">
+          <div class="page-header">
+            <div class="page-header-info">
+              <h1 class="page-title">Live Map & Vehicle Tracking</h1>
+              <p class="page-subtitle">Real-time bus positioning, corridor traffic conditions, and vehicle telemetry.</p>
+            </div>
+            <div class="page-header-actions">
+              <button class="btn btn-secondary btn-sm" id="toggleTelemetryBtn">Pause Stream</button>
+            </div>
+          </div>
+
+          <div class="live-map-wrapper">
+            <!-- Floating Map Controls Toolbar -->
+            <div class="live-map-toolbar">
+              <div class="map-floating-bar" style="flex-wrap:wrap; gap:8px;">
+                <input type="text" class="form-input" id="liveMapSearch" placeholder="Filter bus ID or stop..." style="width:160px; height:32px; font-size:12px;">
+
+                <select class="form-select" id="liveMapRouteFilter" style="width:130px; height:32px; font-size:12px; padding:0 8px;">
+                  <option value="all">All Corridors</option>
+                  <option value="101">Line 101</option>
+                  <option value="102">Line 102</option>
+                  <option value="104">Line 104</option>
+                  <option value="205">Line 205</option>
+                </select>
+                
+                <div style="height:20px; width:1px; background:var(--border-color);"></div>
+
+                <label style="display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-secondary); cursor:pointer;">
+                  <input type="checkbox" id="layerToggleBuses" checked> Buses
+                </label>
+                <label style="display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-secondary); cursor:pointer;">
+                  <input type="checkbox" id="layerToggleRoutes" checked> Routes
+                </label>
+                <label style="display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-secondary); cursor:pointer;">
+                  <input type="checkbox" id="layerToggleTraffic" checked> Traffic Overlay
+                </label>
+              </div>
+
+              <div class="map-floating-bar" style="gap:4px;">
+                <button class="map-ctrl-btn" id="mapZoomIn" aria-label="Zoom in" title="Zoom in">
+                  <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                </button>
+                <button class="map-ctrl-btn" id="mapZoomOut" aria-label="Zoom out" title="Zoom out">
+                  <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M5 12h14"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="live-map-canvas" id="liveMapCanvasContainer">
+              <!-- Rendered by JS -->
+            </div>
+
+            <!-- Selected Bus Info Panel -->
+            <div class="bus-info-panel" id="liveMapBusPanel">
+              <!-- Populated by JS -->
+            </div>
+
+            <!-- Map Functional Legend -->
+            <div class="map-legend-panel">
+              <div style="font-weight:600; font-size:11px; margin-bottom:2px; color:var(--text-primary);">TRAFFIC CONDITIONS</div>
+              <div class="legend-item">
+                <span class="legend-color" style="background:#16A34A;"></span>
+                <span>Normal Flow (< 2 min delay)</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background:#D97706;"></span>
+                <span>Moderate Congestion (2 - 5 min delay)</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color" style="background:#DC2626;"></span>
+                <span>Heavy Congestion (> 5 min delay)</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             PAGE 4: BUS ROUTES
+             ========================================================================== -->
+        <section class="page-view" id="page-routes" aria-label="Bus Routes Directory">
+          <div class="page-header">
+            <div class="page-header-info">
+              <h1 class="page-title">Bus Routes Directory</h1>
+              <p class="page-subtitle">Corridor alignments, operating schedules, frequencies and complete stop sequences.</p>
+            </div>
+          </div>
+
+          <!-- Filter Toolbar -->
+          <div class="card" style="padding:14px 16px;">
+            <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+              <div class="global-search-container" style="width:240px;">
+                <svg class="lucide search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" class="search-input" id="routesSearchInput" placeholder="Filter route or stop name...">
+              </div>
+
+              <div class="form-group" style="flex-direction:row; align-items:center; gap:8px;">
+                <label class="form-label" for="routesCorridorFilter" style="margin:0;">Corridor:</label>
+                <select class="form-select" id="routesCorridorFilter" style="height:36px;">
+                  <option value="all">All Corridors</option>
+                  <option value="radial">Radial</option>
+                  <option value="crosstown">Crosstown</option>
+                  <option value="circulator">Circulator</option>
+                  <option value="express">Express</option>
+                  <option value="feeder">Feeder</option>
+                </select>
+              </div>
+
+              <div class="form-group" style="flex-direction:row; align-items:center; gap:8px;">
+                <label class="form-label" for="routesSortSelect" style="margin:0;">Sort by:</label>
+                <select class="form-select" id="routesSortSelect" style="height:36px;">
+                  <option value="number">Route Number</option>
+                  <option value="duration">Travel Time</option>
+                  <option value="frequency">Frequency</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Split Layout: Route Table & Selected Route Detail -->
+          <div class="routes-layout">
+            <div class="card" style="padding:0; overflow:hidden;">
+              <div class="table-container" style="border:none;">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Line</th>
+                      <th>Route Name</th>
+                      <th>Origin</th>
+                      <th>Destination</th>
+                      <th>Frequency</th>
+                      <th>Duration</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="routesTableBody">
+                    <!-- Populated by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="routeDetailsContainer">
+              <!-- Route details and stop sequence populated by JS -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             PAGE 5: TRAFFIC ANALYTICS
+             ========================================================================== -->
+        <section class="page-view" id="page-analytics" aria-label="Traffic Analytics">
+          <div class="page-header">
+            <div class="page-header-info">
+              <h1 class="page-title">Traffic Analytics & Performance</h1>
+              <p class="page-subtitle">Corridor congestion monitoring, delay metrics, and network reliability intelligence.</p>
+            </div>
+            <div class="page-header-actions" style="display:flex; gap:8px; align-items:center;">
+              <span class="status-pill neutral">Analytical Horizon: Today</span>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="exportAnalyticsCSV()">
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" style="margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Export CSV Report</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Overview Key Performance Indicators -->
+          <div class="metrics-grid">
+            <div class="metric-item">
+              <div class="metric-header">
+                <span>Network Average Delay</span>
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="metric-value">3.2 min</div>
+              <div class="metric-footer">
+                <span class="metric-trend-up">-0.4 min</span>
+                <span>improvement vs last week</span>
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-header">
+                <span>Congestion Index</span>
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+              </div>
+              <div class="metric-value">36%</div>
+              <div class="metric-footer">
+                <span class="status-pill success" style="padding:1px 6px; font-size:11px;">Nominal</span>
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-header">
+                <span>Impacted Corridors</span>
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              </div>
+              <div class="metric-value">3 of 42</div>
+              <div class="metric-footer">
+                <span>Routes 101, 104, 205</span>
+              </div>
+            </div>
+
+            <div class="metric-item">
+              <div class="metric-header">
+                <span>Daily Trips Monitored</span>
+                <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <div class="metric-value">84,200</div>
+              <div class="metric-footer">
+                <span>Simulated passenger count</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Section (Strict: Restrained palette, no rainbow) -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Hourly Congestion Trend</div>
+                  <div class="card-subtitle">Aggregate network congestion percentage from 06:00 to 22:00.</div>
+                </div>
+              </div>
+              <div class="analytics-chart-container" id="congestionTrendChart">
+                <!-- Rendered by JS -->
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-secondary); padding-top:8px;">
+                <span>Morning Peak: 08:00 (78%)</span>
+                <span>Evening Peak: 18:00 (86%)</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Average Delay by Route</div>
+                  <div class="card-subtitle">Mean schedule adherence variance across primary corridors.</div>
+                </div>
+              </div>
+              <div class="analytics-chart-container" id="delayByRouteChart">
+                <!-- Rendered by JS -->
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--text-secondary); padding-top:8px;">
+                <span>Target threshold: < 3.0 min</span>
+                <span>Outlier: Route 104 (+5.4 min)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hotspots Table -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Congestion Hotspots & Bottlenecks</div>
+                <div class="card-subtitle">Corridor segments currently experiencing measurable speed reductions.</div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Location / Intersection</th>
+                    <th>Congestion Level</th>
+                    <th>Affected Lines</th>
+                    <th>Mean Delay</th>
+                    <th>Primary Cause</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="analyticsHotspotsTbody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             PAGE 6: ALERTS
+             ========================================================================== -->
+        <section class="page-view" id="page-alerts" aria-label="Incident and Alert Management">
+          <div class="page-header">
+            <div class="page-header-info">
+              <h1 class="page-title">Service Alerts & Incidents</h1>
+              <p class="page-subtitle">Track road closures, construction detours, weather conditions and transit delays.</p>
+            </div>
+          </div>
+
+          <!-- Tab Navigation Filter -->
+          <div class="alerts-filter-bar">
+            <div class="tab-nav">
+              <button class="tab-btn alert-tab-btn active" data-filter="all">All Incidents (5)</button>
+              <button class="tab-btn alert-tab-btn" data-filter="severe">Severe (1)</button>
+              <button class="tab-btn alert-tab-btn" data-filter="moderate">Moderate (2)</button>
+              <button class="tab-btn alert-tab-btn" data-filter="advisory">Advisories (2)</button>
+            </div>
+          </div>
+
+          <!-- Incidents Table -->
+          <div class="card" style="padding:0; overflow:hidden;">
+            <div class="table-container" style="border:none;">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Alert Type</th>
+                    <th>Location</th>
+                    <th>Affected Corridors</th>
+                    <th>Severity</th>
+                    <th>Reported Time</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="alertsTableBody">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             PAGE 7: SETTINGS
+             ========================================================================== -->
+        <section class="page-view" id="page-settings" aria-label="Platform Settings">
+          <div class="page-header">
+            <div class="page-header-info">
+              <h1 class="page-title">Platform Preferences & Settings</h1>
+              <p class="page-subtitle">Configure interface appearance, notification triggers, map displays and telemetry parameters.</p>
+            </div>
+            <div class="page-header-actions">
+              <button class="btn btn-secondary btn-sm" id="resetSettingsBtn">Restore Defaults</button>
+              <button class="btn btn-primary btn-sm" id="saveSettingsBtn">Save Configuration</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <!-- Appearance Section -->
+            <div class="settings-section">
+              <div class="card-title">Interface & Appearance</div>
+              
+              <div class="settings-row">
+                <div class="settings-text">
+                  <span class="settings-title">High Contrast Mode</span>
+                  <span class="settings-desc">Enforce maximum boundary contrast for enhanced readability (WCAG AAA).</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="settingHighContrast">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-text">
+                  <span class="settings-title">Compact Table Density</span>
+                  <span class="settings-desc">Reduce vertical row padding in schedules and analytical tables.</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="settingCompactDensity">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Notification Preferences -->
+            <div class="settings-section">
+              <div class="card-title">Incident Notifications</div>
+
+              <div class="settings-row">
+                <div class="settings-text">
+                  <span class="settings-title">Severe Incident Push Alerts</span>
+                  <span class="settings-desc">Dispatch immediate browser notifications for major road closures and detours.</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="settingPushAlerts" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-text">
+                  <span class="settings-title">Delay Threshold Alert</span>
+                  <span class="settings-desc">Notify dispatchers when any monitored bus route delay exceeds 5 minutes.</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="settingDelayThreshold" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Map Preferences -->
+            <div class="settings-section">
+              <div class="card-title">Map Display Preferences</div>
+
+              <div class="settings-row">
+                <div class="settings-text">
+                  <span class="settings-title">Show Real-Time Congestion Overlay by Default</span>
+                  <span class="settings-desc">Render colored traffic condition segments when opening the Live Map.</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="settingShowTraffic" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-text">
+                  <span class="settings-title">Vehicle Position Smoothing</span>
+                  <span class="settings-desc">Interpolate simulated bus telemetry updates smoothly between pings.</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Commuter Routing Preferences -->
+            <div class="settings-section">
+              <div class="card-title">Routing Calculations</div>
+
+              <div class="settings-row">
+                <div class="settings-text">
+                  <span class="settings-title">Prioritize Step-Free Access Paths</span>
+                  <span class="settings-desc">Select elevators and accessible ramps over stairs during journey calculation.</span>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="settingStepFree" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+
+              <div class="settings-row">
+                <div class="settings-text">
+                  <span class="settings-title">Walking Speed Calibration</span>
+                  <span class="settings-desc">Standard walking pace: 4.5 km/h.</span>
+                </div>
+                <select class="form-select" id="settingWalkingSpeed" style="width:180px;">
+                  <option value="3.0">Relaxed (3.0 km/h)</option>
+                  <option value="4.5" selected>Standard (4.5 km/h)</option>
+                  <option value="6.0">Brisk (6.0 km/h)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ==========================================================================
+             PAGE 8: HELP
+             ========================================================================== -->
+        <section class="page-view" id="page-help" aria-label="Help and Documentation">
+          <div class="page-header">
+            <div class="page-header-info">
+              <h1 class="page-title">Help & Documentation</h1>
+              <p class="page-subtitle">Platform guides, operational instructions, FAQ and accessibility documentation.</p>
+            </div>
+          </div>
+
+          <!-- Documentation Grid -->
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+            <div class="card">
+              <div class="card-title">Quick Start Handbook</div>
+              
+              <div style="display:flex; flex-direction:column; gap:12px; font-size:13px; color:var(--text-secondary); line-height:1.5;">
+                <div>
+                  <strong style="color:var(--text-primary);">1. Planning a Journey:</strong>
+                  Enter origin and destination stations into the Journey Planner. The algorithm computes 3 prioritized alternatives factoring in walking distance, transfer wait times and current corridor congestion.
+                </div>
+                <div>
+                  <strong style="color:var(--text-primary);">2. Live Vehicle Tracking:</strong>
+                  The Live Map visualizes simulated real-time positions for all buses in service. Click any bus icon to open the telemetry inspector showing speed, next stop and passenger occupancy.
+                </div>
+                <div>
+                  <strong style="color:var(--text-primary);">3. Understanding Alerts:</strong>
+                  Incidents are categorized as Severe (service disruption), Moderate (corridor detours), or Advisory (minor platform adjustments).
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Accessible Keyboard Shortcuts</div>
+
+              <div style="display:flex; flex-direction:column; gap:8px; font-size:12.5px;">
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border-color);">
+                  <span style="color:var(--text-secondary);">Focus Global Search</span>
+                  <kbd style="padding:2px 6px; border:1px solid var(--border-color); border-radius:4px; font-weight:600;">/</kbd>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border-color);">
+                  <span style="color:var(--text-secondary);">Close Modal / Popover</span>
+                  <kbd style="padding:2px 6px; border:1px solid var(--border-color); border-radius:4px; font-weight:600;">Esc</kbd>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border-color);">
+                  <span style="color:var(--text-secondary);">Skip to Content</span>
+                  <kbd style="padding:2px 6px; border:1px solid var(--border-color); border-radius:4px; font-weight:600;">Tab (Top)</kbd>
+                </div>
+                <div style="display:flex; justify-content:space-between; padding:6px 0;">
+                  <span style="color:var(--text-secondary);">Simulated Feed Interval</span>
+                  <span style="font-weight:600; color:var(--text-primary);">4.0 seconds</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Frequently Asked Questions Accordion -->
+          <div class="card">
+            <div class="card-title">Frequently Asked Questions</div>
+
+            <div class="help-faq-list">
+              <div class="faq-item open">
+                <button class="faq-trigger" type="button">
+                  <span>How frequently is the bus position data refreshed?</span>
+                  <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="faq-content">
+                  Vehicle telemetry in this demonstration environment is refreshed every 4 seconds via simulated GPS coordinate updates. In production deployments, data connects to municipal automated vehicle location (AVL) GTFS Realtime feeds.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-trigger" type="button">
+                  <span>What does the delay indicator (+3 min) represent?</span>
+                  <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="faq-content">
+                  The delay indicator compares the estimated arrival time with the scheduled timetable published in the general transit feed. Positive values indicate delay due to congestion or detours.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-trigger" type="button">
+                  <span>How are walking connections calculated between bus stops?</span>
+                  <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="faq-content">
+                  Walking links use pedestrian street networks calibrated to a standard 4.5 km/h walking speed, incorporating pedestrian signals and step-free accessibility preferences where configured.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MOBILE BOTTOM NAVIGATION BAR (for smartphones < 768px) -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile Bottom Navigation">
+    <div class="mobile-bottom-nav-inner">
+      <button type="button" class="mobile-nav-btn active" data-page="overview" onclick="navigateTo('overview')" aria-label="Overview">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+        <span>Overview</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-page="journey" onclick="navigateTo('journey')" aria-label="Journey">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+        <span>Journey</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-page="live-map" onclick="navigateTo('live-map')" aria-label="Live Map">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z"/><path d="M9 3v15"/><path d="M15 6v15"/></svg>
+        <span>Live Map</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-page="routes" onclick="navigateTo('routes')" aria-label="Routes">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6v6"/><path d="M15 6v6"/><path d="M2 12h19.6"/><path d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4c-1.1 0-2.1.8-2.4 1.8l-1.4 5c-.1.4-.2.8-.2 1.2 0 .4.1.8.2 1.2.3 1.1.8 2.8.8 2.8h3"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>
+        <span>Routes</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" data-page="alerts" onclick="navigateTo('alerts')" aria-label="Alerts">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+        <span>Alerts</span>
+      </button>
+      <button type="button" class="mobile-nav-btn" onclick="toggleMobileSidebar()" aria-label="More navigation options">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+        <span>More</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE BOTTOM SHEET (Vehicle Telemetry Drawer) -->
+  <div class="bottom-sheet-backdrop" id="bottomSheetBackdrop" style="display: none;" onclick="closeBottomSheet()" aria-hidden="true"></div>
+  <div class="mobile-bottom-sheet" id="mobileBottomSheet" style="display: none;" role="dialog" aria-label="Vehicle details">
+    <div class="bottom-sheet-handle-bar">
+      <div class="bottom-sheet-handle"></div>
+    </div>
+    <div class="bottom-sheet-header">
+      <div class="bottom-sheet-title-group">
+        <div class="bottom-sheet-kicker">VEHICLE TELEMETRY</div>
+        <div class="bottom-sheet-title" id="sheetBusTitle">Bus 101-A - Route 101</div>
+        <div class="bottom-sheet-subtitle" id="sheetBusRoute">Central Station - West Tech Park</div>
+      </div>
+      <div class="bottom-sheet-actions">
+        <span class="status-pill success" id="sheetBusStatus">On Time</span>
+        <button type="button" class="bottom-sheet-close-btn" onclick="closeBottomSheet()" aria-label="Close vehicle details">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="bottom-sheet-grid">
+      <div class="bottom-sheet-card">
+        <span class="bottom-sheet-label">Direction</span>
+        <span class="bottom-sheet-val" id="sheetBusDirection">Northbound</span>
+      </div>
+      <div class="bottom-sheet-card">
+        <span class="bottom-sheet-label">Speed</span>
+        <span class="bottom-sheet-val" id="sheetBusSpeed">34 km/h</span>
+      </div>
+      <div class="bottom-sheet-card">
+        <span class="bottom-sheet-label">Next Stop</span>
+        <span class="bottom-sheet-val" id="sheetBusNextStop">Civic Center</span>
+      </div>
+      <div class="bottom-sheet-card">
+        <span class="bottom-sheet-label">Arrival ETA</span>
+        <span class="bottom-sheet-val primary-highlight" id="sheetBusEta">3 min</span>
+      </div>
+      <div class="bottom-sheet-card">
+        <span class="bottom-sheet-label">Occupancy</span>
+        <span class="bottom-sheet-val" id="sheetBusOccupancy">42% (Normal)</span>
+      </div>
+      <div class="bottom-sheet-card">
+        <span class="bottom-sheet-label">Last Ping</span>
+        <span class="bottom-sheet-val" id="sheetBusPing">Just now</span>
+      </div>
+    </div>
+    <div class="bottom-sheet-buttons">
+      <button type="button" class="btn btn-secondary" style="flex: 1;" onclick="navigateTo('routes'); closeBottomSheet();">View Route Details</button>
+      <button type="button" class="btn btn-primary" style="flex: 1;" onclick="closeBottomSheet();">Track on Map</button>
+    </div>
+  </div>
+
+  <!-- REUSABLE MODAL DIALOG -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Incident Details</div>
+        <button class="btn btn-secondary btn-icon" onclick="closeModal();" aria-label="Close dialog">
+          <svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Injected via JS -->
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal();">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACCESSIBLE TOAST NOTICE -->
+  <div class="toast-notice" id="appToast" role="status" aria-live="polite">
+    <!-- Notice text injected via showToast -->
+  </div>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
