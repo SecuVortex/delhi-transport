@@ -724,18 +724,19 @@ html, body {
 }
 
 .ui-btn-primary {
-  background-color: var(--color-primary);
-  color: #ffffff;
-  border-color: var(--color-primary);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: var(--btn-bg);
 }
 
 .ui-btn-primary:hover {
-  background-color: var(--color-primary-hover);
-  border-color: var(--color-primary-hover);
+  background-color: var(--btn-hover);
+  border-color: var(--btn-hover);
+  color: var(--btn-text);
 }
 
 .ui-btn-primary:active {
-  background-color: var(--color-primary-active);
+  transform: scale(0.975);
 }
 
 .ui-btn-secondary {

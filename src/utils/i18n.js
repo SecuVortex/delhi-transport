@@ -29,7 +29,6 @@ export const TRANSLATIONS = {
     find_routes: 'Find Routes',
     finding_routes: 'Finding Routes...',
     swap_stops: 'Swap origin and destination',
-    demo_preset: '1-Click Demo Preset',
     delhi_hubs: 'Delhi Hubs',
 
     // Crowding Pills & Badges
@@ -121,7 +120,6 @@ export const TRANSLATIONS = {
     find_routes: 'बस मार्ग खोजें',
     finding_routes: 'खोज जारी है...',
     swap_stops: 'प्रस्थान और गंतव्य बदलें',
-    demo_preset: '1-क्लिक डेमो प्रिसिट',
     delhi_hubs: 'दिल्ली हब्स',
 
     // Crowding Pills & Badges

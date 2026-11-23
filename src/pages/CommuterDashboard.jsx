@@ -149,6 +149,13 @@ export function CommuterDashboard({
     executeSearch({ origin: item.origin, destination: item.destination });
   };
 
+  const clearRecentSearches = () => {
+    setRecentSearches([]);
+    try {
+      localStorage.removeItem(RECENT_SEARCHES_KEY);
+    } catch {}
+  };
+
   const selectedRoute = routes[selectedIndex] || routes[0] || null;
 
   return (
@@ -221,8 +228,10 @@ export function CommuterDashboard({
           onPriorityChange={setPriority}
           onSwap={swapLocations}
           onSearch={handleSearchWithHistory}
-          onDemoPreset={loadDemoPreset}
           loading={loading}
+          recentSearches={recentSearches}
+          onApplyRecentSearch={applyRecentSearch}
+          onClearRecentSearches={clearRecentSearches}
         />
 
         {/* Error Notice */}
@@ -261,49 +270,6 @@ export function CommuterDashboard({
           </div>
         )}
 
-        {/* Recent Searches History Strip */}
-        {recentSearches.length > 0 && (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              flexWrap: 'wrap',
-              marginBottom: '12px',
-              padding: '0 2px'
-            }}
-          >
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#64748B' }}>
-              Recent Queries:
-            </span>
-            {recentSearches.map((item, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => applyRecentSearch(item)}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  backgroundColor: '#FFFFFF',
-                  border: '1px solid #E2E8F0',
-                  borderRadius: '5px',
-                  padding: '2px 8px',
-                  fontSize: '11px',
-                  color: '#475569',
-                  cursor: 'pointer',
-                  transition: 'all 0.12s ease'
-                }}
-                title={`Load route from ${item.origin} to ${item.destination}`}
-              >
-                <span>{item.origin}</span>
-                <span style={{ color: '#94A3B8' }}>&rarr;</span>
-                <span>{item.destination}</span>
-              </button>
-            ))}
-          </div>
-        )}
-
         {/* 2-Panel Results & Map Layout (Above the Fold) */}
         <div
           style={{
@@ -327,7 +293,6 @@ export function CommuterDashboard({
               onSelectStretch={(stretch) => setSelectedStretch(stretch)}
               loading={loading}
               priority={priority}
-              onDemoPreset={loadDemoPreset}
             />
 
             {/* Step-by-Step Itinerary Details for Selected Card */}

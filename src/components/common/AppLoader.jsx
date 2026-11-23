@@ -1,34 +1,50 @@
 import React, { useState, useEffect } from 'react';
+import { useSettings } from '../../context/SettingsContext.jsx';
 import { RunningBusLogo } from './RunningBusLogo.jsx';
 
 /**
- * Fast, Classy Website Loading Splash Component
- * Shown during initial app hydration or when Render backend is waking up.
- * Never sticks: auto-clears cleanly within 1.2s or fades out smoothly in 220ms.
+ * Classy Website Loading Splash Component
+ * Stays on screen for exactly 3 seconds (3000ms) on page load/refresh,
+ * smoothly fills a yellow progress bar from 0% to 100% over 3s,
+ * and fades out gracefully over 300ms with zero jitter.
+ * Heading and subtitle are crisp and high-contrast in both Light and Dark mode.
  */
 export function AppLoader({ onDismiss }) {
+  const { resolvedTheme } = useSettings();
   const [fadingOut, setFadingOut] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [statusMessage, setStatusMessage] = useState('Connecting to Delhi Transit DuckDB...');
 
-  useEffect(() => {
-    // If backend takes longer than 3s, show courteous cold-start notice
-    const coldStartTimer = setTimeout(() => {
-      setStatusMessage('Waking up live server on Render...');
-    }, 3000);
+  const isDark = resolvedTheme === 'dark';
 
-    // Initial smooth splash duration (max 1.2s)
+  useEffect(() => {
+    // Dynamic status messages during the 3-second initialization
+    const msgTimer1 = setTimeout(() => {
+      setStatusMessage('Indexing 1,400+ DTC & Cluster routes...');
+    }, 1100);
+
+    const msgTimer2 = setTimeout(() => {
+      setStatusMessage('Syncing live GTFS crowding model...');
+    }, 2100);
+
+    const msgTimer3 = setTimeout(() => {
+      setStatusMessage('Ready!');
+    }, 2850);
+
+    // Keep splash on screen for exactly 3000ms
     const splashTimer = setTimeout(() => {
       setFadingOut(true);
       const hideTimer = setTimeout(() => {
         setHidden(true);
         if (onDismiss) onDismiss();
-      }, 240); // 240ms matches CSS transition
+      }, 300); // 300ms smooth fadeout
       return () => clearTimeout(hideTimer);
-    }, 1200);
+    }, 3000);
 
     return () => {
-      clearTimeout(coldStartTimer);
+      clearTimeout(msgTimer1);
+      clearTimeout(msgTimer2);
+      clearTimeout(msgTimer3);
       clearTimeout(splashTimer);
     };
   }, [onDismiss]);
@@ -41,7 +57,7 @@ export function AppLoader({ onDismiss }) {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'var(--bg-page, #f8f8f7)',
+        backgroundColor: isDark ? '#0f0f10' : '#f8f8f7',
         zIndex: 99999,
         display: 'flex',
         flexDirection: 'column',
@@ -49,7 +65,7 @@ export function AppLoader({ onDismiss }) {
         justifyContent: 'center',
         opacity: fadingOut ? 0 : 1,
         pointerEvents: fadingOut ? 'none' : 'auto',
-        transition: 'opacity 220ms cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: 'opacity 300ms cubic-bezier(0.16, 1, 0.3, 1)',
         userSelect: 'none'
       }}
       aria-live="polite"
@@ -62,72 +78,81 @@ export function AppLoader({ onDismiss }) {
           alignItems: 'center',
           gap: '16px',
           padding: '24px',
-          textAlign: 'center'
+          textAlign: 'center',
+          maxWidth: '320px',
+          width: '100%'
         }}
       >
         {/* Animated Running Yellow Bus Logo */}
-        <div style={{ transform: 'scale(1.15)', marginBottom: '8px' }}>
-          <RunningBusLogo size={44} />
+        <div style={{ transform: 'scale(1.2)', marginBottom: '8px' }}>
+          <RunningBusLogo size={46} />
         </div>
 
-        {/* Brand Name */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <span
+        {/* Brand Name & Subtitle with guaranteed high contrast */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+          <h1
+            className="text-[#151413] dark:text-[#f4f4f5]"
             style={{
-              fontSize: '20px',
+              fontSize: '22px',
               fontWeight: 800,
               letterSpacing: '-0.03em',
-              color: 'var(--text-primary, #151413)'
+              color: isDark ? '#f4f4f5' : '#151413',
+              margin: 0,
+              lineHeight: 1.2
             }}
           >
             MetroTransit
-          </span>
-          <span
+          </h1>
+          <p
+            className="text-[#5c5852] dark:text-[#a1a1aa]"
             style={{
-              fontSize: '12px',
+              fontSize: '12.5px',
               fontWeight: 500,
-              color: 'var(--text-muted, #5c5852)'
+              color: isDark ? '#a1a1aa' : '#5c5852',
+              margin: 0,
+              lineHeight: 1.4
             }}
           >
             Crowdedness-Aware Delhi Bus Intelligence
-          </span>
+          </p>
         </div>
 
-        {/* Sleek Monochrome / Yellow Shimmer Progress Bar */}
+        {/* Yellow Progress Bar filling smoothly from 0% to 100% over 3 seconds */}
         <div
           style={{
-            width: '180px',
-            height: '3px',
-            backgroundColor: 'var(--border-line, #e2e2df)',
+            width: '200px',
+            height: '4px',
+            backgroundColor: isDark ? '#27272a' : '#e2e2df',
             borderRadius: '999px',
             overflow: 'hidden',
             position: 'relative',
-            marginTop: '8px'
+            marginTop: '10px'
           }}
         >
           <div
-            className="loader-shimmer-bar"
+            className="loader-fill-bar"
             style={{
               position: 'absolute',
               top: 0,
               left: 0,
               height: '100%',
-              width: '45%',
               backgroundColor: '#FACC15',
               borderRadius: '999px',
-              animation: 'loaderSlide 1s ease-in-out infinite alternate'
+              animation: 'fillProgress3s 3000ms linear forwards'
             }}
           />
         </div>
 
         {/* Status Line */}
         <span
+          className="text-[#5c5852] dark:text-[#a1a1aa]"
           style={{
-            fontSize: '11px',
+            fontSize: '11.5px',
             fontWeight: 500,
-            color: 'var(--text-muted, #5c5852)',
+            color: isDark ? '#a1a1aa' : '#5c5852',
             marginTop: '4px',
-            letterSpacing: '0.01em'
+            letterSpacing: '0.01em',
+            minHeight: '16px'
           }}
         >
           {statusMessage}
@@ -135,11 +160,17 @@ export function AppLoader({ onDismiss }) {
       </div>
 
       <style>{`
-        @keyframes loaderSlide {
-          0% { left: 0%; width: 30%; }
-          100% { left: 70%; width: 45%; }
+        @keyframes fillProgress3s {
+          0% {
+            width: 0%;
+          }
+          100% {
+            width: 100%;
+          }
         }
       `}</style>
     </div>
   );
 }
+
+export default AppLoader;

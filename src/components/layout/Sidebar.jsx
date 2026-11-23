@@ -26,6 +26,7 @@ export function Sidebar({
   activePage,
   onNavigate,
   activeProfile = 'commuter',
+  onSelectProfile,
   isCollapsed,
   onToggleCollapse,
   isMobileOpen,
@@ -76,6 +77,120 @@ export function Sidebar({
       </div>
 
       <div className="sidebar-content">
+        {/* Role Switcher (Everyday Commuter ↔ DTC Operator) */}
+        {!isCollapsed ? (
+          <div className="sidebar-profile-switch" style={{ padding: '6px 10px 12px' }}>
+            <div
+              style={{
+                display: 'flex',
+                background: 'var(--bg-subtle, #f1f1ef)',
+                borderRadius: '8px',
+                padding: '3px',
+                border: '1px solid var(--border-line, #e2e2df)',
+                gap: '2px'
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => onSelectProfile && onSelectProfile('commuter')}
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  padding: '7px 8px',
+                  borderRadius: '6px',
+                  fontSize: '11.5px',
+                  fontWeight: activeProfile === 'commuter' ? 700 : 500,
+                  backgroundColor: activeProfile === 'commuter' ? 'var(--bg-card, #ffffff)' : 'transparent',
+                  color: activeProfile === 'commuter' ? 'var(--text-primary, #151413)' : 'var(--text-muted, #5c5852)',
+                  boxShadow: activeProfile === 'commuter' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 150ms ease'
+                }}
+                aria-pressed={activeProfile === 'commuter'}
+                aria-label="Switch to Everyday Commuter Profile"
+              >
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span>{t('commuter_portal') || 'Commuter'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => onSelectProfile && onSelectProfile('operator')}
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  padding: '7px 8px',
+                  borderRadius: '6px',
+                  fontSize: '11.5px',
+                  fontWeight: activeProfile === 'operator' ? 700 : 500,
+                  backgroundColor: activeProfile === 'operator' ? 'var(--bg-card, #ffffff)' : 'transparent',
+                  color: activeProfile === 'operator' ? 'var(--text-primary, #151413)' : 'var(--text-muted, #5c5852)',
+                  boxShadow: activeProfile === 'operator' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 150ms ease'
+                }}
+                aria-pressed={activeProfile === 'operator'}
+                aria-label="Switch to DTC Operator Profile"
+              >
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M3 3v18h18" />
+                  <path d="M18 17V9" />
+                  <path d="M13 17V5" />
+                  <path d="M8 17v-3" />
+                </svg>
+                <span>{t('operator_portal') || 'Operator'}</span>
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '4px 0 10px' }}>
+            <button
+              type="button"
+              onClick={() => onSelectProfile && onSelectProfile(activeProfile === 'commuter' ? 'operator' : 'commuter')}
+              title={`Active: ${activeProfile === 'commuter' ? 'Commuter' : 'Operator'}. Click to switch.`}
+              aria-label={`Switch profile from ${activeProfile}`}
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'var(--bg-subtle, #f1f1ef)',
+                border: '1px solid var(--border-line, #e2e2df)',
+                color: 'var(--text-primary, #151413)',
+                cursor: 'pointer',
+                transition: 'all 150ms ease'
+              }}
+            >
+              {activeProfile === 'commuter' ? (
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M3 3v18h18" />
+                  <path d="M18 17V9" />
+                  <path d="M13 17V5" />
+                  <path d="M8 17v-3" />
+                </svg>
+              )}
+            </button>
+          </div>
+        )}
+
         <nav className="sidebar-nav-group" aria-label="Primary Navigation">
           {!isCollapsed && (
             <div className="sidebar-nav-label">
@@ -115,14 +230,21 @@ export function Sidebar({
 
       <div className="sidebar-footer">
         {!isCollapsed && (
-          <div style={{
-            padding: '8px 12px',
-            marginTop: '4px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            borderTop: '1px solid var(--color-border)'
-          }}>
+          <div
+            onClick={() => onSelectProfile && onSelectProfile(activeProfile === 'commuter' ? 'operator' : 'commuter')}
+            style={{
+              padding: '8px 12px',
+              marginTop: '4px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              borderTop: '1px solid var(--border-line)',
+              cursor: 'pointer',
+              borderRadius: '8px',
+              transition: 'background-color 150ms ease'
+            }}
+            title={`Active: ${activeProfile === 'operator' ? 'DTC Operator' : 'Everyday Commuter'}. Click to toggle.`}
+          >
             <div className="user-avatar-sm" style={{
               background: activeProfile === 'operator' ? '#0F172A' : '#2563EB',
               color: '#FFFFFF',
@@ -130,14 +252,15 @@ export function Sidebar({
             }}>
               {activeProfile === 'operator' ? 'DP' : 'EC'}
             </div>
-            <div className="sidebar-logo-info">
-              <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text)' }}>
+            <div className="sidebar-logo-info" style={{ flex: 1 }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text-primary)' }}>
                 {activeProfile === 'operator' ? t('dtc_planner') : t('everyday_commuter')}
               </div>
-              <div style={{ fontSize: '11px', color: 'var(--color-text-secondary)' }}>
+              <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
                 {activeProfile === 'operator' ? 'Network Intelligence' : 'Delhi Metro & Bus'}
               </div>
             </div>
+            <span style={{ fontSize: '12px', color: 'var(--text-muted)', opacity: 0.6 }}>⇄</span>
           </div>
         )}
       </div>

@@ -150,6 +150,7 @@ export function App() {
         activePage={activePage}
         onNavigate={handleNavigate}
         activeProfile={activeProfile}
+        onSelectProfile={handleSwitchProfile}
         isCollapsed={isSidebarCollapsed}
         onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         isMobileOpen={isMobileOpen}

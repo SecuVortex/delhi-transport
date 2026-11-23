@@ -65,19 +65,31 @@ export function OverviewPage({ onNavigate, onOpenProofModal }) {
   return (
     <PageLayout
       title="Operations Overview"
-      subtitle="Operational monitoring, passenger volume metrics, and quick journey lookup grounded in Delhi ticketing records."
+      subtitle="Delhi bus crowding & corridor analytics"
       actions={
         <>
           <Button variant="secondary" size="sm" onClick={() => onNavigate('analytics')}>
-            Corridor Analytics
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ marginRight: '4px' }}>
+              <path d="M18 20V10" />
+              <path d="M12 20V4" />
+              <path d="M6 20v-6" />
+            </svg>
+            Corridors
           </Button>
           {onOpenProofModal && (
             <Button variant="secondary" size="sm" onClick={onOpenProofModal}>
-              Validation & Proof
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ marginRight: '4px' }}>
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              Validation
             </Button>
           )}
           <Button variant="primary" size="sm" onClick={() => onNavigate('journey')}>
-            Plan Journey
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ marginRight: '4px' }}>
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+            Plan Trip
           </Button>
         </>
       }

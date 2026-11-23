@@ -5,7 +5,7 @@ import { RouteCardSkeleton } from '../common/Skeletons.jsx';
 /**
  * RouteList Component
  * Scannable route comparison cards, monochrome shimmer skeletons while loading,
- * and friendly empty state with 1-click Demo Preset button.
+ * and clean empty state with helpful commuter guidance.
  */
 export function RouteList({
   routes = [],
@@ -13,8 +13,7 @@ export function RouteList({
   onSelectIndex,
   onSelectStretch = null,
   loading = false,
-  priority = 'fastest',
-  onDemoPreset
+  priority = 'fastest'
 }) {
   // 1. Loading State: ONLY show while loading is true (Monochrome Shimmer Skeletons)
   if (loading) {
@@ -60,34 +59,8 @@ export function RouteList({
           No Route Options Found
         </div>
         <div style={{ fontSize: '12.5px', color: 'var(--text-muted)', maxWidth: '320px', lineHeight: 1.45 }}>
-          No connecting buses match the requested origin and destination. Try our verified Delhi corridor demo.
+          No direct buses match the requested origin and destination. Try searching different nearby stops or check specific route numbers below.
         </div>
-        {onDemoPreset && (
-          <button
-            type="button"
-            onClick={onDemoPreset}
-            className="btn-primary"
-            style={{
-              marginTop: '4px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              backgroundColor: 'var(--btn-bg)',
-              color: 'var(--btn-text)',
-              border: '1px solid var(--btn-bg)',
-              borderRadius: '999px',
-              fontSize: '12px',
-              fontWeight: 600,
-              padding: '8px 16px',
-              cursor: 'pointer'
-            }}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-            </svg>
-            <span>1-Click Demo Preset</span>
-          </button>
-        )}
       </div>
     );
   }

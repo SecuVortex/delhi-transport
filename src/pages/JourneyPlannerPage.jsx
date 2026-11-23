@@ -97,6 +97,13 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
     executeSearch({ origin: item.origin, destination: item.destination });
   };
 
+  const clearRecentSearches = () => {
+    setRecentSearches([]);
+    try {
+      localStorage.removeItem(RECENT_SEARCHES_KEY);
+    } catch {}
+  };
+
   const handlePrintItinerary = () => {
     window.print();
   };
@@ -192,7 +199,7 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
         </div>
       )}
 
-      {/* Main Search Bar */}
+      {/* Main Search Bar with Integrated Collapsible Recent Queries Drawer & Sort Bar */}
       <JourneySearch
         origin={origin}
         onOriginChange={setOrigin}
@@ -208,7 +215,9 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
         onPriorityChange={setPriority}
         onSwap={swapLocations}
         onSearch={handleSearchWithHistory}
-        onDemoPreset={loadDemoPreset}
+        recentSearches={recentSearches}
+        onApplyRecentSearch={applyRecentSearch}
+        onClearRecentSearches={clearRecentSearches}
       />
 
       {/* Error / Offline Retry Banner */}
@@ -228,36 +237,6 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
         </div>
       )}
 
-      {/* Recent Searches History Strip */}
-      {recentSearches.length > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', padding: '0 2px', marginBottom: '14px' }}>
-          <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-            Recent Queries:
-          </span>
-          {recentSearches.map((item, idx) => (
-            <button
-              key={idx}
-              type="button"
-              className="chip station-chip"
-              onClick={() => applyRecentSearch(item)}
-              title={`Load route from ${item.origin} to ${item.destination}`}
-              style={{
-                borderRadius: '999px',
-                padding: '4px 12px',
-                fontSize: '11px',
-                backgroundColor: 'var(--bg-card)',
-                color: 'var(--text-primary)',
-                border: '1px solid var(--border-line)'
-              }}
-            >
-              <span>{item.origin}</span>
-              <span style={{ margin: '0 4px', color: 'var(--text-muted)' }}>&rarr;</span>
-              <span>{item.destination}</span>
-            </button>
-          ))}
-        </div>
-      )}
-
       <div className="planner-layout">
         {/* Left Panel: Alternatives & Itinerary */}
         <div className="planner-sidebar">
@@ -271,7 +250,6 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
             onSelectStretch={(stretch) => setSelectedStretch(stretch)}
             loading={loading}
             priority={priority}
-            onDemoPreset={loadDemoPreset}
           />
 
           <RouteDetails routeOption={selectedRoute} />

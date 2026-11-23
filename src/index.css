@@ -4,6 +4,15 @@
    Strict Z-Index Hierarchy & Complete Dark Mode Inversion
    ========================================================================== */
 
+/* Utility: Hide scrollbar for clean swipeable horizontal carousels/drawers */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* 1. Global Typography, Smooth Scrolling & Surface Foundation */
 html {
   scrollbar-gutter: stable;
@@ -430,9 +439,20 @@ button.btn-secondary:hover {
   z-index: var(--z-modal, 60) !important;
 }
 
-/* 8. Leaflet Map Styling & Dark Mode Tile Filter */
-.leaflet-container img {
+/* 8. Leaflet Map Styling, Tile Seam Elimination & Dark Mode Tile Filter */
+.leaflet-container img,
+.leaflet-tile,
+.leaflet-tile-container img {
   max-width: none !important;
+  max-height: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.leaflet-tile {
+  width: 256.5px !important;
+  height: 256.5px !important;
 }
 
 .leaflet-tile-pane {
@@ -649,6 +669,104 @@ html[data-theme='dark'] .shimmer-skeleton {
       transform: translateY(0);
     }
   }
+}
+
+/* Page Header Responsive Flex Layout (Zero Overflow on Mobile & Desktop) */
+.page-header {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+  border-bottom: 1px solid var(--border-line) !important;
+  padding-bottom: 16px !important;
+  width: 100% !important;
+}
+
+@media (min-width: 768px) {
+  .page-header {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+}
+
+.page-header-actions {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  width: 100% !important;
+}
+
+@media (min-width: 768px) {
+  .page-header-actions {
+    width: auto !important;
+  }
+}
+
+/* Small Phones Navbar Tightening (<=400px) */
+@media (max-width: 400px) {
+  .top-header {
+    height: 52px !important;
+    padding: 0 8px !important;
+    gap: 6px !important;
+  }
+
+  .header-left {
+    gap: 6px !important;
+    min-width: 0 !important;
+  }
+
+  .header-brand-breadcrumb {
+    gap: 4px !important;
+    min-width: 0 !important;
+  }
+
+  .header-right {
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .search-toggle-btn {
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+
+  .theme-toggle-btn {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .lang-pill-btn {
+    height: 28px !important;
+    padding: 2px 6px !important;
+    font-size: 10.5px !important;
+  }
+
+  .user-profile-btn {
+    height: 28px !important;
+    padding: 2px 6px !important;
+    gap: 3px !important;
+  }
+}
+
+/* Where Is My Train Card Styling */
+.wimt-card {
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.wimt-card:hover {
+  border-color: var(--text-muted) !important;
+}
+
+.quick-route-lookup-bar {
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.quick-route-lookup-bar:focus-within {
+  border-color: var(--text-primary) !important;
+  box-shadow: 0 0 0 1px var(--text-primary) !important;
 }
 
 /* 13. Reduced Motion Accessibility */

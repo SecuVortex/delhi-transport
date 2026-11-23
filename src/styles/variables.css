@@ -22,7 +22,7 @@
   --border-soft: #e2e2df;
   --btn-bg: #151413;
   --btn-text: #ffffff;
-  --btn-hover: #000000;
+  --btn-hover: #2a2927;
 
   /* Aliased theme tokens for backward compatibility */
   --stage-bg: var(--bg-page);
@@ -132,7 +132,7 @@ html[data-theme='dark'],
   --border-soft: #2e2e33;
   --btn-bg: #f4f4f5;
   --btn-text: #111113;
-  --btn-hover: #ffffff;
+  --btn-hover: #e4e4e7;
 
   --stage-bg: var(--bg-page);
   --panel-bg: var(--bg-card);
