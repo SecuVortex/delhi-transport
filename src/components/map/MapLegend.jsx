@@ -12,7 +12,7 @@ export function MapLegend() {
       </div>
       <div className="legend-item">
         <span className="legend-color" style={{ background: 'var(--color-success)' }} />
-        <span>Normal Flow (&lt; 2 min delay)</span>
+        <span>{'Normal Flow (< 2 min delay)'}</span>
       </div>
       <div className="legend-item">
         <span className="legend-color" style={{ background: 'var(--color-warning)' }} />
@@ -20,7 +20,7 @@ export function MapLegend() {
       </div>
       <div className="legend-item">
         <span className="legend-color" style={{ background: 'var(--color-error)' }} />
-        <span>Heavy Congestion (&gt; 5 min delay)</span>
+        <span>{'Heavy Congestion (> 5 min delay)'}</span>
       </div>
     </div>
   );

@@ -693,7 +693,7 @@ export async function getVerifiedDemoPreset() {
       }
     }
 
-    // Primary verified live connecting pair on 192.168.0.103 with real middle stops and road paths
+    // Primary verified live connecting pair on live backend with real middle stops and road paths
     return {
       origin: 'Anand Vihar',
       destination: 'Connaught Place',

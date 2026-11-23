@@ -2,7 +2,7 @@ import { apiClient } from './apiClient.js';
 
 /**
  * Traffic Intelligence, Corridor Crowding & Operator Analytics Service
- * Connects directly to live DuckDB backend (192.168.0.103:8000) for:
+ * Connects directly to live DuckDB backend for:
  * - /api/v1/operator/hotspots (supporting day_type, hour_start, hour_end, pass_multiplier, bus_size)
  * - /api/v1/validation/summary (October 2026 ground truth dataset metrics and chart references)
  * - /api/v1/health (operational system telemetry)

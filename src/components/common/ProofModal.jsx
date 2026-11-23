@@ -115,7 +115,7 @@ export function ProofModal({ isOpen, onClose, healthData }) {
           <div style={{ background: 'var(--bg-subtle)', padding: '10px 12px', borderRadius: '8px', border: '1px solid var(--border-line)' }}>
             <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: 600 }}>WEEKLY STABILITY</div>
             <div style={{ fontSize: '16px', fontWeight: 700, color: '#16A34A', marginTop: '2px' }}>
-              Variance &lt; 4.2%
+              {'Variance < 4.2%'}
             </div>
           </div>
         </div>
@@ -254,7 +254,7 @@ export function ProofModal({ isOpen, onClose, healthData }) {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span style={{ width: '8px', height: '8px', borderRadius: '2px', background: '#D97706' }} />
-                <span>Heavy Shoulder (&gt;75%)</span>
+                <span>{'Heavy Shoulder (>75%)'}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                 <span style={{ width: '8px', height: '8px', borderRadius: '2px', background: '#16A34A' }} />

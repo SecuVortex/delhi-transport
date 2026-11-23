@@ -303,18 +303,18 @@ export function OperatorBottleneckMap({
         </div>
 
         {/* Legend */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '11.5px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', fontSize: '11.5px', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: '12px', height: '4px', background: '#16A34A', borderRadius: '2px' }} />
-            <span style={{ color: '#475569' }}>Seats Available (&le;60%)</span>
+            <span style={{ color: 'var(--text-muted)' }}>{'Seats Available (≤ 60%)'}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: '12px', height: '4px', background: '#D97706', borderRadius: '2px' }} />
-            <span style={{ color: '#475569' }}>Standing Room (60-95%)</span>
+            <span style={{ color: 'var(--text-muted)' }}>Standing Room (60-95%)</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
             <span style={{ width: '12px', height: '4px', background: '#DC2626', borderRadius: '2px' }} />
-            <span style={{ color: '#475569', fontWeight: 600 }}>Crowded (&gt;95%)</span>
+            <span style={{ color: 'var(--text-primary)', fontWeight: 600 }}>{'Crowded (> 95%)'}</span>
           </div>
         </div>
       </div>

@@ -174,8 +174,8 @@ export function RankedBottlenecksTable({
       </div>
 
       {/* Table Container */}
-      <div style={{ maxHeight: '420px', overflowY: 'auto' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
+      <div style={{ maxHeight: '420px', overflowY: 'auto', overflowX: 'auto', WebkitOverflowScrolling: 'touch', width: '100%' }}>
+        <table style={{ width: '100%', minWidth: '660px', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
           <thead>
             <tr style={{ background: 'var(--bg-subtle)', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-line)', position: 'sticky', top: 0, zIndex: 2 }}>
               <th style={{ padding: '10px 14px', fontWeight: 600, width: '45px' }}>#</th>

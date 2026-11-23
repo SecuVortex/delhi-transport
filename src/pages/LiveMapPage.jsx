@@ -80,9 +80,9 @@ export function LiveMapPage({ onNavigate }) {
         </div>
       }
     >
-      <div className="live-map-wrapper" style={{ display: 'grid', gridTemplateColumns: 'minmax(280px, 320px) 1fr', gap: '16px', height: 'calc(100vh - 180px)', minHeight: '550px' }}>
+      <div className="live-map-grid">
         {/* Left Corridors List */}
-        <div className="ui-card" style={{ display: 'flex', flexDirection: 'column', padding: '16px', overflow: 'hidden', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)', background: 'var(--bg-card)' }}>
+        <div className="ui-card live-map-corridors-card" style={{ display: 'flex', flexDirection: 'column', padding: '16px', overflow: 'hidden', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)', background: 'var(--bg-card)' }}>
           <div style={{ fontSize: '14px', fontWeight: 700, marginBottom: '6px', color: 'var(--text-primary)' }}>
             Monitored Delhi Corridors
           </div>
@@ -127,7 +127,7 @@ export function LiveMapPage({ onNavigate }) {
         </div>
 
         {/* Right Leaflet Map View */}
-        <div className="ui-card" style={{ padding: 0, overflow: 'hidden', height: '100%', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)', background: 'var(--bg-card)' }}>
+        <div className="ui-card live-map-leaflet-card" style={{ padding: 0, overflow: 'hidden', height: '100%', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)', background: 'var(--bg-card)' }}>
           <DelhiLeafletMap
             origin={origin}
             destination={destination}

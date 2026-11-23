@@ -206,6 +206,7 @@ export function App() {
       {/* Mobile Dedicated Bottom Navigation Bar */}
       <BottomNav
         activePage={activePage}
+        activeProfile={activeProfile}
         onNavigate={(page) => {
           handleNavigate(page);
           window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -8,7 +8,7 @@ import { getValidationSummary, getSystemHealth } from '../../services/trafficSer
  * 2. Week 1-4 stability metrics (weekly variance < 4.2%)
  * 3. Data coverage % (100% October 2026 ground truth, 31/31 days)
  * 4. Technical methodology & DuckDB OLAP aggregation (2,232,041 Ground Truth Tickets)
- * Pure white canvas, zero emojis, professional typography.
+ * Full Theme Support: Crisp and accessible in both Light and Dark modes.
  */
 export function ValidationProofModal({ isOpen, onClose }) {
   const [summary, setSummary] = useState(null);
@@ -78,7 +78,7 @@ export function ValidationProofModal({ isOpen, onClose }) {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(15, 23, 42, 0.7)',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
         zIndex: 2000,
         display: 'flex',
         alignItems: 'center',
@@ -88,27 +88,28 @@ export function ValidationProofModal({ isOpen, onClose }) {
       onClick={onClose}
     >
       <div
-        className="validation-modal-card"
+        className="validation-modal-card ui-card"
         style={{
           maxWidth: '820px',
           width: '100%',
           maxHeight: '90vh',
           overflowY: 'auto',
           padding: '28px',
-          background: '#FFFFFF',
-          borderRadius: '8px',
+          background: 'var(--bg-card)',
+          borderRadius: 'var(--card-radius, 12px)',
+          border: '1px solid var(--border-line)',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-          color: '#0F172A'
+          color: 'var(--text-primary)'
         }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid #E2E8F0', paddingBottom: '16px', marginBottom: '18px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '1px solid var(--border-line)', paddingBottom: '16px', marginBottom: '18px' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{
-                background: '#DCFCE7',
-                color: '#166534',
+                background: 'rgba(22, 163, 74, 0.15)',
+                color: '#16A34A',
                 fontSize: '11px',
                 fontWeight: 700,
                 padding: '2px 8px',
@@ -116,15 +117,15 @@ export function ValidationProofModal({ isOpen, onClose }) {
               }}>
                 VERIFIED GROUND TRUTH
               </span>
-              <span style={{ fontSize: '12px', color: '#64748B' }}>
+              <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
                 Endpoint: /api/v1/validation/summary
               </span>
             </div>
-            <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#0F172A', margin: '6px 0 2px 0' }}>
-              Empirical Validation & Model Grounding Proof
+            <h2 style={{ fontSize: '20px', fontWeight: 800, color: 'var(--text-primary)', margin: '6px 0 2px 0' }}>
+              Empirical Validation &amp; Model Grounding Proof
             </h2>
-            <p style={{ fontSize: '13px', color: '#64748B', margin: 0 }}>
-              DTC Bus Crowdedness & Travel-Time Intelligence (October 2026 Ground Truth Dataset)
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
+              DTC Bus Crowdedness &amp; Travel-Time Intelligence (October 2026 Ground Truth Dataset)
             </p>
           </div>
           <button
@@ -135,7 +136,7 @@ export function ValidationProofModal({ isOpen, onClose }) {
               border: 'none',
               fontSize: '24px',
               cursor: 'pointer',
-              color: '#64748B',
+              color: 'var(--text-muted)',
               padding: '2px 8px',
               lineHeight: 1
             }}
@@ -152,11 +153,11 @@ export function ValidationProofModal({ isOpen, onClose }) {
           gap: '12px',
           marginBottom: '20px'
         }}>
-          <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px', padding: '12px' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', textTransform: 'uppercase' }}>
+          <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border-line)', borderRadius: '6px', padding: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
               Indexed Volume
             </div>
-            <div style={{ fontSize: '18px', fontWeight: 800, color: '#2563EB', marginTop: '2px' }}>
+            <div style={{ fontSize: '18px', fontWeight: 800, color: '#3B82F6', marginTop: '2px' }}>
               {Number(totalTickets).toLocaleString()}
             </div>
             <div style={{ fontSize: '11px', color: '#16A34A', fontWeight: 600, marginTop: '2px' }}>
@@ -164,35 +165,35 @@ export function ValidationProofModal({ isOpen, onClose }) {
             </div>
           </div>
 
-          <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px', padding: '12px' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', textTransform: 'uppercase' }}>
+          <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border-line)', borderRadius: '6px', padding: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
               Data Coverage
             </div>
             <div style={{ fontSize: '18px', fontWeight: 800, color: '#16A34A', marginTop: '2px' }}>
               100.0%
             </div>
-            <div style={{ fontSize: '11px', color: '#64748B', marginTop: '2px' }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '2px' }}>
               31 of 31 Days Continuous
             </div>
           </div>
 
-          <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px', padding: '12px' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', textTransform: 'uppercase' }}>
+          <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border-line)', borderRadius: '6px', padding: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
               Weekly Stability
             </div>
-            <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', marginTop: '2px' }}>
-              Variance &lt; 4.2%
+            <div style={{ fontSize: '18px', fontWeight: 800, color: 'var(--text-primary)', marginTop: '2px' }}>
+              {'Variance < 4.2%'}
             </div>
             <div style={{ fontSize: '11px', color: '#16A34A', fontWeight: 600, marginTop: '2px' }}>
               High Pattern Convergence
             </div>
           </div>
 
-          <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '6px', padding: '12px' }}>
-            <div style={{ fontSize: '11px', fontWeight: 600, color: '#64748B', textTransform: 'uppercase' }}>
+          <div style={{ background: 'var(--bg-subtle)', border: '1px solid var(--border-line)', borderRadius: '6px', padding: '12px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase' }}>
               Day Profiles
             </div>
-            <div style={{ fontSize: '18px', fontWeight: 800, color: '#0F172A', marginTop: '2px' }}>
+            <div style={{ fontSize: '18px', fontWeight: 800, color: 'var(--text-primary)', marginTop: '2px' }}>
               {summary?.day_type_breakdown ? `${summary.day_type_breakdown.weekday + summary.day_type_breakdown.weekend} Verified` : '744 Verified'}
             </div>
             <div style={{ fontSize: '11px', color: '#16A34A', fontWeight: 600, marginTop: '2px' }}>
@@ -202,7 +203,18 @@ export function ValidationProofModal({ isOpen, onClose }) {
         </div>
 
         {/* Tab Navigation */}
-        <div style={{ display: 'flex', gap: '8px', borderBottom: '1px solid #E2E8F0', paddingBottom: '8px', marginBottom: '18px' }}>
+        <div
+          className="no-scrollbar"
+          style={{
+            display: 'flex',
+            gap: '8px',
+            borderBottom: '1px solid var(--border-line)',
+            paddingBottom: '8px',
+            marginBottom: '18px',
+            overflowX: 'auto',
+            whiteSpace: 'nowrap'
+          }}
+        >
           {[
             { id: 'curves', label: '1. Hourly Peak Curves (Weekday vs Weekend)' },
             { id: 'stability', label: '2. Week 1-4 Stability Metrics' },
@@ -217,11 +229,12 @@ export function ValidationProofModal({ isOpen, onClose }) {
                 padding: '6px 12px',
                 fontSize: '12px',
                 fontWeight: 600,
-                borderRadius: '4px',
-                border: 'none',
-                background: activeTab === tab.id ? '#2563EB' : '#F1F5F9',
-                color: activeTab === tab.id ? '#FFFFFF' : '#475569',
-                cursor: 'pointer'
+                borderRadius: '6px',
+                border: '1px solid ' + (activeTab === tab.id ? 'var(--btn-bg)' : 'var(--border-line)'),
+                background: activeTab === tab.id ? 'var(--btn-bg)' : 'var(--bg-subtle)',
+                color: activeTab === tab.id ? 'var(--btn-text)' : 'var(--text-muted)',
+                cursor: 'pointer',
+                flexShrink: 0
               }}
             >
               {tab.label}
@@ -232,8 +245,8 @@ export function ValidationProofModal({ isOpen, onClose }) {
         {/* Tab 1: Hourly Peak Curves */}
         {activeTab === 'curves' && (
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <div style={{ fontSize: '13px', color: '#334155', fontWeight: 500 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px', flexWrap: 'wrap', gap: '8px' }}>
+              <div style={{ fontSize: '13px', color: 'var(--text-primary)', fontWeight: 500 }}>
                 Hourly passenger volume index normalized to 100% evening peak:
               </div>
               <div style={{ display: 'flex', gap: '4px' }}>
@@ -251,9 +264,9 @@ export function ValidationProofModal({ isOpen, onClose }) {
                       fontWeight: 600,
                       padding: '3px 8px',
                       borderRadius: '4px',
-                      border: '1px solid #CBD5E1',
-                      background: curveType === c.id ? '#0F172A' : '#FFFFFF',
-                      color: curveType === c.id ? '#FFFFFF' : '#475569',
+                      border: '1px solid ' + (curveType === c.id ? 'var(--btn-bg)' : 'var(--border-line)'),
+                      background: curveType === c.id ? 'var(--btn-bg)' : 'var(--bg-subtle)',
+                      color: curveType === c.id ? 'var(--btn-text)' : 'var(--text-muted)',
                       cursor: 'pointer'
                     }}
                   >
@@ -265,13 +278,15 @@ export function ValidationProofModal({ isOpen, onClose }) {
 
             {/* Visual SVG Chart */}
             <div style={{
-              background: '#F8FAFC',
-              border: '1px solid #E2E8F0',
-              borderRadius: '6px',
+              background: 'var(--bg-subtle)',
+              border: '1px solid var(--border-line)',
+              borderRadius: '8px',
               padding: '16px 12px',
-              marginBottom: '12px'
+              marginBottom: '12px',
+              overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch'
             }}>
-              <div style={{ display: 'flex', alignItems: 'flex-end', height: '160px', gap: '8px' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-end', height: '160px', gap: '8px', minWidth: '540px' }}>
                 {hourlyData.map((d, i) => {
                   const showWeekday = curveType === 'both' || curveType === 'weekday';
                   const showWeekend = curveType === 'both' || curveType === 'weekend';
@@ -305,7 +320,7 @@ export function ValidationProofModal({ isOpen, onClose }) {
                           />
                         )}
                       </div>
-                      <div style={{ fontSize: '9px', color: '#64748B', marginTop: '6px', whiteSpace: 'nowrap' }}>
+                      <div style={{ fontSize: '9px', color: 'var(--text-muted)', marginTop: '6px', whiteSpace: 'nowrap' }}>
                         {d.hour.slice(0, 2)}h
                       </div>
                     </div>
@@ -315,22 +330,22 @@ export function ValidationProofModal({ isOpen, onClose }) {
             </div>
 
             {/* Legend & Findings */}
-            <div style={{ display: 'flex', gap: '20px', fontSize: '11.5px', marginBottom: '14px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '20px', fontSize: '11.5px', marginBottom: '14px', alignItems: 'center', flexWrap: 'wrap' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ width: '10px', height: '10px', background: '#DC2626', borderRadius: '2px' }} />
-                <span>Weekday Peak (09:00 AM & 18:00 PM)</span>
+                <span style={{ color: 'var(--text-primary)' }}>Weekday Peak (09:00 AM &amp; 18:00 PM)</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ width: '10px', height: '10px', background: '#2563EB', borderRadius: '2px' }} />
-                <span>Weekday Midday & Shoulder</span>
+                <span style={{ color: 'var(--text-primary)' }}>Weekday Midday &amp; Shoulder</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ width: '10px', height: '10px', background: '#94A3B8', borderRadius: '2px' }} />
-                <span>Weekend Steady Profile (Flat afternoon curve)</span>
+                <span style={{ color: 'var(--text-muted)' }}>Weekend Steady Profile (Flat afternoon curve)</span>
               </div>
             </div>
 
-            <div style={{ fontSize: '12px', color: '#475569', lineHeight: 1.5, background: '#F1F5F9', padding: '10px 14px', borderRadius: '6px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--text-primary)', lineHeight: 1.5, background: 'var(--bg-subtle)', border: '1px solid var(--border-line)', padding: '10px 14px', borderRadius: '6px' }}>
               <strong>Empirical Finding:</strong> Weekday boardings exhibit bimodal twin surges (Morning rush 08:30-10:00 reaching 98%, Evening rush 17:30-19:30 reaching 100%). Weekend travel spreads evenly across 11:00-17:00 at moderate volume (55-76%), validating why separate time-dependent multipliers are required.
             </div>
           </div>
@@ -339,13 +354,13 @@ export function ValidationProofModal({ isOpen, onClose }) {
         {/* Tab 2: Week 1 to 4 Stability */}
         {activeTab === 'stability' && (
           <div>
-            <div style={{ fontSize: '13px', color: '#334155', marginBottom: '12px' }}>
+            <div style={{ fontSize: '13px', color: 'var(--text-primary)', marginBottom: '12px' }}>
               Comparison across the 4 chronological weeks of October 2026 demonstrates strict stability and repeatability:
             </div>
-            <div style={{ border: '1px solid #E2E8F0', borderRadius: '6px', overflow: 'hidden', marginBottom: '14px' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
+            <div style={{ border: '1px solid var(--border-line)', borderRadius: '6px', overflowX: 'auto', marginBottom: '14px' }}>
+              <table style={{ width: '100%', minWidth: '560px', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
                 <thead>
-                  <tr style={{ background: '#F8FAFC', color: '#475569', borderBottom: '1px solid #E2E8F0' }}>
+                  <tr style={{ background: 'var(--bg-subtle)', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-line)' }}>
                     <th style={{ padding: '10px 14px', fontWeight: 600 }}>Observation Period</th>
                     <th style={{ padding: '10px 14px', fontWeight: 600 }}>ETM Ticket Volume</th>
                     <th style={{ padding: '10px 14px', fontWeight: 600 }}>Peak Hour Load</th>
@@ -355,13 +370,13 @@ export function ValidationProofModal({ isOpen, onClose }) {
                 </thead>
                 <tbody>
                   {weeklyStability.map((row, i) => (
-                    <tr key={i} style={{ borderBottom: '1px solid #E2E8F0', background: i % 2 === 0 ? '#FFFFFF' : '#FAFAFA' }}>
+                    <tr key={i} style={{ borderBottom: '1px solid var(--border-line)', background: i % 2 === 0 ? 'var(--bg-card)' : 'var(--bg-subtle)' }}>
                       <td style={{ padding: '10px 14px', fontWeight: 600 }}>{row.week}</td>
                       <td style={{ padding: '10px 14px' }}>{row.tickets.toLocaleString()}</td>
-                      <td style={{ padding: '10px 14px', fontWeight: 700, color: '#0F172A' }}>{row.peakLoad}</td>
-                      <td style={{ padding: '10px 14px', color: '#2563EB', fontWeight: 600 }}>{row.variance}</td>
+                      <td style={{ padding: '10px 14px', fontWeight: 700, color: 'var(--text-primary)' }}>{row.peakLoad}</td>
+                      <td style={{ padding: '10px 14px', color: '#3B82F6', fontWeight: 600 }}>{row.variance}</td>
                       <td style={{ padding: '10px 14px' }}>
-                        <span style={{ background: '#DCFCE7', color: '#166534', fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
+                        <span style={{ background: 'rgba(22, 163, 74, 0.15)', color: '#16A34A', fontSize: '11px', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>
                           {row.status}
                         </span>
                       </td>
@@ -370,7 +385,7 @@ export function ValidationProofModal({ isOpen, onClose }) {
                 </tbody>
               </table>
             </div>
-            <div style={{ fontSize: '12px', color: '#475569', lineHeight: 1.5, background: '#F1F5F9', padding: '10px 14px', borderRadius: '6px' }}>
+            <div style={{ fontSize: '12px', color: 'var(--text-primary)', lineHeight: 1.5, background: 'var(--bg-subtle)', border: '1px solid var(--border-line)', padding: '10px 14px', borderRadius: '6px' }}>
               <strong>Statistical Significance:</strong> The maximum week-over-week variance observed in peak load is under 0.8%, confirming that the 2.56M ticketing dataset provides stable, reproducible transit demand patterns without localized anomalies.
             </div>
           </div>
@@ -379,38 +394,38 @@ export function ValidationProofModal({ isOpen, onClose }) {
         {/* Tab 3: Data Coverage & Bins */}
         {activeTab === 'coverage' && (
           <div>
-            <div style={{ fontSize: '13px', color: '#334155', marginBottom: '14px', lineHeight: 1.5 }}>
+            <div style={{ fontSize: '13px', color: 'var(--text-primary)', marginBottom: '14px', lineHeight: 1.5 }}>
               Data coverage summary for the October 2026 Delhi Transport Stack ground truth:
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', marginBottom: '16px' }}>
-              <div style={{ background: '#F8FAFC', padding: '12px 14px', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
-                <div style={{ fontSize: '11.5px', color: '#64748B', fontWeight: 600 }}>TEMPORAL BOUNDS</div>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A', marginTop: '4px' }}>
+              <div style={{ background: 'var(--bg-subtle)', padding: '12px 14px', borderRadius: '6px', border: '1px solid var(--border-line)' }}>
+                <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: 600 }}>TEMPORAL BOUNDS</div>
+                <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
                   2026-10-01 to 2026-10-31
                 </div>
                 <div style={{ fontSize: '11px', color: '#16A34A', marginTop: '2px' }}>31 Calendar Days (100%)</div>
               </div>
-              <div style={{ background: '#F8FAFC', padding: '12px 14px', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
-                <div style={{ fontSize: '11.5px', color: '#64748B', fontWeight: 600 }}>HOURLY BINS</div>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A', marginTop: '4px' }}>
+              <div style={{ background: 'var(--bg-subtle)', padding: '12px 14px', borderRadius: '6px', border: '1px solid var(--border-line)' }}>
+                <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: 600 }}>HOURLY BINS</div>
+                <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
                   744 Hourly Segments
                 </div>
                 <div style={{ fontSize: '11px', color: '#16A34A', marginTop: '2px' }}>Zero Missing Bins</div>
               </div>
-              <div style={{ background: '#F8FAFC', padding: '12px 14px', borderRadius: '6px', border: '1px solid #E2E8F0' }}>
-                <div style={{ fontSize: '11.5px', color: '#64748B', fontWeight: 600 }}>DAY TYPE BREAKDOWN</div>
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A', marginTop: '4px' }}>
+              <div style={{ background: 'var(--bg-subtle)', padding: '12px 14px', borderRadius: '6px', border: '1px solid var(--border-line)' }}>
+                <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: 600 }}>DAY TYPE BREAKDOWN</div>
+                <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', marginTop: '4px' }}>
                   22 Weekdays / 9 Weekends
                 </div>
-                <div style={{ fontSize: '11px', color: '#2563EB', marginTop: '2px' }}>Full Calendar Coverage</div>
+                <div style={{ fontSize: '11px', color: '#3B82F6', marginTop: '2px' }}>Full Calendar Coverage</div>
               </div>
             </div>
 
-            <div style={{ border: '1px solid #E2E8F0', borderRadius: '6px', padding: '14px', background: '#FFFFFF' }}>
-              <div style={{ fontSize: '12.5px', fontWeight: 700, color: '#0F172A', marginBottom: '6px' }}>
-                Data Integrity & Validation Guarantees:
+            <div style={{ border: '1px solid var(--border-line)', borderRadius: '6px', padding: '14px', background: 'var(--bg-card)' }}>
+              <div style={{ fontSize: '12.5px', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '6px' }}>
+                Data Integrity &amp; Validation Guarantees:
               </div>
-              <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '12px', color: '#475569', lineHeight: 1.6 }}>
+              <ul style={{ margin: 0, paddingLeft: '18px', fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.6 }}>
                 <li>Every single ticket contains route identifier, boarding stop sequence, terminal ID, and timestamp.</li>
                 <li>Zero synthetic or mock data utilized; queries execute live on DuckDB tables over verified parquet partitions.</li>
                 <li>Stretches without active GPS pings fall back to schedule-anchored GTFS frequencies rather than interpolations.</li>
@@ -421,18 +436,18 @@ export function ValidationProofModal({ isOpen, onClose }) {
 
         {/* Tab 4: Analytical Pipeline & Methodology */}
         {activeTab === 'methodology' && (
-          <div style={{ fontSize: '12.5px', color: '#334155', lineHeight: 1.6 }}>
+          <div style={{ fontSize: '12.5px', color: 'var(--text-primary)', lineHeight: 1.6 }}>
             <div style={{ marginBottom: '14px' }}>
-              <div style={{ fontWeight: 700, color: '#0F172A', fontSize: '13px' }}>
+              <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '13px' }}>
                 1. Analytical Pipeline Grounding (DuckDB OLAP):
               </div>
-              <p style={{ margin: '4px 0 8px 0', color: '#475569' }}>
+              <p style={{ margin: '4px 0 8px 0', color: 'var(--text-muted)' }}>
                 Ticketing records from October 2026 are parsed and queried directly using DuckDB column-store aggregations over 2,232,041 verified ETM journeys:
               </p>
-              <div style={{ border: '1px solid #E2E8F0', borderRadius: '6px', overflow: 'hidden', marginBottom: '10px' }}>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+              <div style={{ border: '1px solid var(--border-line)', borderRadius: '6px', overflowX: 'auto', marginBottom: '10px' }}>
+                <table style={{ width: '100%', minWidth: '500px', borderCollapse: 'collapse', fontSize: '12px' }}>
                   <thead>
-                    <tr style={{ background: '#F8FAFC', borderBottom: '1px solid #E2E8F0' }}>
+                    <tr style={{ background: 'var(--bg-subtle)', borderBottom: '1px solid var(--border-line)' }}>
                       <th style={{ padding: '8px 12px', textAlign: 'left' }}>Route</th>
                       <th style={{ padding: '8px 12px', textAlign: 'left' }}>Start Stop</th>
                       <th style={{ padding: '8px 12px', textAlign: 'left' }}>End Stop</th>
@@ -447,11 +462,11 @@ export function ValidationProofModal({ isOpen, onClose }) {
                       { route: '718UP', start: 'Dwarkasec-9/10 X-Ing', end: 'Dwarka Sec-22/23 Crossing', avg_passengers: 3.0 },
                       { route: '611BUP', start: 'Ganpati Mandir', end: 'Lajpat Nagar Ring Road', avg_passengers: 3.0 }
                     ]).map((c, idx) => (
-                      <tr key={idx} style={{ borderBottom: '1px solid #E2E8F0', background: idx % 2 === 0 ? '#FFFFFF' : '#FAFAFA' }}>
-                        <td style={{ padding: '8px 12px', fontWeight: 600, color: '#2563EB' }}>{c.route}</td>
+                      <tr key={idx} style={{ borderBottom: '1px solid var(--border-line)', background: idx % 2 === 0 ? 'var(--bg-card)' : 'var(--bg-subtle)' }}>
+                        <td style={{ padding: '8px 12px', fontWeight: 600, color: '#3B82F6' }}>{c.route}</td>
                         <td style={{ padding: '8px 12px' }}>{c.start}</td>
                         <td style={{ padding: '8px 12px' }}>{c.end}</td>
-                        <td style={{ padding: '8px 12px', fontWeight: 700, color: '#0F172A' }}>{c.avg_passengers ? `${c.avg_passengers.toFixed(1)} pass/km` : '3.0 pass/km'}</td>
+                        <td style={{ padding: '8px 12px', fontWeight: 700, color: 'var(--text-primary)' }}>{c.avg_passengers ? `${c.avg_passengers.toFixed(1)} pass/km` : '3.0 pass/km'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -460,25 +475,25 @@ export function ValidationProofModal({ isOpen, onClose }) {
             </div>
 
             <div>
-              <div style={{ fontWeight: 700, color: '#0F172A', fontSize: '13px' }}>
-                2. Real-Time Capacity Scaling & Dynamic Denominator:
+              <div style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '13px' }}>
+                2. Real-Time Capacity Scaling &amp; Dynamic Denominator:
               </div>
-              <p style={{ margin: '4px 0 0 0', color: '#475569' }}>
+              <p style={{ margin: '4px 0 0 0', color: 'var(--text-muted)' }}>
                 Load ratio is formulated as <code>Load Ratio = (ETM Count &times; pass_multiplier) / Bus Capacity</code>.
-                When bus size is set to 12m standard (65 capacity) or 9m midi (42 capacity), DuckDB recalculates bottleneck load ratios in sub-second response times, categorizing stretches into Green (&le;60%), Amber (60%-95%), and Red (&gt;95%).
+                When bus size is set to 12m standard (65 capacity) or 9m midi (42 capacity), DuckDB recalculates bottleneck load ratios in sub-second response times, categorizing stretches into {'Green (≤ 60%), Amber (60%-95%), and Red (> 95%)'}.
               </p>
             </div>
           </div>
         )}
 
         {/* Footer */}
-        <div style={{ marginTop: '20px', borderTop: '1px solid #E2E8F0', paddingTop: '14px', display: 'flex', justifyContent: 'flex-end' }}>
+        <div style={{ marginTop: '20px', borderTop: '1px solid var(--border-line)', paddingTop: '14px', display: 'flex', justifyContent: 'flex-end' }}>
           <button
             type="button"
             onClick={onClose}
             style={{
-              background: '#0F172A',
-              color: '#FFFFFF',
+              background: 'var(--btn-bg)',
+              color: 'var(--btn-text)',
               border: 'none',
               borderRadius: '6px',
               padding: '8px 20px',

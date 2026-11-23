@@ -6,20 +6,8 @@ import { NAV_PAGES } from '../../constants/navigation.js';
  * Designed specifically for smartphones (320px - 768px).
  * Provides 1-tap touch navigation (min 48px touch targets) with safe-area padding.
  */
-export function BottomNav({ activePage, onNavigate, onOpenMenu }) {
-  const navItems = [
-    {
-      id: NAV_PAGES.OVERVIEW,
-      label: 'Overview',
-      icon: (
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect width="7" height="9" x="3" y="3" rx="1" />
-          <rect width="7" height="5" x="14" y="3" rx="1" />
-          <rect width="7" height="9" x="14" y="12" rx="1" />
-          <rect width="7" height="5" x="3" y="16" rx="1" />
-        </svg>
-      )
-    },
+export function BottomNav({ activePage, activeProfile = 'commuter', onNavigate, onOpenMenu }) {
+  const commuterItems = [
     {
       id: NAV_PAGES.JOURNEY,
       label: 'Journey',
@@ -68,6 +56,56 @@ export function BottomNav({ activePage, onNavigate, onOpenMenu }) {
       )
     }
   ];
+
+  const operatorItems = [
+    {
+      id: NAV_PAGES.ANALYTICS,
+      label: 'Dashboard',
+      icon: (
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M3 3v18h18" />
+          <path d="M18 17V9" />
+          <path d="M13 17V5" />
+          <path d="M8 17v-3" />
+        </svg>
+      )
+    },
+    {
+      id: NAV_PAGES.OVERVIEW,
+      label: 'Overview',
+      icon: (
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect width="7" height="9" x="3" y="3" rx="1" />
+          <rect width="7" height="5" x="14" y="3" rx="1" />
+          <rect width="7" height="9" x="14" y="12" rx="1" />
+          <rect width="7" height="5" x="3" y="16" rx="1" />
+        </svg>
+      )
+    },
+    {
+      id: NAV_PAGES.LIVE_MAP,
+      label: 'Live Map',
+      icon: (
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z" />
+          <path d="M9 3v15" />
+          <path d="M15 6v15" />
+        </svg>
+      )
+    },
+    {
+      id: 'validation',
+      label: 'Proof',
+      icon: (
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <polyline points="9 12 11 14 15 10" />
+        </svg>
+      )
+    }
+  ];
+
+  const navItems = activeProfile === 'operator' ? operatorItems : commuterItems;
 
   return (
     <nav className="mobile-bottom-nav" aria-label="Mobile Navigation">

@@ -203,7 +203,7 @@ export function RouteResult({ routeOption, isSelected, onSelect, onSelectStretch
               flexShrink: 0
             }}
           />
-          <span>{pillLabel} &middot; {riderText}</span>
+          <span>{pillLabel} · {riderText}</span>
         </span>
       </div>
 
@@ -212,7 +212,7 @@ export function RouteResult({ routeOption, isSelected, onSelect, onSelectStretch
         className="tabular-nums"
         style={{ fontSize: '11.5px', fontWeight: 500, color: 'var(--text-muted)', marginBottom: '10px' }}
       >
-        <span>{routeOption.totalTime} &middot; {distanceText} &middot; {stopCountText}</span>
+        <span>{routeOption.totalTime} · {distanceText} · {stopCountText}</span>
       </div>
 
       {/* 4. Expandable "Show stops & crowding breakdown ▾" */}
@@ -327,7 +327,9 @@ export function RouteResult({ routeOption, isSelected, onSelect, onSelectStretch
                 const sLabel =
                   st.crowding_label ||
                   (isStretchRed ? t('crowded') : isStretchAmber ? t('standing_room') : t('seats_available'));
-                const sDist = st.distanceKm ? `${st.distanceKm} km` : 'Direct stretch';
+                const sDist = (st.distanceKm || st.distance_km)
+                  ? `${st.distanceKm || st.distance_km} km`
+                  : 'Direct stretch';
                 const sLoad = st.passenger_count
                   ? `~${st.passenger_count} riders`
                   : st.load_ratio !== undefined
@@ -376,7 +378,7 @@ export function RouteResult({ routeOption, isSelected, onSelect, onSelectStretch
                           {st.from_stop_name} &rarr; {st.to_stop_name}
                         </span>
                         <div className="tabular-nums" style={{ fontSize: '10.5px', color: 'var(--text-muted)' }}>
-                          {st.route || busBadge} &middot; {sDist} {sLoad ? `&middot; ${sLoad}` : ''}
+                          {st.route || busBadge} · {sDist} {sLoad ? `· ${sLoad}` : ''}
                         </div>
                       </div>
                     </div>

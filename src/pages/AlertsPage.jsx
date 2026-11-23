@@ -176,7 +176,7 @@ export function AlertsPage() {
               <div style={{ fontSize: '12px', color: 'var(--color-text-secondary)' }}>{activeAlert.impact}</div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', fontSize: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '12px', fontSize: '12px' }}>
               <div>
                 <span style={{ color: 'var(--color-text-secondary)' }}>Affected Corridors</span>
                 <div style={{ fontWeight: 600, marginTop: '2px' }}>{activeAlert.affectedRoutes.join(', ')}</div>

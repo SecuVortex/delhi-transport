@@ -451,8 +451,13 @@ button.btn-secondary:hover {
 }
 
 .leaflet-tile {
-  width: 256.5px !important;
-  height: 256.5px !important;
+  outline: 1px solid transparent !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.leaflet-tile-container {
+  transform: translate3d(0, 0, 0);
 }
 
 .leaflet-tile-pane {
@@ -767,6 +772,48 @@ html[data-theme='dark'] .shimmer-skeleton {
 .quick-route-lookup-bar:focus-within {
   border-color: var(--text-primary) !important;
   box-shadow: 0 0 0 1px var(--text-primary) !important;
+}
+
+/* Live Map Responsive Grid Layout */
+.live-map-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 320px) 1fr;
+  gap: 16px;
+  height: calc(100vh - 180px);
+  min-height: 550px;
+}
+
+@media (max-width: 768px) {
+  .live-map-grid {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    min-height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+  .live-map-corridors-card {
+    max-height: 220px !important;
+    min-height: 180px !important;
+  }
+  .live-map-leaflet-card {
+    height: 420px !important;
+    min-height: 420px !important;
+  }
+}
+
+/* App Loader Overlay Instant Dark Mode Sync */
+.app-loader-overlay {
+  background-color: var(--bg-page, #f8f8f7) !important;
+}
+.app-loader-title {
+  color: var(--text-primary, #151413) !important;
+}
+.app-loader-subtitle {
+  color: var(--text-muted, #5c5852) !important;
+}
+.app-loader-track {
+  background-color: var(--border-line, #e2e2df) !important;
 }
 
 /* 13. Reduced Motion Accessibility */

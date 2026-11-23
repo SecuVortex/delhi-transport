@@ -2,12 +2,11 @@ import { DELHI_STOP_COORDINATES } from '../components/operator/delhiCoordinates.
 
 /**
  * Central API Client for Delhi Transport Stack Live FastAPI Backend
- * Connects directly to backend on the local network (no auth required).
- * Base URL defaults to VITE_API_BASE_URL (http://192.168.0.103:8000).
+ * Connects to live Render backend via VITE_API_BASE_URL (or local dev proxy).
  */
 
 const getBaseUrl = () => {
-  // 1. Prioritize explicit API base URL (e.g., Render HTTPS backend in Vercel production)
+  // 1. Prioritize explicit API base URL (e.g., Render HTTPS backend)
   const envUrl = typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_BASE_URL;
   if (envUrl && typeof envUrl === 'string' && envUrl.trim() !== '') {
     return envUrl.trim().replace(/\/+$/, '');
@@ -21,7 +20,7 @@ const getBaseUrl = () => {
     }
   }
 
-  return '';
+  return 'https://delhi-bus-crowding-backend.onrender.com';
 };
 
 const API_BASE_URL = getBaseUrl();
@@ -71,20 +70,6 @@ async function apiFetch(endpoint, options = {}) {
     return data;
   } catch (err) {
     clearTimeout(timeoutId);
-
-    // Resilient fallback: In local HTTP dev environment only, attempt direct network request to 192.168.0.103
-    const isHttps = typeof window !== 'undefined' && window.location?.protocol === 'https:';
-    if (!url.startsWith('http') && !isHttps) {
-      try {
-        const directRes = await fetch(`http://192.168.0.103:8000${cleanEndpoint}`, {
-          ...options,
-          headers: { Accept: 'application/json', ...(options.headers || {}) }
-        });
-        if (directRes.ok) return await directRes.json();
-      } catch {
-        // Continue to throw primary error
-      }
-    }
     throw err;
   }
 }
@@ -158,7 +143,7 @@ export const apiClient = {
   },
 
   /**
-   * Journey planning: GET /api/v1/plan directly on 192.168.0.103 DuckDB backend.
+   * Journey planning: GET /api/v1/plan on live DuckDB backend.
    * Supports both raw.cards and raw.options, handles empty options cleanly.
    */
   async planJourney({

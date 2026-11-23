@@ -201,7 +201,7 @@ export function ModelAssumptionsDrawer({
               <option value="9m">9m Feeder / Midi Electric (42 Passenger Capacity)</option>
             </select>
             <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '8px', lineHeight: 1.4 }}>
-              Denominator used to calculate load ratio: Green (&le;60%), Amber (60%-95%), Red (&gt;95%).
+              {'Denominator used to calculate load ratio: Green (≤ 60%), Amber (60%-95%), Red (> 95%).'}
             </div>
           </div>
 

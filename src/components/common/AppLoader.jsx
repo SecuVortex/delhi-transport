@@ -15,7 +15,19 @@ export function AppLoader({ onDismiss }) {
   const [hidden, setHidden] = useState(false);
   const [statusMessage, setStatusMessage] = useState('Connecting to Delhi Transit DuckDB...');
 
-  const isDark = resolvedTheme === 'dark';
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof document !== 'undefined') {
+      return document.documentElement.classList.contains('dark') ||
+        localStorage.getItem('delhi_transit_theme') === 'dark';
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (resolvedTheme) {
+      setIsDark(resolvedTheme === 'dark');
+    }
+  }, [resolvedTheme]);
 
   useEffect(() => {
     // Dynamic status messages during the 3-second initialization
@@ -91,7 +103,7 @@ export function AppLoader({ onDismiss }) {
         {/* Brand Name & Subtitle with guaranteed high contrast */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
           <h1
-            className="text-[#151413] dark:text-[#f4f4f5]"
+            className="app-loader-title text-[#151413] dark:text-[#f4f4f5]"
             style={{
               fontSize: '22px',
               fontWeight: 800,
@@ -104,7 +116,7 @@ export function AppLoader({ onDismiss }) {
             MetroTransit
           </h1>
           <p
-            className="text-[#5c5852] dark:text-[#a1a1aa]"
+            className="app-loader-subtitle text-[#5c5852] dark:text-[#a1a1aa]"
             style={{
               fontSize: '12.5px',
               fontWeight: 500,
@@ -119,6 +131,7 @@ export function AppLoader({ onDismiss }) {
 
         {/* Yellow Progress Bar filling smoothly from 0% to 100% over 3 seconds */}
         <div
+          className="app-loader-track"
           style={{
             width: '200px',
             height: '4px',

@@ -36,10 +36,27 @@ export function Sidebar({
   const navItems = activeProfile === 'operator' ? OPERATOR_NAV_ITEMS : COMMUTER_NAV_ITEMS;
 
   return (
-    <aside
-      className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobileOpen ? 'mobile-open' : ''}`}
-      aria-label="Main Navigation"
-    >
+    <>
+      {isMobileOpen && (
+        <div
+          className="sidebar-backdrop"
+          onClick={onCloseMobile}
+          aria-hidden="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backdropFilter: 'blur(3px)',
+            WebkitBackdropFilter: 'blur(3px)',
+            zIndex: 'var(--z-drawer-backdrop, 39)',
+            animation: 'fadeIn 180ms ease'
+          }}
+        />
+      )}
+      <aside
+        className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobileOpen ? 'mobile-open' : ''}`}
+        aria-label="Main Navigation"
+      >
       <div className="sidebar-header">
         <div
           className="sidebar-logo"
@@ -265,6 +282,7 @@ export function Sidebar({
         )}
       </div>
     </aside>
+    </>
   );
 }
 
