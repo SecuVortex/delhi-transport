@@ -4,10 +4,8 @@ import { RouteCardSkeleton } from '../common/Skeletons.jsx';
 
 /**
  * RouteList Component
- * Fix 3: Fix Stuck Loading Text.
- * - Shows editorial monochrome RouteCardSkeleton with 100deg shimmer while loading.
- * - Shows 'X Route Options Found' when loading is complete and routes are available.
- * - Shows a helpful Empty State with 1-click Demo Preset button when 0 routes are found.
+ * Scannable route comparison cards, monochrome shimmer skeletons while loading,
+ * and friendly empty state with 1-click Demo Preset button.
  */
 export function RouteList({
   routes = [],
@@ -27,63 +25,64 @@ export function RouteList({
   if (routes.length === 0) {
     return (
       <div
+        className="ui-card empty-route-state"
         style={{
-          padding: '24px 16px',
+          padding: '28px 20px',
           textAlign: 'center',
-          backgroundColor: '#F8FAFC',
-          borderRadius: '8px',
-          border: '1px solid #CBD5E1',
+          backgroundColor: 'var(--bg-card)',
+          borderRadius: 'var(--card-radius, 12px)',
+          border: '1px solid var(--border-line)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '10px'
+          gap: '12px'
         }}
       >
         <div
           style={{
-            width: '36px',
-            height: '36px',
+            width: '40px',
+            height: '40px',
             borderRadius: '50%',
-            backgroundColor: '#EFF6FF',
+            backgroundColor: 'var(--bg-subtle)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#2563EB'
+            color: 'var(--text-muted)'
           }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="12" cy="12" r="10" />
             <line x1="12" y1="8" x2="12" y2="12" />
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
         </div>
-        <div style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A' }}>
+        <div style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)' }}>
           No Route Options Found
         </div>
-        <div style={{ fontSize: '12px', color: '#64748B', maxWidth: '320px', lineHeight: 1.4 }}>
+        <div style={{ fontSize: '12.5px', color: 'var(--text-muted)', maxWidth: '320px', lineHeight: 1.45 }}>
           No connecting buses match the requested origin and destination. Try our verified Delhi corridor demo.
         </div>
         {onDemoPreset && (
           <button
             type="button"
             onClick={onDemoPreset}
+            className="btn-primary"
             style={{
               marginTop: '4px',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
-              backgroundColor: '#2563EB',
-              color: '#FFFFFF',
-              border: 'none',
-              borderRadius: '6px',
+              backgroundColor: 'var(--btn-bg)',
+              color: 'var(--btn-text)',
+              border: '1px solid var(--btn-bg)',
+              borderRadius: '999px',
               fontSize: '12px',
-              fontWeight: 700,
-              padding: '6px 14px',
-              cursor: 'pointer',
-              boxShadow: '0 1px 2px rgba(37, 99, 235, 0.2)'
+              fontWeight: 600,
+              padding: '8px 16px',
+              cursor: 'pointer'
             }}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#F59E0B" stroke="#D97706" strokeWidth="2">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" stroke="none">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
             </svg>
             <span>1-Click Demo Preset</span>
@@ -108,15 +107,15 @@ export function RouteList({
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: '8px',
-          padding: '0 2px'
+          marginBottom: '10px',
+          padding: '0 4px'
         }}
       >
-        <span style={{ fontSize: '12.5px', fontWeight: 700, color: '#0F172A' }}>
+        <span style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-primary)' }}>
           {routes.length} Route Option{routes.length > 1 ? 's' : ''} Found
         </span>
-        <span style={{ fontSize: '11px', color: '#64748B', fontWeight: 500 }}>
-          Sorted by: <strong style={{ color: '#2563EB' }}>{priorityLabel}</strong>
+        <span style={{ fontSize: '11.5px', color: 'var(--text-muted)', fontWeight: 500 }}>
+          Sorted by: <strong style={{ color: 'var(--text-primary)' }}>{priorityLabel}</strong>
         </span>
       </div>
 
@@ -132,3 +131,5 @@ export function RouteList({
     </div>
   );
 }
+
+export default RouteList;

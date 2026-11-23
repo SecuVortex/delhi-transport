@@ -1,60 +1,67 @@
 /* ==========================================================================
-   Editorial Monochrome Design Tokens (Runway Aesthetic)
-   - Strict monochrome palette: #FFFFFF, #F5F5F4, #E4E4E4, #C8C8C8, #66625C, #151413
-   - Restrained semantic colors ONLY for Crowding Pills & Map Polylines:
-     * Seats Available: #16A34A
-     * Standing Room:   #D97706
-     * Crowded:         #DC2626
-   - Sharp CTA buttons (--btn-radius: 0px), rounded chips (--chip-radius: 30px)
-   - Tabular numerals for time, distance, ticket counts, load percentages
-   - Runway deceleration curve: cubic-bezier(0.16, 1, 0.3, 1)
+   Editorial Monochrome Design Tokens (Classy & Approachable)
+   - Strict monochrome palette with semantic dark mode inversion
+   - Refined radii: 12px cards/panels, 8px buttons/inputs, 999px pills/chips
+   - Semantic crowding dots: #16A34A (Green), #D97706 (Amber), #DC2626 (Red)
+   - Strict Z-Index layering scale:
+       * Leaflet map:              z-10
+       * Sticky top header:        z-30
+       * Sidebar drawer (mobile):  z-40
+       * Dropdowns & Autocomplete: z-50
+       * Modals & Bottom-sheets:   z-60
    ========================================================================== */
 
 :root {
-  /* Runway Editorial Monochrome Light Mode Tokens */
-  --stage-bg: #ffffff;
-  --panel-bg: #ffffff;
-  --surface-subtle: #f5f5f4;
+  /* 1. Core Semantic Palette (Light Mode) */
+  --bg-page: #f8f8f7;
+  --bg-card: #ffffff;
+  --bg-subtle: #f1f1ef;
   --text-primary: #151413;
-  --text-muted: #66625c;
-  --accent: #0e0e0e;
-  --on-accent: #ffffff;
-  --border-line: #c8c8c8;
-  --border-soft: #e4e4e4;
+  --text-muted: #5c5852;
+  --border-line: #e2e2df;
+  --border-soft: #e2e2df;
+  --btn-bg: #151413;
+  --btn-text: #ffffff;
+  --btn-hover: #000000;
 
-  /* Aliased theme color variables for application compatibility */
-  --color-background: var(--stage-bg);
-  --color-surface: var(--panel-bg);
-  --color-surface-muted: var(--surface-subtle);
-  --color-surface-hover: #ececeb;
+  /* Aliased theme tokens for backward compatibility */
+  --stage-bg: var(--bg-page);
+  --panel-bg: var(--bg-card);
+  --surface-subtle: var(--bg-subtle);
+  --color-background: var(--bg-page);
+  --color-surface: var(--bg-card);
+  --color-surface-muted: var(--bg-subtle);
+  --color-surface-hover: #eaeae7;
   --color-text: var(--text-primary);
   --color-text-secondary: var(--text-muted);
   --color-text-muted: #8e8a84;
-  --color-border: var(--border-soft);
-  --color-border-focus: var(--accent);
+  --color-border: var(--border-line);
+  --color-border-focus: var(--btn-bg);
   
-  --color-primary: var(--accent);
-  --color-primary-hover: #000000;
+  --color-primary: var(--btn-bg);
+  --color-primary-hover: var(--btn-hover);
   --color-primary-active: #222120;
-  --color-primary-light: var(--surface-subtle);
-  
-  /* Restrained Semantic Colors (Crowding Status Only) */
+  --color-primary-light: var(--bg-subtle);
+  --accent: var(--btn-bg);
+  --on-accent: var(--btn-text);
+
+  /* Semantic Crowding Status Colors */
   --color-success: #16a34a;
-  --color-success-bg: #f0fdf4;
-  --color-success-border: #bbf7d0;
+  --color-success-bg: rgba(22, 163, 74, 0.12);
+  --color-success-border: rgba(22, 163, 74, 0.32);
   
   --color-warning: #d97706;
-  --color-warning-bg: #fffbeb;
-  --color-warning-border: #fde68a;
+  --color-warning-bg: rgba(217, 119, 6, 0.12);
+  --color-warning-border: rgba(217, 119, 6, 0.32);
   
   --color-error: #dc2626;
-  --color-error-bg: #fef2f2;
-  --color-error-border: #fecaca;
+  --color-error-bg: rgba(220, 38, 38, 0.12);
+  --color-error-border: rgba(220, 38, 38, 0.32);
   
-  --color-info: #151413;
-  --color-info-bg: #f5f5f4;
+  --color-info: var(--text-primary);
+  --color-info-bg: var(--bg-subtle);
 
-  /* Editorial Typography */
+  /* Typography */
   --font-family: Helvetica, Arial, sans-serif;
   --font-family-nav: 'Inter', Helvetica, Arial, sans-serif;
   --font-size-xs: 11px;
@@ -74,80 +81,95 @@
   --spacing-6: 24px;
   --spacing-8: 32px;
 
-  /* Corner Radii */
-  --btn-radius: 0px;
-  --chip-radius: 30px;
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 6px;
+  /* Classy, Approachable Corner Radii (Replacing Boxy 0px) */
+  --btn-radius: 8px;
+  --card-radius: 12px;
+  --input-radius: 8px;
+  --chip-radius: 999px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 999px;
+
+  /* Strict Z-Index Scale */
+  --z-map: 10;
+  --z-header: 30;
+  --z-sidebar: 40;
+  --z-dropdown: 50;
+  --z-modal: 60;
 
   /* Layout Dimensions */
   --sidebar-width: 250px;
   --sidebar-collapsed-width: 68px;
-  --header-height: 68px;
+  --header-height: 64px;
   --bottom-nav-height: 60px;
 
-  /* Subtle Crisp Monochrome Shadows */
-  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
-  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
-  --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  /* Refined Monochrome Shadows */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-elevated: 0 12px 32px -4px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06);
 
-  /* Runway Deceleration & Spring Curves */
+  /* Runway Animation Curves */
   --ease-runway: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --transition-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 160ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-normal: 200ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-smooth: 240ms cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-spring: 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ==========================================================================
-   Dark Mode Editorial Tokens (Toggled via Settings)
+   2. Dark Mode Semantic Inversions (.dark, [data-theme='dark'])
    ========================================================================== */
 html.dark,
 html[data-theme='dark'],
 .dark {
-  --stage-bg: #0e0e0e;
-  --panel-bg: #151413;
-  --surface-subtle: #1c1b1a;
-  --text-primary: #f5f5f4;
-  --text-muted: #9e9b97;
-  --accent: #ffffff;
-  --on-accent: #151413;
-  --border-line: #33312e;
-  --border-soft: #252422;
+  --bg-page: #0f0f10;
+  --bg-card: #18181b;
+  --bg-subtle: #242428;
+  --text-primary: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --border-line: #2e2e33;
+  --border-soft: #2e2e33;
+  --btn-bg: #f4f4f5;
+  --btn-text: #111113;
+  --btn-hover: #ffffff;
 
-  --color-background: var(--stage-bg);
-  --color-surface: var(--panel-bg);
-  --color-surface-muted: var(--surface-subtle);
-  --color-surface-hover: #262524;
+  --stage-bg: var(--bg-page);
+  --panel-bg: var(--bg-card);
+  --surface-subtle: var(--bg-subtle);
+  --color-background: var(--bg-page);
+  --color-surface: var(--bg-card);
+  --color-surface-muted: var(--bg-subtle);
+  --color-surface-hover: #2b2b30;
   --color-text: var(--text-primary);
   --color-text-secondary: var(--text-muted);
-  --color-text-muted: #75726e;
-  --color-border: var(--border-soft);
-  --color-border-focus: var(--accent);
+  --color-text-muted: #888892;
+  --color-border: var(--border-line);
+  --color-border-focus: var(--btn-bg);
 
-  --color-primary: var(--accent);
-  --color-primary-hover: #e4e4e4;
-  --color-primary-active: #cccccc;
-  --color-primary-light: #222120;
+  --color-primary: var(--btn-bg);
+  --color-primary-hover: var(--btn-hover);
+  --color-primary-active: #d4d4d8;
+  --color-primary-light: var(--bg-subtle);
+  --accent: var(--btn-bg);
+  --on-accent: var(--btn-text);
 
   --color-success: #22c55e;
-  --color-success-bg: #052e16;
-  --color-success-border: #166534;
+  --color-success-bg: rgba(34, 197, 94, 0.16);
+  --color-success-border: rgba(34, 197, 94, 0.36);
 
   --color-warning: #f59e0b;
-  --color-warning-bg: #451a03;
-  --color-warning-border: #92400e;
+  --color-warning-bg: rgba(245, 158, 11, 0.16);
+  --color-warning-border: rgba(245, 158, 11, 0.36);
 
   --color-error: #ef4444;
-  --color-error-bg: #450a0a;
-  --color-error-border: #991b1b;
+  --color-error-bg: rgba(239, 68, 68, 0.16);
+  --color-error-border: rgba(239, 68, 68, 0.36);
 
-  --color-info: #ffffff;
-  --color-info-bg: #1c1b1a;
+  --color-info: var(--text-primary);
+  --color-info-bg: var(--bg-subtle);
 
-  --shadow-subtle: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
-  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
-  --shadow-elevated: 0 12px 28px -5px rgba(0, 0, 0, 0.7);
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --shadow-elevated: 0 16px 36px -4px rgba(0, 0, 0, 0.65);
 }

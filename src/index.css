@@ -1,17 +1,25 @@
 /* ==========================================================================
-   Editorial Monochrome Black/White/Grey Design System (Runway Aesthetic)
+   Editorial Monochrome Black/White/Grey Design System
+   Refined, Approachable Radii (12px cards, 8px inputs/buttons, 999px pills)
+   Strict Z-Index Hierarchy & Complete Dark Mode Inversion
    ========================================================================== */
 
-/* 1. Global Typography & Smoothing */
+/* 1. Global Typography, Smooth Scrolling & Surface Foundation */
+html {
+  scrollbar-gutter: stable;
+}
+
 html, body {
   font-family: Helvetica, Arial, sans-serif;
   font-weight: 400;
-  background-color: var(--stage-bg, #ffffff);
+  background-color: var(--bg-page, #f8f8f7);
   color: var(--text-primary, #151413);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
+  transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              color 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Tabular Numerals for metrics, times, distances, ticket counts, loads */
@@ -27,11 +35,12 @@ html, body {
 }
 
 /* Large Editorial Headings */
-h1, .editorial-heading, .page-title {
+h1, h2, h3, h4, h5, h6,
+.editorial-heading,
+.page-title {
   font-family: Helvetica, Arial, sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: -0.02em;
-  line-height: 1.05;
   color: var(--text-primary, #151413);
 }
 
@@ -42,9 +51,9 @@ h1, .editorial-heading, .page-title {
 .badge-label,
 .editorial-meta {
   font-size: 10px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--text-muted, #66625c);
+  color: var(--text-muted, #5c5852);
   font-weight: 600;
 }
 
@@ -66,39 +75,188 @@ h1, .editorial-heading, .page-title {
   text-underline-offset: 4px;
 }
 
-@media (max-width: 749px) {
-  .header-nav-link {
-    font-size: 11px;
-  }
+/* 2. Global Form Elements (Inputs, Selects, Options) Dark Mode Safe */
+input,
+select,
+textarea {
+  background-color: var(--bg-card, #ffffff) !important;
+  color: var(--text-primary, #151413) !important;
+  border: 1px solid var(--border-line, #e2e2df) !important;
+  border-radius: var(--input-radius, 8px) !important;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
 }
 
-/* 2. Primary CTA Buttons & Editorial Inputs */
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted, #5c5852) !important;
+  opacity: 0.75;
+}
+
+select option {
+  background-color: var(--bg-card, #ffffff) !important;
+  color: var(--text-primary, #151413) !important;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--btn-bg, #151413) !important;
+  outline-offset: 2px !important;
+  border-color: var(--btn-bg, #151413) !important;
+}
+
+/* 3. Classy Cards, Panels & Modals (12px Radii & 1px Hairline Borders) */
+.ui-card,
+.modal-card,
+.popover-menu,
+.proof-modal-card {
+  background-color: var(--bg-card, #ffffff) !important;
+  color: var(--text-primary, #151413) !important;
+  border: 1px solid var(--border-line, #e2e2df) !important;
+  border-radius: var(--card-radius, 12px) !important;
+  box-shadow: var(--shadow-card);
+}
+
+/* 4. Primary & Secondary CTA Buttons (8px Radii) & Tactile Press */
+button,
+.ui-btn,
+.btn-primary,
+.btn-secondary,
+.chip,
+.tab-btn,
+.segmented-btn,
+.filter-chip,
+.nav-item,
+.search-toggle-btn,
+.theme-toggle-btn,
+.lang-pill-btn,
+.user-profile-btn,
+.btn-save-config {
+  cursor: pointer;
+  transition: transform 120ms cubic-bezier(0.2, 0, 0, 1),
+              background-color 150ms ease,
+              border-color 150ms ease,
+              box-shadow 150ms ease,
+              color 150ms ease;
+}
+
+button:active:not(:disabled),
+.ui-btn:active:not(:disabled),
+.btn-primary:active:not(:disabled),
+.btn-secondary:active:not(:disabled),
+.chip:active:not(:disabled),
+.tab-btn:active:not(:disabled),
+.segmented-btn:active:not(:disabled),
+.filter-chip:active:not(:disabled),
+.nav-item:active:not(:disabled),
+.search-toggle-btn:active:not(:disabled),
+.theme-toggle-btn:active:not(:disabled),
+.lang-pill-btn:active:not(:disabled),
+.user-profile-btn:active:not(:disabled),
+.btn-save-config:active:not(:disabled) {
+  transform: scale(0.975) !important;
+}
+
+/* Subtle lift on hover for primary action buttons */
+.btn-primary:hover:not(:disabled),
+button.btn-primary:hover:not(:disabled),
+.ui-btn-primary:hover:not(:disabled),
+.cta-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+/* Accessible, crisp focus-visible outlines */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--text-primary, #151413) !important;
+  outline-offset: 2px !important;
+}
+
+html.dark button:focus-visible,
+html.dark input:focus-visible,
+html.dark select:focus-visible,
+html.dark textarea:focus-visible {
+  outline: 2px solid #facc15 !important;
+  outline-offset: 2px !important;
+}
+
+/* High-Contrast Save Configuration Button */
+.btn-save-config {
+  background-color: #151413 !important;
+  color: #ffffff !important;
+  border: 1px solid #151413 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.btn-save-config:hover:not(:disabled) {
+  background-color: #2a2927 !important;
+  border-color: #2a2927 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+html.dark .btn-save-config,
+html[data-theme='dark'] .btn-save-config {
+  background-color: #facc15 !important;
+  color: #111113 !important;
+  border: 1px solid #eab308 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 1px 4px rgba(250, 204, 21, 0.3);
+}
+
+html.dark .btn-save-config:hover:not(:disabled),
+html[data-theme='dark'] .btn-save-config:hover:not(:disabled) {
+  background-color: #fde047 !important;
+  border-color: #facc15 !important;
+  color: #111113 !important;
+  transform: translateY(-1px);
+}
+
 .btn-primary,
 button.btn-primary,
 .cta-button {
-  background-color: var(--accent, #151413);
-  color: var(--on-accent, #ffffff);
-  border: 1px solid var(--accent, #151413);
-  border-radius: var(--btn-radius, 0px) !important;
+  background-color: var(--btn-bg, #151413) !important;
+  color: var(--btn-text, #ffffff) !important;
+  border: 1px solid var(--btn-bg, #151413) !important;
+  border-radius: var(--btn-radius, 8px) !important;
   font-family: Helvetica, Arial, sans-serif;
   font-weight: 500;
   font-size: 13px;
-  letter-spacing: 0.02em;
-  padding: 10px 18px;
+  letter-spacing: 0.01em;
+  padding: 8px 16px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-primary:hover,
 button.btn-primary:hover,
 .cta-button:hover {
-  transform: translateY(-1px);
-  background-color: #000000;
-  box-shadow: 0 4px 12px rgba(21, 20, 19, 0.12);
+  background-color: var(--btn-hover, #000000) !important;
+  box-shadow: var(--shadow-subtle);
+}
+
+.btn-secondary,
+button.btn-secondary {
+  background-color: var(--bg-subtle, #f1f1ef) !important;
+  color: var(--text-primary, #151413) !important;
+  border: 1px solid var(--border-line, #e2e2df) !important;
+  border-radius: var(--btn-radius, 8px) !important;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover,
+button.btn-secondary:hover {
+  background-color: var(--border-line, #e2e2df) !important;
+  color: var(--text-primary, #151413) !important;
 }
 
 /* Subtle Monochrome Shine Sweep Effect */
@@ -126,82 +284,81 @@ button.btn-primary:hover,
   transform: translateX(100%);
 }
 
-/* Editorial Pills / Chips */
+/* 5. Editorial Pills / Chips (999px Radii) */
 .chip,
 .tag-pill,
 .filter-chip,
-.hub-chip {
-  border-radius: var(--chip-radius, 30px) !important;
-  border: 1px solid var(--border-line, #c8c8c8);
-  background-color: var(--stage-bg, #ffffff);
-  color: var(--text-primary, #151413);
-  font-size: 11px;
+.hub-chip,
+.station-chip {
+  border-radius: var(--chip-radius, 999px) !important;
+  border: 1px solid var(--border-line, #e2e2df) !important;
+  background-color: var(--bg-card, #ffffff) !important;
+  color: var(--text-primary, #151413) !important;
+  font-size: 11.5px;
   font-weight: 500;
-  padding: 4px 12px;
+  padding: 5px 14px;
   cursor: pointer;
-  transition: all 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .chip:hover,
 .filter-chip:hover,
-.hub-chip:hover {
-  border-color: var(--accent, #151413);
-  background-color: var(--surface-subtle, #f5f5f4);
+.hub-chip:hover,
+.station-chip:hover {
+  border-color: var(--text-muted, #5c5852) !important;
+  background-color: var(--bg-subtle, #f1f1ef) !important;
 }
 
 .chip.active,
 .filter-chip.active,
-.hub-chip.active {
-  background-color: var(--accent, #151413) !important;
-  color: var(--on-accent, #ffffff) !important;
-  border-color: var(--accent, #151413) !important;
+.hub-chip.active,
+.station-chip.active {
+  background-color: var(--btn-bg, #151413) !important;
+  color: var(--btn-text, #ffffff) !important;
+  border-color: var(--btn-bg, #151413) !important;
   transform: scale(1.02);
 }
 
-/* Focus Visible Accessibility */
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-select:focus-visible {
-  outline: 2px solid var(--accent, #151413) !important;
-  outline-offset: 4px !important;
-}
-
-/* 3. Fast Runway Transitions (180ms - 260ms) */
-.page-view-animated,
-.view-entrance {
-  animation: runwayEntrance 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes runwayEntrance {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Animated Left-to-Right Hairline Underline on Route Cards */
+/* 6. Route Comparison Cards (12px Radii) */
 .route-option-card {
   position: relative;
-  border: 1px solid var(--border-soft, #e4e4e4);
-  background-color: var(--panel-bg, #ffffff);
+  border: 1px solid var(--border-line, #e2e2df) !important;
+  border-radius: var(--card-radius, 12px) !important;
+  background-color: var(--bg-card, #ffffff) !important;
+  color: var(--text-primary, #151413) !important;
+  padding: 16px !important;
+  margin-bottom: 14px !important;
+  box-shadow: var(--shadow-subtle);
   transition: border-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
               background-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1),
               transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.route-option-card:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card);
+  border-color: var(--text-muted, #5c5852) !important;
+}
+
+.route-option-card.selected {
+  border-color: var(--btn-bg, #151413) !important;
+  background-color: var(--bg-subtle, #f1f1ef) !important;
+  box-shadow: var(--shadow-card);
 }
 
 .route-option-card::before {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 12px;
+  right: 12px;
   height: 2px;
-  background-color: var(--accent, #151413);
+  background-color: var(--btn-bg, #151413);
+  border-radius: 2px;
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -212,19 +369,128 @@ select:focus-visible {
   transform: scaleX(1);
 }
 
-.route-option-card.selected {
-  border-color: var(--border-line, #c8c8c8) !important;
-  background-color: var(--surface-subtle, #f5f5f4) !important;
+/* 7. Strict Z-Index Hierarchy Layering */
+/* Level 1: Leaflet map container & panes (z-10) */
+.leaflet-container,
+.planner-map-container,
+.bottleneck-map-container {
+  position: relative !important;
+  z-index: var(--z-map, 10) !important;
+  font-family: Helvetica, Arial, sans-serif !important;
+  background: var(--bg-subtle, #f1f1ef) !important;
 }
 
-/* Stop-by-stop Stretch Accordion Slide */
-.accordion-content {
-  overflow: hidden;
-  transition: max-height 240ms cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 200ms cubic-bezier(0.16, 1, 0.3, 1);
+.leaflet-pane {
+  z-index: var(--z-map, 10) !important;
 }
 
-/* 4. Monochrome Shimmer Skeleton Animations */
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 12 !important;
+}
+
+/* Level 2: Sticky Top Header (z-30) */
+.top-header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: var(--z-header, 30) !important;
+  background-color: var(--bg-card, #ffffff) !important;
+  border-bottom: 1px solid var(--border-line, #e2e2df) !important;
+}
+
+/* Level 3: Sidebar & Mobile Drawer (z-40) */
+.sidebar-container,
+.app-sidebar,
+.mobile-sidebar-drawer {
+  z-index: var(--z-sidebar, 40) !important;
+  background-color: var(--bg-card, #ffffff) !important;
+  border-right: 1px solid var(--border-line, #e2e2df) !important;
+}
+
+/* Level 4: Top-right Dropdowns & Autocomplete Menus (z-50) */
+.popover-menu,
+.suggestion-dropdown,
+[data-dropdown="true"],
+.search-dropdown-menu,
+.autocomplete-dropdown {
+  z-index: var(--z-dropdown, 50) !important;
+  background-color: var(--bg-card, #ffffff) !important;
+  color: var(--text-primary, #151413) !important;
+  border: 1px solid var(--border-line, #e2e2df) !important;
+  border-radius: var(--card-radius, 12px) !important;
+  box-shadow: var(--shadow-elevated) !important;
+}
+
+/* Level 5: Modals, Bottom-Sheets & Overlays (z-60) */
+.modal-overlay,
+.proof-modal-overlay,
+.global-search-overlay,
+.legal-modal-overlay,
+.mobile-bottom-sheet {
+  z-index: var(--z-modal, 60) !important;
+}
+
+/* 8. Leaflet Map Styling & Dark Mode Tile Filter */
+.leaflet-container img {
+  max-width: none !important;
+}
+
+.leaflet-tile-pane {
+  filter: saturate(0.9) contrast(1.02);
+}
+
+html.dark .leaflet-tile-pane,
+html[data-theme='dark'] .leaflet-tile-pane {
+  filter: invert(92%) hue-rotate(180deg) brightness(88%) contrast(105%);
+}
+
+/* Leaflet Popups Clean Inversion */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background-color: var(--bg-card, #ffffff) !important;
+  color: var(--text-primary, #151413) !important;
+  border: 1px solid var(--border-line, #e2e2df) !important;
+  border-radius: 8px !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+.leaflet-popup-content {
+  color: var(--text-primary, #151413) !important;
+  font-family: Helvetica, Arial, sans-serif !important;
+  font-size: 12.5px !important;
+  margin: 10px 14px !important;
+}
+
+/* 9. Data Tables (Operator Table Headers & Rows) Dark Mode Fix */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: var(--bg-subtle, #f1f1ef) !important;
+  color: var(--text-muted, #5c5852) !important;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-line, #e2e2df) !important;
+  text-align: left;
+}
+
+td {
+  color: var(--text-primary, #151413) !important;
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--border-line, #e2e2df) !important;
+  font-size: 13px;
+}
+
+tr:hover td {
+  background-color: var(--bg-subtle, #f1f1ef) !important;
+}
+
+/* 10. Monochrome Shimmer Skeletons */
 @keyframes monochromeShimmer {
   0% {
     background-position: -200% 0;
@@ -237,59 +503,127 @@ select:focus-visible {
 .shimmer-skeleton {
   background: linear-gradient(
     100deg,
-    #f0f0ef 30%,
-    #ffffff 50%,
-    #f0f0ef 70%
+    var(--bg-subtle, #f1f1ef) 25%,
+    var(--bg-card, #ffffff) 50%,
+    var(--bg-subtle, #f1f1ef) 75%
   );
   background-size: 200% 100%;
-  animation: monochromeShimmer 1.1s linear infinite;
-  border-radius: var(--radius-sm, 2px);
+  animation: monochromeShimmer 1.2s linear infinite;
+  border-radius: var(--radius-sm, 6px);
 }
 
-html.dark .shimmer-skeleton {
+html.dark .shimmer-skeleton,
+html[data-theme='dark'] .shimmer-skeleton {
   background: linear-gradient(
     100deg,
-    #1c1b1a 30%,
-    #2a2927 50%,
-    #1c1b1a 70%
+    #18181b 25%,
+    #27272a 50%,
+    #18181b 75%
   );
   background-size: 200% 100%;
 }
 
-/* 5. Leaflet Map Container & Tile Rules */
-.leaflet-container {
-  width: 100%;
-  height: 100%;
-  font-family: Helvetica, Arial, sans-serif !important;
-  background: var(--surface-subtle, #f5f5f4) !important;
+/* 11. Zero-Jitter GPU-Composited Page Transitions */
+.page-view-animated,
+.view-entrance {
+  animation: pageFadeIn 180ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
-.leaflet-container img {
-  max-width: none !important;
+@keyframes pageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
-/* Keyless OpenStreetMap subtle monochrome styling filter */
-.leaflet-tile-pane {
-  filter: saturate(0.85) contrast(1.03);
+/* 12. Responsive Header & Mobile Navigation */
+@media (max-width: 1100px) {
+  .search-btn-label,
+  .search-btn-slash,
+  .profile-btn-label,
+  .breadcrumb-slash,
+  .breadcrumb-active {
+    display: none !important;
+  }
 }
 
-html.dark .leaflet-tile-pane {
-  filter: invert(90%) hue-rotate(180deg) brightness(85%) contrast(110%);
+@media (max-width: 640px) {
+  .live-status-text {
+    display: none !important;
+  }
+  .live-status-pill {
+    padding: 3px 6px !important;
+  }
 }
 
-/* 6. Full Mobile Compatibility (<=749px) & Bottom Sheets */
-.bottom-sheet-grabber {
-  display: none;
-}
-
-@media (max-width: 749px) {
+@media (max-width: 768px) {
   .top-header {
-    height: 68px;
-    padding: 0 16px;
+    height: 54px !important;
+    padding: 0 10px !important;
+    overflow: hidden;
   }
 
-  .main-content-wrapper {
+  .header-left {
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+
+  .header-right {
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Full responsive Sidebar as an off-canvas drawer */
+  .sidebar,
+  .sidebar.collapsed {
+    position: fixed !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 260px !important;
+    transform: translateX(-100%) !important;
+    z-index: var(--z-sidebar, 40) !important;
+    box-shadow: none !important;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0) !important;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .app-shell,
+  .app-shell.sidebar-collapsed {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+
+  .main-content-wrapper,
+  .app-shell.sidebar-collapsed .main-content-wrapper {
     margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+    padding-bottom: calc(var(--bottom-nav-height, 60px) + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Planner search 1-row grid stacks cleanly on mobile */
+  .planner-1row-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .planner-1row-grid > div {
+    grid-column: span 1 !important;
+    width: 100% !important;
+    min-width: 0 !important;
   }
 
   .mobile-bottom-sheet {
@@ -297,35 +631,14 @@ html.dark .leaflet-tile-pane {
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: var(--panel-bg, #ffffff);
-    border-radius: 20px 20px 0 0;
-    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.15);
-    z-index: 10000;
-    padding: 16px 20px calc(20px + env(safe-area-inset-bottom));
+    background-color: var(--bg-card, #ffffff) !important;
+    border-radius: 16px 16px 0 0 !important;
+    border-top: 1px solid var(--border-line, #e2e2df) !important;
+    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.2);
+    padding: 16px 18px calc(20px + env(safe-area-inset-bottom));
     animation: sheetSlideUp 240ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
     max-height: 88vh;
     overflow-y: auto;
-  }
-
-  .proof-modal-overlay {
-    align-items: flex-end !important;
-    padding: 0 !important;
-  }
-
-  .proof-modal-card {
-    border-radius: 20px 20px 0 0 !important;
-    max-height: 88vh !important;
-    animation: sheetSlideUp 240ms cubic-bezier(0.32, 0.72, 0, 1) forwards !important;
-    padding: 16px 20px calc(24px + env(safe-area-inset-bottom)) !important;
-  }
-
-  .bottom-sheet-grabber {
-    display: block !important;
-    width: 34px;
-    height: 4px;
-    background-color: var(--border-line, #c8c8c8);
-    border-radius: 2px;
-    margin: 0 auto 14px;
   }
 
   @keyframes sheetSlideUp {
@@ -336,20 +649,9 @@ html.dark .leaflet-tile-pane {
       transform: translateY(0);
     }
   }
-
-  /* Minimum 44x44px touch targets */
-  button,
-  .nav-item,
-  .segmented-btn,
-  .search-toggle-btn,
-  input[type="time"],
-  select {
-    min-height: 44px;
-    min-width: 44px;
-  }
 }
 
-/* 7. Reduced Motion Accessibility */
+/* 13. Reduced Motion Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

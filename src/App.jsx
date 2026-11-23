@@ -12,6 +12,7 @@ import { AlertsPage } from './pages/AlertsPage.jsx';
 import { SettingsPage } from './pages/SettingsPage.jsx';
 import { HelpPage } from './pages/HelpPage.jsx';
 import { ProofModal } from './components/common/ProofModal.jsx';
+import { AppLoader } from './components/common/AppLoader.jsx';
 import { NAV_PAGES } from './constants/navigation.js';
 
 const PAGE_TITLES = {
@@ -137,6 +138,9 @@ export function App() {
 
   return (
     <div className={`app-shell ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+      {/* Fast, classy initial splash / data loader */}
+      <AppLoader />
+
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>

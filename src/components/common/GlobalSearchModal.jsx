@@ -92,9 +92,9 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(21, 20, 19, 0.65)',
+        backgroundColor: 'rgba(0, 0, 0, 0.65)',
         backdropFilter: 'blur(4px)',
-        zIndex: 99999,
+        zIndex: 'var(--z-modal, 60)',
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center',
@@ -107,10 +107,10 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
         style={{
           width: '100%',
           maxWidth: '640px',
-          backgroundColor: 'var(--panel-bg, #ffffff)',
-          border: '1px solid var(--border-line, #c8c8c8)',
-          borderRadius: '4px',
-          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.25)',
+          backgroundColor: 'var(--bg-card)',
+          border: '1px solid var(--border-line)',
+          borderRadius: 'var(--card-radius, 12px)',
+          boxShadow: '0 20px 40px rgba(0, 0, 0, 0.35)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -127,11 +127,12 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
             display: 'flex',
             alignItems: 'center',
             padding: '14px 18px',
-            borderBottom: '1px solid var(--border-soft, #e4e4e4)',
-            gap: '12px'
+            borderBottom: '1px solid var(--border-line)',
+            gap: '12px',
+            backgroundColor: 'var(--bg-card)'
           }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: 'var(--text-muted, #66625c)' }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: 'var(--text-muted)' }}>
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.3-4.3" />
           </svg>
@@ -148,9 +149,8 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
               outline: 'none',
               background: 'transparent',
               fontSize: '15px',
-              fontFamily: 'Helvetica, Arial, sans-serif',
               fontWeight: 500,
-              color: 'var(--text-primary, #151413)'
+              color: 'var(--text-primary)'
             }}
           />
           {query && (
@@ -161,7 +161,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
                 background: 'transparent',
                 border: 'none',
                 cursor: 'pointer',
-                color: 'var(--text-muted, #66625c)',
+                color: 'var(--text-muted)',
                 padding: '4px'
               }}
               title="Clear search"
@@ -178,9 +178,9 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
               fontWeight: 600,
               letterSpacing: '0.08em',
               textTransform: 'uppercase',
-              color: 'var(--text-muted, #66625c)',
-              border: '1px solid var(--border-soft, #e4e4e4)',
-              borderRadius: '2px',
+              color: 'var(--text-muted)',
+              border: '1px solid var(--border-line)',
+              borderRadius: '4px',
               padding: '2px 6px'
             }}
           >
@@ -193,7 +193,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
           {/* Section 1: Matching Stops */}
           {results.matchingStops.length > 0 && (
             <div style={{ marginBottom: '16px' }}>
-              <div className="meta-label" style={{ marginBottom: '8px', paddingLeft: '4px' }}>
+              <div className="meta-label" style={{ marginBottom: '8px', paddingLeft: '4px', color: 'var(--text-muted)' }}>
                 Matching Delhi Stops ({results.matchingStops.length})
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
@@ -209,10 +209,10 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         padding: '9px 12px',
-                        borderRadius: '2px',
+                        borderRadius: 'var(--btn-radius, 8px)',
                         cursor: 'pointer',
-                        backgroundColor: isCur ? 'var(--surface-subtle, #f5f5f4)' : 'transparent',
-                        border: isCur ? '1px solid var(--border-line, #c8c8c8)' : '1px solid transparent',
+                        backgroundColor: isCur ? 'var(--bg-subtle)' : 'transparent',
+                        border: isCur ? '1px solid var(--border-line)' : '1px solid transparent',
                         transition: 'all 120ms ease'
                       }}
                       onMouseEnter={() => setSelectedIndex(sIdx)}
@@ -223,7 +223,8 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
                             width: '24px',
                             height: '24px',
                             borderRadius: '50%',
-                            backgroundColor: 'var(--surface-subtle, #f5f5f4)',
+                            backgroundColor: 'var(--bg-subtle)',
+                            color: 'var(--text-primary)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -235,7 +236,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
                             <circle cx="12" cy="10" r="3" />
                           </svg>
                         </div>
-                        <span style={{ fontSize: '13px', color: 'var(--text-primary, #151413)' }}>
+                        <span style={{ fontSize: '13px', color: 'var(--text-primary)' }}>
                           {parts.map((p, pIdx) => (
                             <span key={pIdx} style={p.isMatch ? { fontWeight: 800, textDecoration: 'underline' } : { fontWeight: 400 }}>
                               {p.text}
@@ -243,7 +244,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
                           ))}
                         </span>
                       </div>
-                      <span className="meta-label" style={{ fontSize: '9px' }}>
+                      <span className="meta-label" style={{ fontSize: '9px', color: 'var(--text-muted)' }}>
                         DTC STOP &rarr;
                       </span>
                     </div>
@@ -256,7 +257,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
           {/* Section 2: Connected Routes / Corridors */}
           {results.connectedRoutes.length > 0 && (
             <div style={{ marginBottom: '16px' }}>
-              <div className="meta-label" style={{ marginBottom: '8px', paddingLeft: '4px' }}>
+              <div className="meta-label" style={{ marginBottom: '8px', paddingLeft: '4px', color: 'var(--text-muted)' }}>
                 Connected DTC Bus Routes
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
@@ -272,10 +273,10 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         padding: '9px 12px',
-                        borderRadius: '2px',
+                        borderRadius: 'var(--btn-radius, 8px)',
                         cursor: 'pointer',
-                        backgroundColor: isCur ? 'var(--surface-subtle, #f5f5f4)' : 'transparent',
-                        border: isCur ? '1px solid var(--border-line, #c8c8c8)' : '1px solid transparent',
+                        backgroundColor: isCur ? 'var(--bg-subtle)' : 'transparent',
+                        border: isCur ? '1px solid var(--border-line)' : '1px solid transparent',
                         transition: 'all 120ms ease'
                       }}
                       onMouseEnter={() => setSelectedIndex(globalIdx)}
@@ -285,24 +286,24 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
                           style={{
                             fontSize: '11px',
                             fontWeight: 700,
-                            backgroundColor: 'var(--accent, #151413)',
-                            color: 'var(--on-accent, #ffffff)',
-                            padding: '2px 6px',
-                            borderRadius: '2px'
+                            backgroundColor: 'var(--btn-bg)',
+                            color: 'var(--btn-text)',
+                            padding: '3px 7px',
+                            borderRadius: '4px'
                           }}
                         >
                           {routeObj.route}
                         </span>
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                          <span style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--text-primary, #151413)' }}>
+                          <span style={{ fontSize: '12.5px', fontWeight: 500, color: 'var(--text-primary)' }}>
                             {routeObj.corridor}
                           </span>
-                          <span style={{ fontSize: '10px', color: 'var(--text-muted, #66625c)' }}>
+                          <span style={{ fontSize: '10.5px', color: 'var(--text-muted)' }}>
                             Serves {routeObj.servingStop}
                           </span>
                         </div>
                       </div>
-                      <span className="meta-label" style={{ fontSize: '9px' }}>
+                      <span className="meta-label" style={{ fontSize: '9px', color: 'var(--text-muted)' }}>
                         VIEW ROUTE &rarr;
                       </span>
                     </div>
@@ -315,7 +316,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
           {/* Section 3: Similar / Nearby Hubs */}
           {results.nearbyHubs.length > 0 && (
             <div>
-              <div className="meta-label" style={{ marginBottom: '8px', paddingLeft: '4px' }}>
+              <div className="meta-label" style={{ marginBottom: '8px', paddingLeft: '4px', color: 'var(--text-muted)' }}>
                 Delhi Transit Hubs
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
@@ -329,9 +330,13 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
                       className={`chip ${isCur ? 'active' : ''}`}
                       onClick={() => handleItemClick({ type: 'hub', data: { name: hubName } })}
                       style={{
-                        border: isCur ? '1px solid var(--accent, #151413)' : '1px solid var(--border-line, #c8c8c8)',
-                        backgroundColor: isCur ? 'var(--accent, #151413)' : 'transparent',
-                        color: isCur ? 'var(--on-accent, #ffffff)' : 'var(--text-primary, #151413)'
+                        borderRadius: 'var(--chip-radius, 999px)',
+                        border: isCur ? '1px solid var(--btn-bg)' : '1px solid var(--border-line)',
+                        backgroundColor: isCur ? 'var(--btn-bg)' : 'var(--bg-subtle)',
+                        color: isCur ? 'var(--btn-text)' : 'var(--text-primary)',
+                        padding: '4px 12px',
+                        cursor: 'pointer',
+                        fontSize: '12px'
                       }}
                     >
                       {hubName}
@@ -346,8 +351,8 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
           {query.trim() &&
             results.matchingStops.length === 0 &&
             results.connectedRoutes.length === 0 && (
-              <div style={{ padding: '30px 10px', textAlign: 'center', color: 'var(--text-muted, #66625c)' }}>
-                <div style={{ fontSize: '14px', fontWeight: 500, marginBottom: '4px' }}>
+              <div style={{ padding: '30px 10px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                <div style={{ fontSize: '14px', fontWeight: 500, marginBottom: '4px', color: 'var(--text-primary)' }}>
                   No exact stops found for "{query}"
                 </div>
                 <div style={{ fontSize: '12px' }}>
@@ -361,13 +366,13 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
         <div
           style={{
             padding: '8px 16px',
-            borderTop: '1px solid var(--border-soft, #e4e4e4)',
-            backgroundColor: 'var(--surface-subtle, #f5f5f4)',
+            borderTop: '1px solid var(--border-line)',
+            backgroundColor: 'var(--bg-subtle)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             fontSize: '11px',
-            color: 'var(--text-muted, #66625c)'
+            color: 'var(--text-muted)'
           }}
         >
           <div style={{ display: 'flex', gap: '14px' }}>
@@ -376,7 +381,7 @@ export function GlobalSearchModal({ isOpen, onClose, onSelectStop, onSelectRoute
             <span><kbd style={{ fontWeight: 700 }}>ESC</kbd> Close</span>
           </div>
           <span style={{ fontSize: '10px', letterSpacing: '0.04em' }}>
-            2.56M DUCKDB TICKETS INDEXED
+            2.56M TICKETS INDEXED
           </span>
         </div>
       </div>

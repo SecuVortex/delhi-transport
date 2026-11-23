@@ -9,6 +9,7 @@ import { useSettings } from '../../context/SettingsContext.jsx';
  * 3. day_type selector (weekday / weekend)
  * 4. peak_window selector (evening peak / morning peak / all day)
  * Triggers debounced live-refetch of /api/v1/operator/hotspots.
+ * Clean, theme-safe monochrome styling with 12px/8px radii.
  */
 export function ModelAssumptionsDrawer({
   isOpen,
@@ -29,40 +30,45 @@ export function ModelAssumptionsDrawer({
 
   return (
     <div
-      className="model-assumptions-drawer"
+      className="model-assumptions-drawer ui-card"
       style={{
-        background: '#0F172A',
-        borderBottom: '2px solid #3B82F6',
+        background: 'var(--bg-card)',
+        borderBottom: '2px solid var(--border-line)',
         padding: '18px 24px',
-        color: '#F8FAFC',
-        animation: 'slideDown 0.2s ease-out'
+        color: 'var(--text-primary)',
+        animation: 'slideDown 0.2s ease-out',
+        borderRadius: '0 0 var(--card-radius, 12px) var(--card-radius, 12px)',
+        marginBottom: '20px',
+        boxShadow: 'var(--shadow-card)'
       }}
     >
       <div style={{ maxWidth: '1440px', margin: '0 auto' }}>
         {/* Drawer Title Bar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '20px',
-              height: '20px',
-              borderRadius: '4px',
-              background: '#2563EB',
-              color: '#FFFFFF'
-            }}>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '24px',
+                height: '24px',
+                borderRadius: '6px',
+                background: 'var(--btn-bg)',
+                color: 'var(--btn-text)'
+              }}
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="3" />
                 <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
               </svg>
             </span>
-            <span style={{ fontSize: '13.5px', fontWeight: 700, color: '#F1F5F9' }}>
-              Live Operational Model Assumptions & Scenario Simulator
+            <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)' }}>
+              Operational Model Assumptions &amp; Scenario Simulator
             </span>
             {isLoading && (
-              <span style={{ fontSize: '11px', color: '#60A5FA', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#60A5FA', animation: 'pulse 1s infinite' }} />
+              <span style={{ fontSize: '11.5px', color: '#3B82F6', display: 'inline-flex', alignItems: 'center', gap: '5px' }}>
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#3B82F6', animation: 'pulse 1s infinite' }} />
                 Recalculating corridor bottlenecks in DuckDB...
               </span>
             )}
@@ -72,12 +78,13 @@ export function ModelAssumptionsDrawer({
               type="button"
               onClick={onResetDefaults}
               style={{
-                background: 'transparent',
-                border: '1px solid #334155',
-                color: '#94A3B8',
-                padding: '3px 8px',
-                borderRadius: '4px',
-                fontSize: '11px',
+                background: 'var(--bg-subtle)',
+                border: '1px solid var(--border-line)',
+                color: 'var(--text-primary)',
+                padding: '4px 10px',
+                borderRadius: '6px',
+                fontSize: '11.5px',
+                fontWeight: 500,
                 cursor: 'pointer'
               }}
               title="Reset parameters to DTC baseline (1.2x, Auto)"
@@ -90,11 +97,11 @@ export function ModelAssumptionsDrawer({
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#94A3B8',
-                fontSize: '18px',
+                color: 'var(--text-muted)',
+                fontSize: '20px',
                 lineHeight: 1,
                 cursor: 'pointer',
-                padding: '2px 6px'
+                padding: '2px 8px'
               }}
               aria-label="Close assumptions drawer"
             >
@@ -104,27 +111,32 @@ export function ModelAssumptionsDrawer({
         </div>
 
         {/* Controls Grid */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '20px',
-          alignItems: 'start'
-        }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '16px',
+            alignItems: 'start'
+          }}
+        >
           {/* 1. Passenger Multiplier Slider */}
-          <div style={{ background: '#1E293B', padding: '14px 16px', borderRadius: '8px', border: '1px solid #334155' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-              <label htmlFor="pass-multiplier-slider" style={{ fontSize: '12.5px', fontWeight: 600, color: '#E2E8F0' }}>
-                Passenger Multiplier (Pass / Un-ticketed):
+          <div style={{ background: 'var(--bg-subtle)', padding: '14px 16px', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <label htmlFor="pass-multiplier-slider" style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--text-primary)' }}>
+                Passenger Multiplier:
               </label>
-              <span style={{
-                background: '#0F172A',
-                color: '#38BDF8',
-                fontWeight: 700,
-                fontSize: '13px',
-                padding: '2px 8px',
-                borderRadius: '4px',
-                fontFamily: 'monospace'
-              }}>
+              <span
+                className="tabular-nums"
+                style={{
+                  background: 'var(--bg-card)',
+                  color: 'var(--text-primary)',
+                  fontWeight: 700,
+                  fontSize: '13px',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  border: '1px solid var(--border-line)'
+                }}
+              >
                 {Number(passMultiplier).toFixed(2)}x
               </span>
             </div>
@@ -136,32 +148,35 @@ export function ModelAssumptionsDrawer({
               step="0.05"
               value={passMultiplier}
               onChange={(e) => onChangePassMultiplier(parseFloat(e.target.value))}
-              style={{ width: '100%', accentColor: '#38BDF8', cursor: 'pointer', margin: '6px 0' }}
+              style={{ width: '100%', cursor: 'pointer', margin: '6px 0' }}
             />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#64748B' }}>
-              <span>1.0x (Raw ETM Tickets)</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10.5px', color: 'var(--text-muted)' }}>
+              <span>1.0x (Raw Tickets)</span>
               <span>1.2x (DTC Standard)</span>
-              <span>1.4x (High Peak Surge)</span>
+              <span>1.4x (High Surge)</span>
             </div>
-            <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '6px', lineHeight: 1.4 }}>
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '8px', lineHeight: 1.4 }}>
               Scales ticketed boardings to account for Pink Pass holders, student passes, and un-ticketed transfers.
             </div>
           </div>
 
           {/* 2. Default Vehicle Capacity Selector */}
-          <div style={{ background: '#1E293B', padding: '14px 16px', borderRadius: '8px', border: '1px solid #334155' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-              <label htmlFor="bus-size-select" style={{ fontSize: '12.5px', fontWeight: 600, color: '#E2E8F0' }}>
+          <div style={{ background: 'var(--bg-subtle)', padding: '14px 16px', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+              <label htmlFor="bus-size-select" style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--text-primary)' }}>
                 Fleet Composition / Vehicle Size:
               </label>
-              <span style={{
-                background: '#0F172A',
-                color: '#4ADE80',
-                fontWeight: 700,
-                fontSize: '12px',
-                padding: '2px 8px',
-                borderRadius: '4px'
-              }}>
+              <span
+                style={{
+                  background: 'var(--bg-card)',
+                  color: '#16A34A',
+                  fontWeight: 700,
+                  fontSize: '11.5px',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  border: '1px solid var(--border-line)'
+                }}
+              >
                 {busSize === '12m' ? '65 Passengers' : busSize === '9m' ? '42 Passengers' : '50 Passengers'}
               </span>
             </div>
@@ -171,29 +186,29 @@ export function ModelAssumptionsDrawer({
               onChange={(e) => onChangeBusSize(e.target.value)}
               style={{
                 width: '100%',
-                background: '#0F172A',
-                color: '#F8FAFC',
-                border: '1px solid #334155',
-                borderRadius: '6px',
+                background: 'var(--bg-card)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-line)',
+                borderRadius: 'var(--input-radius, 8px)',
                 padding: '6px 10px',
                 fontSize: '12.5px',
                 marginTop: '4px',
                 cursor: 'pointer'
               }}
             >
-              <option value="auto">Auto (Default GTFS Mixed Fleet - 50 Pax Capacity)</option>
-              <option value="12m">12m Low-Floor Standard DTC (65 Pax Capacity)</option>
-              <option value="9m">9m Feeder / Midi Electric (42 Pax Capacity)</option>
+              <option value="auto">Auto (Default GTFS Mixed Fleet - 50 Passenger Capacity)</option>
+              <option value="12m">12m Low-Floor Standard DTC (65 Passenger Capacity)</option>
+              <option value="9m">9m Feeder / Midi Electric (42 Passenger Capacity)</option>
             </select>
-            <div style={{ fontSize: '11px', color: '#94A3B8', marginTop: '8px', lineHeight: 1.4 }}>
-              Denominator used for calculate load ratio: Green (&le;60%), Amber (60%-95%), Red (&gt;95%).
+            <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: '8px', lineHeight: 1.4 }}>
+              Denominator used to calculate load ratio: Green (&le;60%), Amber (60%-95%), Red (&gt;95%).
             </div>
           </div>
 
           {/* 3. Operational Day Type & Peak Window */}
-          <div style={{ background: '#1E293B', padding: '14px 16px', borderRadius: '8px', border: '1px solid #334155' }}>
-            <div style={{ fontSize: '12.5px', fontWeight: 600, color: '#E2E8F0', marginBottom: '8px' }}>
-              Service Day & Observation Window:
+          <div style={{ background: 'var(--bg-subtle)', padding: '14px 16px', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)' }}>
+            <div style={{ fontSize: '12.5px', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '8px' }}>
+              Service Day &amp; Observation Window:
             </div>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
               <button
@@ -201,14 +216,15 @@ export function ModelAssumptionsDrawer({
                 onClick={() => onChangeDayType('weekday')}
                 style={{
                   flex: 1,
-                  padding: '5px 8px',
-                  borderRadius: '4px',
+                  padding: '6px 8px',
+                  borderRadius: '6px',
                   fontSize: '11.5px',
                   fontWeight: 600,
-                  border: dayType === 'weekday' ? '1px solid #3B82F6' : '1px solid #334155',
-                  background: dayType === 'weekday' ? '#2563EB' : '#0F172A',
-                  color: dayType === 'weekday' ? '#FFFFFF' : '#94A3B8',
-                  cursor: 'pointer'
+                  border: dayType === 'weekday' ? '1px solid var(--btn-bg)' : '1px solid var(--border-line)',
+                  background: dayType === 'weekday' ? 'var(--btn-bg)' : 'var(--bg-card)',
+                  color: dayType === 'weekday' ? 'var(--btn-text)' : 'var(--text-muted)',
+                  cursor: 'pointer',
+                  transition: 'all 120ms ease'
                 }}
               >
                 Weekday Pattern
@@ -218,14 +234,15 @@ export function ModelAssumptionsDrawer({
                 onClick={() => onChangeDayType('weekend')}
                 style={{
                   flex: 1,
-                  padding: '5px 8px',
-                  borderRadius: '4px',
+                  padding: '6px 8px',
+                  borderRadius: '6px',
                   fontSize: '11.5px',
                   fontWeight: 600,
-                  border: dayType === 'weekend' ? '1px solid #3B82F6' : '1px solid #334155',
-                  background: dayType === 'weekend' ? '#2563EB' : '#0F172A',
-                  color: dayType === 'weekend' ? '#FFFFFF' : '#94A3B8',
-                  cursor: 'pointer'
+                  border: dayType === 'weekend' ? '1px solid var(--btn-bg)' : '1px solid var(--border-line)',
+                  background: dayType === 'weekend' ? 'var(--btn-bg)' : 'var(--bg-card)',
+                  color: dayType === 'weekend' ? 'var(--btn-text)' : 'var(--text-muted)',
+                  cursor: 'pointer',
+                  transition: 'all 120ms ease'
                 }}
               >
                 Weekend Pattern
@@ -245,14 +262,15 @@ export function ModelAssumptionsDrawer({
                     onClick={() => onChangeHourRange(opt.start, opt.end)}
                     style={{
                       flex: 1,
-                      padding: '4px 6px',
-                      borderRadius: '4px',
+                      padding: '5px 6px',
+                      borderRadius: '6px',
                       fontSize: '10.5px',
-                      fontWeight: 500,
-                      border: isSelected ? '1px solid #38BDF8' : '1px solid #334155',
-                      background: isSelected ? 'rgba(56, 189, 248, 0.15)' : '#0F172A',
-                      color: isSelected ? '#38BDF8' : '#64748B',
-                      cursor: 'pointer'
+                      fontWeight: isSelected ? 600 : 500,
+                      border: isSelected ? '1px solid var(--btn-bg)' : '1px solid var(--border-line)',
+                      background: isSelected ? 'var(--btn-bg)' : 'var(--bg-card)',
+                      color: isSelected ? 'var(--btn-text)' : 'var(--text-muted)',
+                      cursor: 'pointer',
+                      transition: 'all 120ms ease'
                     }}
                   >
                     {opt.label}
@@ -266,3 +284,5 @@ export function ModelAssumptionsDrawer({
     </div>
   );
 }
+
+export default ModelAssumptionsDrawer;

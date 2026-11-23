@@ -82,15 +82,15 @@ export function LiveMapPage({ onNavigate }) {
     >
       <div className="live-map-wrapper" style={{ display: 'grid', gridTemplateColumns: 'minmax(280px, 320px) 1fr', gap: '16px', height: 'calc(100vh - 180px)', minHeight: '550px' }}>
         {/* Left Corridors List */}
-        <div className="ui-card" style={{ display: 'flex', flexDirection: 'column', padding: '14px', overflow: 'hidden' }}>
-          <div style={{ fontSize: '13px', fontWeight: 700, marginBottom: '8px', color: '#0F172A' }}>
+        <div className="ui-card" style={{ display: 'flex', flexDirection: 'column', padding: '16px', overflow: 'hidden', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)', background: 'var(--bg-card)' }}>
+          <div style={{ fontSize: '14px', fontWeight: 700, marginBottom: '6px', color: 'var(--text-primary)' }}>
             Monitored Delhi Corridors
           </div>
-          <div style={{ fontSize: '11.5px', color: '#64748B', marginBottom: '12px' }}>
+          <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '14px' }}>
             Select a corridor to center geographic polyline
           </div>
 
-          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {routesList.map((r, i) => {
               const fromName = r.from_stop_name || r.from || 'Origin Stop';
               const toName = r.to_stop_name || r.to || 'Destination Stop';
@@ -101,23 +101,23 @@ export function LiveMapPage({ onNavigate }) {
                   className={`corridor-item ${isSelected ? 'selected' : ''}`}
                   onClick={() => handleSelectCorridor(r)}
                   style={{
-                    padding: '10px',
-                    borderRadius: '6px',
-                    border: isSelected ? '1.5px solid var(--color-primary)' : '1px solid var(--color-border)',
-                    background: isSelected ? '#EFF6FF' : '#FFFFFF',
+                    padding: '12px',
+                    borderRadius: 'var(--btn-radius, 8px)',
+                    border: isSelected ? '1px solid var(--btn-bg)' : '1px solid var(--border-line)',
+                    background: isSelected ? 'var(--bg-subtle)' : 'var(--bg-card)',
                     cursor: 'pointer',
-                    transition: 'background 150ms ease'
+                    transition: 'all 150ms ease'
                   }}
                 >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
-                    <span style={{ fontWeight: 700, fontSize: '12px', color: 'var(--color-primary)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                    <span style={{ fontWeight: 700, fontSize: '13px', color: 'var(--text-primary)' }}>
                       Route {r.route}
                     </span>
-                    <span style={{ fontSize: '11px', color: '#64748B' }}>
-                      {r.passenger_count ? `${r.passenger_count.toLocaleString()} pax` : 'Seats Available'}
+                    <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
+                      {r.passenger_count ? `${r.passenger_count.toLocaleString()} passengers` : 'Seats Available'}
                     </span>
                   </div>
-                  <div style={{ fontSize: '11px', color: '#334155', lineHeight: 1.35 }}>
+                  <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', lineHeight: 1.4 }}>
                     {fromName} &rarr; {toName}
                   </div>
                 </div>
@@ -127,7 +127,7 @@ export function LiveMapPage({ onNavigate }) {
         </div>
 
         {/* Right Leaflet Map View */}
-        <div className="ui-card" style={{ padding: 0, overflow: 'hidden', height: '100%' }}>
+        <div className="ui-card" style={{ padding: 0, overflow: 'hidden', height: '100%', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)', background: 'var(--bg-card)' }}>
           <DelhiLeafletMap
             origin={origin}
             destination={destination}

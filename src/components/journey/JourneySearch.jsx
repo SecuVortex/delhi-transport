@@ -13,6 +13,7 @@ const POPULAR_DELHI_STOPS = [
 
 /**
  * Editorial Monochrome Suggestion Dropdown
+ * Fully theme-safe: crisp in Light and Dark Mode with zero white-on-white text.
  */
 function SuggestionDropdown({ results, query, onSelectStop }) {
   if (!results) return null;
@@ -21,25 +22,26 @@ function SuggestionDropdown({ results, query, onSelectStop }) {
 
   return (
     <div
+      className="suggestion-dropdown"
       style={{
         position: 'absolute',
-        top: '100%',
+        top: 'calc(100% + 4px)',
         left: 0,
         right: 0,
-        backgroundColor: 'var(--panel-bg, #ffffff)',
-        border: '1px solid var(--border-line, #c8c8c8)',
-        borderRadius: '2px',
-        boxShadow: '0 12px 28px rgba(0, 0, 0, 0.14)',
-        zIndex: 1000,
-        marginTop: '4px',
+        backgroundColor: 'var(--bg-card, #ffffff)',
+        border: '1px solid var(--border-line, #e2e2df)',
+        borderRadius: 'var(--card-radius, 12px)',
+        boxShadow: 'var(--shadow-elevated)',
+        zIndex: 'var(--z-dropdown, 50)',
         maxHeight: '280px',
-        overflowY: 'auto'
+        overflowY: 'auto',
+        padding: '4px 0'
       }}
     >
       {/* 1. Matching Stops */}
       {matchingStops.length > 0 && (
-        <div style={{ padding: '4px 0' }}>
-          <div className="meta-label" style={{ padding: '6px 12px 3px', fontSize: '9px' }}>
+        <div>
+          <div className="meta-label" style={{ padding: '8px 14px 4px', fontSize: '9px', color: 'var(--text-muted)' }}>
             Matching Delhi Stops
           </div>
           {matchingStops.map((st, i) => {
@@ -49,26 +51,30 @@ function SuggestionDropdown({ results, query, onSelectStop }) {
                 key={i}
                 onClick={() => onSelectStop(st.name)}
                 style={{
-                  padding: '8px 12px',
+                  padding: '9px 14px',
                   fontSize: '12.5px',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  borderBottom: '1px solid var(--border-soft, #e4e4e4)',
-                  transition: 'background-color 100ms ease'
+                  borderBottom: '1px solid var(--border-line)',
+                  color: 'var(--text-primary)',
+                  transition: 'background-color 120ms ease'
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--surface-subtle, #f5f5f4)')}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-subtle)')}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
               >
-                <span>
+                <span style={{ color: 'var(--text-primary)' }}>
                   {parts.map((p, idx) => (
-                    <span key={idx} style={p.isMatch ? { fontWeight: 800, textDecoration: 'underline' } : { fontWeight: 400 }}>
+                    <span
+                      key={idx}
+                      style={p.isMatch ? { fontWeight: 800, textDecoration: 'underline', color: 'var(--text-primary)' } : { fontWeight: 400, color: 'var(--text-primary)' }}
+                    >
                       {p.text}
                     </span>
                   ))}
                 </span>
-                <span className="meta-label" style={{ fontSize: '8.5px' }}>
+                <span className="meta-label" style={{ fontSize: '9px', color: 'var(--text-muted)' }}>
                   SELECT &rarr;
                 </span>
               </div>
@@ -79,8 +85,8 @@ function SuggestionDropdown({ results, query, onSelectStop }) {
 
       {/* 2. Connected Bus Routes */}
       {connectedRoutes.length > 0 && (
-        <div style={{ padding: '4px 0', borderTop: '1px solid var(--border-soft, #e4e4e4)' }}>
-          <div className="meta-label" style={{ padding: '6px 12px 3px', fontSize: '9px' }}>
+        <div style={{ borderTop: '1px solid var(--border-line)' }}>
+          <div className="meta-label" style={{ padding: '8px 14px 4px', fontSize: '9px', color: 'var(--text-muted)' }}>
             Connected Routes Serving Area
           </div>
           {connectedRoutes.map((r, i) => (
@@ -88,61 +94,36 @@ function SuggestionDropdown({ results, query, onSelectStop }) {
               key={i}
               onClick={() => onSelectStop(r.servingStop)}
               style={{
-                padding: '6px 12px',
-                fontSize: '11.5px',
+                padding: '8px 14px',
+                fontSize: '12px',
                 cursor: 'pointer',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                borderBottom: '1px solid var(--border-soft, #e4e4e4)'
+                borderBottom: '1px solid var(--border-line)',
+                color: 'var(--text-primary)',
+                transition: 'background-color 120ms ease'
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--surface-subtle, #f5f5f4)')}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'var(--bg-subtle)')}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
             >
               <span
                 style={{
-                  fontSize: '10px',
-                  fontWeight: 700,
-                  backgroundColor: 'var(--accent, #151413)',
-                  color: 'var(--on-accent, #ffffff)',
                   padding: '2px 6px',
-                  borderRadius: '2px'
+                  borderRadius: '4px',
+                  backgroundColor: 'var(--btn-bg)',
+                  color: 'var(--btn-text)',
+                  fontWeight: 700,
+                  fontSize: '10px'
                 }}
               >
                 {r.route}
               </span>
-              <span style={{ fontSize: '11px', color: 'var(--text-muted, #66625c)' }}>
-                {r.corridor}
+              <span style={{ color: 'var(--text-muted)', fontSize: '11px' }}>
+                Via {r.servingStop}
               </span>
             </div>
           ))}
-        </div>
-      )}
-
-      {/* 3. Nearby Hubs */}
-      {nearbyHubs.length > 0 && (
-        <div style={{ padding: '6px 12px 8px', borderTop: '1px solid var(--border-soft, #e4e4e4)' }}>
-          <div className="meta-label" style={{ marginBottom: '4px', fontSize: '9px' }}>
-            Suggested Hubs
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
-            {nearbyHubs.map((hub) => (
-              <span
-                key={hub}
-                onClick={() => onSelectStop(hub)}
-                style={{
-                  fontSize: '10.5px',
-                  padding: '2px 8px',
-                  borderRadius: '30px',
-                  border: '1px solid var(--border-line, #c8c8c8)',
-                  cursor: 'pointer',
-                  color: 'var(--text-primary, #151413)'
-                }}
-              >
-                {hub}
-              </span>
-            ))}
-          </div>
         </div>
       )}
     </div>
@@ -151,8 +132,8 @@ function SuggestionDropdown({ results, query, onSelectStop }) {
 
 /**
  * JourneySearch Component
- * Editorial Monochrome styling, 1-letter instant fuzzy suggestions,
- * sharp CTA buttons, and responsive layout.
+ * Refined Monochrome styling, 1-letter instant fuzzy suggestions,
+ * approachable radii (12px card, 8px inputs, 999px pills).
  */
 export function JourneySearch({
   origin = 'Anand Vihar',
@@ -244,21 +225,21 @@ export function JourneySearch({
     <div
       className="ui-card journey-search-card"
       style={{
-        padding: '14px 18px',
-        backgroundColor: 'var(--panel-bg, #ffffff)',
-        border: '1px solid var(--border-soft, #e4e4e4)',
-        borderRadius: '4px',
-        boxShadow: 'var(--shadow-subtle)',
+        padding: '16px 20px',
+        backgroundColor: 'var(--bg-card, #ffffff)',
+        border: '1px solid var(--border-line, #e2e2df)',
+        borderRadius: 'var(--card-radius, 12px)',
+        boxShadow: 'var(--shadow-card)',
         marginBottom: '16px'
       }}
     >
       <form onSubmit={handleFormSubmit}>
-        {/* Responsive Grid: 1 Crisp Row on Desktop, Clean Stack on Mobile */}
+        {/* Step 1: Compact, Unclipped 1-Row Search Bar */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-            gap: '8px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(135px, 1fr))',
+            gap: '10px',
             alignItems: 'center',
             width: '100%'
           }}
@@ -270,10 +251,10 @@ export function JourneySearch({
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                backgroundColor: 'var(--stage-bg, #ffffff)',
-                border: '1px solid var(--border-line, #c8c8c8)',
-                borderRadius: '0px',
-                padding: '0 10px',
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-line)',
+                borderRadius: 'var(--input-radius, 8px)',
+                padding: '0 12px',
                 height: '42px',
                 minWidth: 0
               }}
@@ -303,7 +284,7 @@ export function JourneySearch({
                   fontSize: '13px',
                   fontFamily: 'Helvetica, Arial, sans-serif',
                   fontWeight: 500,
-                  color: 'var(--text-primary, #151413)'
+                  color: 'var(--text-primary)'
                 }}
               />
             </div>
@@ -331,14 +312,14 @@ export function JourneySearch({
               style={{
                 width: '38px',
                 height: '42px',
-                borderRadius: '0px',
-                border: '1px solid var(--border-line, #c8c8c8)',
-                backgroundColor: 'var(--surface-subtle, #f5f5f4)',
+                borderRadius: 'var(--btn-radius, 8px)',
+                border: '1px solid var(--border-line)',
+                backgroundColor: 'var(--bg-subtle)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                color: 'var(--text-primary, #151413)',
+                color: 'var(--text-primary)',
                 transition: 'all 150ms ease'
               }}
             >
@@ -355,10 +336,10 @@ export function JourneySearch({
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                backgroundColor: 'var(--stage-bg, #ffffff)',
-                border: '1px solid var(--border-line, #c8c8c8)',
-                borderRadius: '0px',
-                padding: '0 10px',
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-line)',
+                borderRadius: 'var(--input-radius, 8px)',
+                padding: '0 12px',
                 height: '42px',
                 minWidth: 0
               }}
@@ -388,7 +369,7 @@ export function JourneySearch({
                   fontSize: '13px',
                   fontFamily: 'Helvetica, Arial, sans-serif',
                   fontWeight: 500,
-                  color: 'var(--text-primary, #151413)'
+                  color: 'var(--text-primary)'
                 }}
               />
             </div>
@@ -417,14 +398,14 @@ export function JourneySearch({
               style={{
                 width: '100%',
                 height: '42px',
-                backgroundColor: 'var(--stage-bg, #ffffff)',
-                border: '1px solid var(--border-line, #c8c8c8)',
-                borderRadius: '0px',
-                fontSize: '12px',
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-line)',
+                borderRadius: 'var(--input-radius, 8px)',
+                fontSize: '12.5px',
                 fontFamily: 'Helvetica, Arial, sans-serif',
                 fontWeight: 500,
-                color: 'var(--text-primary, #151413)',
-                padding: '0 8px',
+                color: 'var(--text-primary)',
+                padding: '0 10px',
                 outline: 'none'
               }}
             >
@@ -445,21 +426,21 @@ export function JourneySearch({
               style={{
                 width: '100%',
                 height: '42px',
-                backgroundColor: 'var(--stage-bg, #ffffff)',
-                border: '1px solid var(--border-line, #c8c8c8)',
-                borderRadius: '0px',
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--border-line)',
+                borderRadius: 'var(--input-radius, 8px)',
                 fontSize: '12.5px',
                 fontFamily: 'Helvetica, Arial, sans-serif',
                 fontWeight: 500,
-                color: 'var(--text-primary, #151413)',
-                padding: '0 8px',
+                color: 'var(--text-primary)',
+                padding: '0 10px',
                 outline: 'none'
               }}
             />
           </div>
 
           {/* 6. Primary CTA Action Button */}
-          <div style={{ minWidth: '125px' }}>
+          <div style={{ minWidth: '130px' }}>
             <button
               type="submit"
               disabled={loading}
@@ -471,7 +452,9 @@ export function JourneySearch({
                 alignItems: 'center',
                 justifyContent: 'center',
                 gap: '6px',
-                borderRadius: '0px'
+                borderRadius: 'var(--btn-radius, 8px)',
+                fontSize: '13px',
+                fontWeight: 600
               }}
             >
               {loading ? (
@@ -489,17 +472,17 @@ export function JourneySearch({
           </div>
         </div>
 
-        {/* Sub-bar with Hub Chips and Editorial Sort Pills */}
+        {/* Step 2: Directly beneath: Prominent 1-Click Demo Preset + Tidy Delhi Hub Chips + Clean Sort */}
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            gap: '10px',
-            marginTop: '12px',
-            paddingTop: '10px',
-            borderTop: '1px solid var(--border-soft, #e4e4e4)'
+            gap: '12px',
+            marginTop: '14px',
+            paddingTop: '12px',
+            borderTop: '1px solid var(--border-line)'
           }}
         >
           {/* Left Group: 1-Click Demo Preset + Delhi Hubs Chips */}
@@ -512,9 +495,15 @@ export function JourneySearch({
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '5px',
-                  height: '28px',
-                  borderRadius: '30px'
+                  gap: '6px',
+                  height: '30px',
+                  borderRadius: '999px',
+                  padding: '5px 14px',
+                  fontWeight: 600,
+                  fontSize: '11.5px',
+                  backgroundColor: 'var(--btn-bg)',
+                  color: 'var(--btn-text)',
+                  border: '1px solid var(--btn-bg)'
                 }}
                 title="Load verified Delhi bus corridor demo (Anand Vihar ISBT to Mandi House Roundabout)"
               >
@@ -529,12 +518,12 @@ export function JourneySearch({
               style={{
                 width: '1px',
                 height: '18px',
-                backgroundColor: 'var(--border-line, #c8c8c8)',
+                backgroundColor: 'var(--border-line)',
                 margin: '0 4px'
               }}
             />
 
-            <span className="meta-label">
+            <span className="meta-label" style={{ color: 'var(--text-muted)' }}>
               {t('delhi_hubs') || 'Delhi Hubs'}:
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
@@ -547,6 +536,12 @@ export function JourneySearch({
                     onClick={() => handleChipClick(station)}
                     className={`chip ${isSelected ? 'active' : ''}`}
                     title={`Select ${station}`}
+                    style={{
+                      height: '28px',
+                      padding: '4px 12px',
+                      fontSize: '11px',
+                      borderRadius: '999px'
+                    }}
                   >
                     {station}
                   </button>
@@ -555,20 +550,20 @@ export function JourneySearch({
             </div>
           </div>
 
-          {/* Right Group: Styled 30px Segmented Pills (Fastest | Least Crowded | Leave Later) */}
+          {/* Right Group: Styled 999px Segmented Pills (Fastest | Least Crowded | Leave Later) */}
           {onPriorityChange && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <span className="meta-label">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="meta-label" style={{ color: 'var(--text-muted)' }}>
                 SORT:
               </span>
               <div
                 style={{
                   display: 'inline-flex',
-                  padding: '2px',
-                  backgroundColor: 'var(--surface-subtle, #f5f5f4)',
-                  borderRadius: '30px',
-                  border: '1px solid var(--border-line, #c8c8c8)',
-                  gap: '2px'
+                  padding: '3px',
+                  backgroundColor: 'var(--bg-subtle)',
+                  borderRadius: '999px',
+                  border: '1px solid var(--border-line)',
+                  gap: '3px'
                 }}
                 role="radiogroup"
                 aria-label="Route comparison sorting"
@@ -581,14 +576,14 @@ export function JourneySearch({
                     alignItems: 'center',
                     gap: '4px',
                     padding: '4px 12px',
-                    borderRadius: '30px',
+                    borderRadius: '999px',
                     fontSize: '11px',
                     border: 'none',
-                    backgroundColor: priority === 'fastest' ? 'var(--accent, #151413)' : 'transparent',
-                    color: priority === 'fastest' ? 'var(--on-accent, #ffffff)' : 'var(--text-muted, #66625c)',
-                    fontWeight: priority === 'fastest' ? 600 : 400,
+                    backgroundColor: priority === 'fastest' ? 'var(--btn-bg)' : 'transparent',
+                    color: priority === 'fastest' ? 'var(--btn-text)' : 'var(--text-muted)',
+                    fontWeight: priority === 'fastest' ? 600 : 500,
                     cursor: 'pointer',
-                    transition: 'all 180ms cubic-bezier(0.16, 1, 0.3, 1)'
+                    transition: 'all 160ms cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
                 >
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -605,14 +600,14 @@ export function JourneySearch({
                     alignItems: 'center',
                     gap: '4px',
                     padding: '4px 12px',
-                    borderRadius: '30px',
+                    borderRadius: '999px',
                     fontSize: '11px',
                     border: 'none',
-                    backgroundColor: (priority === 'least_crowded' || priority === 'comfortable') ? 'var(--accent, #151413)' : 'transparent',
-                    color: (priority === 'least_crowded' || priority === 'comfortable') ? 'var(--on-accent, #ffffff)' : 'var(--text-muted, #66625c)',
-                    fontWeight: (priority === 'least_crowded' || priority === 'comfortable') ? 600 : 400,
+                    backgroundColor: (priority === 'least_crowded' || priority === 'comfortable') ? 'var(--btn-bg)' : 'transparent',
+                    color: (priority === 'least_crowded' || priority === 'comfortable') ? 'var(--btn-text)' : 'var(--text-muted)',
+                    fontWeight: (priority === 'least_crowded' || priority === 'comfortable') ? 600 : 500,
                     cursor: 'pointer',
-                    transition: 'all 180ms cubic-bezier(0.16, 1, 0.3, 1)'
+                    transition: 'all 160ms cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
                 >
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -630,14 +625,14 @@ export function JourneySearch({
                     alignItems: 'center',
                     gap: '4px',
                     padding: '4px 12px',
-                    borderRadius: '30px',
+                    borderRadius: '999px',
                     fontSize: '11px',
                     border: 'none',
-                    backgroundColor: (priority === 'leave_later' || priority === 'later') ? 'var(--accent, #151413)' : 'transparent',
-                    color: (priority === 'leave_later' || priority === 'later') ? 'var(--on-accent, #ffffff)' : 'var(--text-muted, #66625c)',
-                    fontWeight: (priority === 'leave_later' || priority === 'later') ? 600 : 400,
+                    backgroundColor: (priority === 'leave_later' || priority === 'later') ? 'var(--btn-bg)' : 'transparent',
+                    color: (priority === 'leave_later' || priority === 'later') ? 'var(--btn-text)' : 'var(--text-muted)',
+                    fontWeight: (priority === 'leave_later' || priority === 'later') ? 600 : 500,
                     cursor: 'pointer',
-                    transition: 'all 180ms cubic-bezier(0.16, 1, 0.3, 1)'
+                    transition: 'all 160ms cubic-bezier(0.16, 1, 0.3, 1)'
                   }}
                 >
                   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -654,3 +649,5 @@ export function JourneySearch({
     </div>
   );
 }
+
+export default JourneySearch;

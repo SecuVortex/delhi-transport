@@ -133,7 +133,9 @@ export function CommuterMap({
         } catch {
           map.setView(oCoords, 12);
         }
-        setTimeout(() => map.invalidateSize(), 80);
+        setTimeout(() => {
+          try { map.invalidateSize(); } catch {}
+        }, 200);
 
         // Background upgrade to real Delhi road geometry via OSRM with 3s timeout
         fetchRoadGeometry([oCoords, dCoords]).then((roadCoords) => {
@@ -283,7 +285,9 @@ export function CommuterMap({
         }
       }
 
-      setTimeout(() => map.invalidateSize(), 80);
+      setTimeout(() => {
+        try { map.invalidateSize(); } catch {}
+      }, 200);
 
       // 7. Non-blocking background upgrade: fetch road-snapped geometries from OSRM
       try {

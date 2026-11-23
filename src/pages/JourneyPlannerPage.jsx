@@ -213,14 +213,15 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
 
       {/* Error / Offline Retry Banner */}
       {error && (
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '6px', color: '#B91C1C', fontSize: '12.5px', marginBottom: '14px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 16px', background: 'rgba(220, 38, 38, 0.12)', border: '1px solid rgba(220, 38, 38, 0.3)', borderRadius: 'var(--btn-radius, 8px)', color: '#DC2626', fontSize: '12.5px', marginBottom: '14px' }}>
           <div>
-            <strong>Backend Error:</strong> {error}
+            <strong>Backend Connection:</strong> {error.includes('timeout') ? 'Backend is waking up from sleep. Please retry.' : error}
           </div>
           <button
             type="button"
             onClick={executeSearch}
-            style={{ background: '#DC2626', color: '#FFFFFF', border: 'none', borderRadius: '4px', padding: '4px 10px', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}
+            className="btn-primary"
+            style={{ background: '#DC2626', color: '#FFFFFF', border: 'none', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', cursor: 'pointer', fontWeight: 600 }}
           >
             Retry Connection
           </button>
@@ -229,20 +230,28 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
 
       {/* Recent Searches History Strip */}
       {recentSearches.length > 0 && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', padding: '0 4px', marginBottom: '14px' }}>
-          <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--color-text-secondary)', whiteSpace: 'nowrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', padding: '0 2px', marginBottom: '14px' }}>
+          <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
             Recent Queries:
           </span>
           {recentSearches.map((item, idx) => (
             <button
               key={idx}
               type="button"
-              className="station-chip"
+              className="chip station-chip"
               onClick={() => applyRecentSearch(item)}
               title={`Load route from ${item.origin} to ${item.destination}`}
+              style={{
+                borderRadius: '999px',
+                padding: '4px 12px',
+                fontSize: '11px',
+                backgroundColor: 'var(--bg-card)',
+                color: 'var(--text-primary)',
+                border: '1px solid var(--border-line)'
+              }}
             >
               <span>{item.origin}</span>
-              <span style={{ margin: '0 4px', color: 'var(--color-text-secondary)' }}>&rarr;</span>
+              <span style={{ margin: '0 4px', color: 'var(--text-muted)' }}>&rarr;</span>
               <span>{item.destination}</span>
             </button>
           ))}
@@ -269,7 +278,7 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
         </div>
 
         {/* Right Panel: Synchronized Delhi Leaflet Map */}
-        <div className="planner-map-container" style={{ minHeight: '440px', height: '100%', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--color-border)' }}>
+        <div className="planner-map-container" style={{ minHeight: '460px', height: '100%', borderRadius: 'var(--card-radius, 12px)', overflow: 'hidden', border: '1px solid var(--border-line)' }}>
           <CommuterMap
             origin={origin}
             destination={destination}

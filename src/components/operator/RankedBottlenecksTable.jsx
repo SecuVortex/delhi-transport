@@ -4,6 +4,7 @@ import React, { useState } from 'react';
  * Ranked Bottleneck Stretches Table
  * Lists high-congestion stretches from /api/v1/operator/hotspots
  * Clicking any table row zooms map to that stretch and opens popup.
+ * Fully theme-safe: crisp in Light Mode and Dark Mode.
  */
 export function RankedBottlenecksTable({
   hotspots = [],
@@ -41,7 +42,13 @@ export function RankedBottlenecksTable({
       extraBuses = 1;
     }
 
-    const passengerCount = h.adjusted_load ?? (h.passenger_count ? Math.round(h.passenger_count * passMultiplier) : (h.avg_passengers ? Math.round(h.avg_passengers * passMultiplier) : 1));
+    const passengerCount =
+      h.adjusted_load ??
+      (h.passenger_count
+        ? Math.round(h.passenger_count * passMultiplier)
+        : h.avg_passengers
+          ? Math.round(h.avg_passengers * passMultiplier)
+          : 1);
 
     return {
       ...h,
@@ -69,89 +76,98 @@ export function RankedBottlenecksTable({
   });
 
   return (
-    <div className="ranked-bottlenecks-table-card" style={{
-      background: '#FFFFFF',
-      borderRadius: '8px',
-      border: '1px solid #E2E8F0',
-      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
-      overflow: 'hidden',
-      marginTop: '20px'
-    }}>
+    <div
+      className="ranked-bottlenecks-table-card ui-card"
+      style={{
+        background: 'var(--bg-card)',
+        borderRadius: 'var(--card-radius, 12px)',
+        border: '1px solid var(--border-line)',
+        boxShadow: 'var(--shadow-card)',
+        overflow: 'hidden',
+        marginTop: '20px'
+      }}
+    >
       {/* Table Header & Filters */}
-      <div style={{
-        padding: '14px 18px',
-        borderBottom: '1px solid #E2E8F0',
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: '12px',
-        background: '#F8FAFC'
-      }}>
+      <div
+        style={{
+          padding: '14px 18px',
+          borderBottom: '1px solid var(--border-line)',
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: '12px',
+          background: 'var(--bg-subtle)'
+        }}
+      >
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <h2 style={{ fontSize: '14px', fontWeight: 700, color: '#0F172A', margin: 0 }}>
-              Ranked Corridor Bottlenecks (/api/v1/operator/hotspots)
+            <h2 style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+              Ranked Corridor Bottlenecks
             </h2>
-            <span style={{
-              background: '#E2E8F0',
-              color: '#334155',
-              fontSize: '11px',
-              padding: '2px 8px',
-              borderRadius: '9999px',
-              fontWeight: 600
-            }}>
+            <span
+              style={{
+                background: 'var(--border-line)',
+                color: 'var(--text-primary)',
+                fontSize: '11px',
+                padding: '2px 8px',
+                borderRadius: '999px',
+                fontWeight: 600
+              }}
+            >
               {filtered.length} Stretches
             </span>
           </div>
-          <p style={{ fontSize: '12px', color: '#64748B', margin: '2px 0 0 0' }}>
-            Click any row to automatically pan and zoom the Leaflet map to that critical stretch.
-          </p>
+          <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', marginTop: '2px' }}>
+            Click any row to pan &amp; zoom Leaflet map to that corridor stretch.
+          </div>
         </div>
 
-        {/* Filter controls */}
+        {/* Filters */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-          {/* Level Filter Pills */}
-          <div style={{ display: 'flex', gap: '4px' }}>
-            {[
-              { id: 'ALL', label: 'All Stretches' },
-              { id: 'RED', label: 'Crowded (>95%)', color: '#DC2626' },
-              { id: 'AMBER', label: 'Standing Room', color: '#D97706' },
-              { id: 'GREEN', label: 'Seats Available', color: '#16A34A' }
-            ].map((f) => (
-              <button
-                key={f.id}
-                type="button"
-                onClick={() => setStatusFilter(f.id)}
-                style={{
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                  border: statusFilter === f.id ? '1px solid #3B82F6' : '1px solid #CBD5E1',
-                  background: statusFilter === f.id ? '#2563EB' : '#FFFFFF',
-                  color: statusFilter === f.id ? '#FFFFFF' : '#475569',
-                  cursor: 'pointer'
-                }}
-              >
-                {f.label}
-              </button>
-            ))}
+          {/* Status Buttons */}
+          <div style={{ display: 'flex', gap: '3px', background: 'var(--bg-card)', padding: '2px', borderRadius: '8px', border: '1px solid var(--border-line)' }}>
+            {['ALL', 'RED', 'AMBER', 'GREEN'].map((st) => {
+              const isActive = statusFilter === st;
+              const label = st === 'ALL' ? 'All' : st === 'RED' ? 'Crowded' : st === 'AMBER' ? 'Moderate' : 'Low';
+              return (
+                <button
+                  key={st}
+                  type="button"
+                  onClick={() => setStatusFilter(st)}
+                  style={{
+                    padding: '3px 9px',
+                    fontSize: '11px',
+                    borderRadius: '6px',
+                    border: 'none',
+                    cursor: 'pointer',
+                    background: isActive ? 'var(--btn-bg)' : 'transparent',
+                    color: isActive ? 'var(--btn-text)' : 'var(--text-muted)',
+                    fontWeight: isActive ? 600 : 500,
+                    transition: 'all 120ms ease'
+                  }}
+                >
+                  {label}
+                </button>
+              );
+            })}
           </div>
 
-          {/* Search Box */}
+          {/* Quick Search */}
           <input
             type="text"
+            placeholder="Filter route/stop..."
             value={filterText}
             onChange={(e) => setFilterText(e.target.value)}
-            placeholder="Search route or stop..."
             style={{
-              padding: '4px 10px',
+              padding: '5px 10px',
               fontSize: '12px',
-              border: '1px solid #CBD5E1',
-              borderRadius: '6px',
+              border: '1px solid var(--border-line)',
+              borderRadius: 'var(--input-radius, 8px)',
               outline: 'none',
-              width: '180px'
+              width: '160px',
+              backgroundColor: 'var(--bg-card)',
+              color: 'var(--text-primary)'
             }}
           />
         </div>
@@ -161,23 +177,23 @@ export function RankedBottlenecksTable({
       <div style={{ maxHeight: '420px', overflowY: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', textAlign: 'left' }}>
           <thead>
-            <tr style={{ background: '#F1F5F9', color: '#475569', borderBottom: '1px solid #E2E8F0', position: 'sticky', top: 0, zIndex: 2 }}>
-              <th style={{ padding: '9px 14px', fontWeight: 600, width: '45px' }}>#</th>
-              <th style={{ padding: '9px 14px', fontWeight: 600, width: '110px' }}>Route</th>
-              <th style={{ padding: '9px 14px', fontWeight: 600 }}>From Stop (Origin)</th>
-              <th style={{ padding: '9px 14px', fontWeight: 600 }}>To Stop (Destination)</th>
-              <th style={{ padding: '9px 14px', fontWeight: 600, width: '120px' }}>Peak Load</th>
-              <th style={{ padding: '9px 14px', fontWeight: 600, width: '130px' }}>Crowding Status</th>
-              <th style={{ padding: '9px 14px', fontWeight: 600, width: '140px' }}>Extra Buses/hr</th>
-              <th style={{ padding: '9px 14px', fontWeight: 600, textAlign: 'center', width: '90px' }}>Map Action</th>
+            <tr style={{ background: 'var(--bg-subtle)', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-line)', position: 'sticky', top: 0, zIndex: 2 }}>
+              <th style={{ padding: '10px 14px', fontWeight: 600, width: '45px' }}>#</th>
+              <th style={{ padding: '10px 14px', fontWeight: 600, width: '100px' }}>Route</th>
+              <th style={{ padding: '10px 14px', fontWeight: 600 }}>From Stop</th>
+              <th style={{ padding: '10px 14px', fontWeight: 600 }}>To Stop</th>
+              <th style={{ padding: '10px 14px', fontWeight: 600, width: '120px' }}>Peak Load</th>
+              <th style={{ padding: '10px 14px', fontWeight: 600, width: '130px' }}>Crowding Status</th>
+              <th style={{ padding: '10px 14px', fontWeight: 600, width: '130px' }}>Extra Buses/hr</th>
+              <th style={{ padding: '10px 14px', fontWeight: 600, textAlign: 'center', width: '90px' }}>Map Action</th>
             </tr>
           </thead>
           <tbody>
             {isLoading && (
               <tr>
-                <td colSpan="8" style={{ padding: '24px', textAlign: 'center', color: '#64748B' }}>
+                <td colSpan="8" style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)' }}>
                   <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#2563EB', animation: 'ping 1s infinite' }} />
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#3B82F6', animation: 'ping 1s infinite' }} />
                     Querying DuckDB corridor bottlenecks...
                   </div>
                 </td>
@@ -186,87 +202,99 @@ export function RankedBottlenecksTable({
 
             {!isLoading && filtered.length === 0 && (
               <tr>
-                <td colSpan="8" style={{ padding: '24px', textAlign: 'center', color: '#64748B' }}>
+                <td colSpan="8" style={{ padding: '24px', textAlign: 'center', color: 'var(--text-muted)' }}>
                   No bottlenecks matching current filters.
                 </td>
               </tr>
             )}
 
             {!isLoading && filtered.map((row, index) => {
-              const isSelected = selectedStretch && (
-                (selectedStretch.tableId && selectedStretch.tableId === row.tableId) ||
-                (selectedStretch.route === row.route && (selectedStretch.fromStop === row.fromStop || selectedStretch.start_stop_name === row.fromStop))
-              );
+              const isSelected =
+                selectedStretch &&
+                ((selectedStretch.tableId && selectedStretch.tableId === row.tableId) ||
+                  (selectedStretch.route === row.route &&
+                    (selectedStretch.fromStop === row.fromStop || selectedStretch.start_stop_name === row.fromStop)));
 
               const badgeColor = row.level === 'RED' ? '#DC2626' : row.level === 'AMBER' ? '#D97706' : '#16A34A';
-              const badgeBg = row.level === 'RED' ? '#FEE2E2' : row.level === 'AMBER' ? '#FEF3C7' : '#DCFCE7';
+              const badgeBg =
+                row.level === 'RED'
+                  ? 'rgba(220, 38, 38, 0.12)'
+                  : row.level === 'AMBER'
+                    ? 'rgba(217, 119, 6, 0.12)'
+                    : 'rgba(22, 163, 74, 0.12)';
 
               return (
                 <tr
                   key={row.tableId || index}
                   onClick={() => onSelectStretch(row)}
                   style={{
-                    borderBottom: '1px solid #E2E8F0',
+                    borderBottom: '1px solid var(--border-line)',
                     cursor: 'pointer',
-                    background: isSelected ? '#EFF6FF' : index % 2 === 0 ? '#FFFFFF' : '#FAFAFA',
-                    transition: 'background-color 0.1s ease'
+                    background: isSelected ? 'var(--bg-subtle)' : 'transparent',
+                    transition: 'background-color 100ms ease'
                   }}
                   onMouseEnter={(e) => {
-                    if (!isSelected) e.currentTarget.style.backgroundColor = '#F1F5F9';
+                    if (!isSelected) e.currentTarget.style.backgroundColor = 'var(--bg-subtle)';
                   }}
                   onMouseLeave={(e) => {
-                    if (!isSelected) e.currentTarget.style.backgroundColor = index % 2 === 0 ? '#FFFFFF' : '#FAFAFA';
+                    if (!isSelected) e.currentTarget.style.backgroundColor = 'transparent';
                   }}
                 >
-                  <td style={{ padding: '10px 14px', fontWeight: 700, color: '#64748B' }}>
+                  <td style={{ padding: '10px 14px', fontWeight: 600, color: 'var(--text-muted)' }}>
                     #{index + 1}
                   </td>
-                  <td style={{ padding: '10px 14px', fontWeight: 700, color: '#2563EB' }}>
+                  <td style={{ padding: '10px 14px', fontWeight: 700, color: 'var(--text-primary)' }}>
                     {row.route}
                   </td>
-                  <td style={{ padding: '10px 14px', fontWeight: 600, color: '#1E293B' }}>
+                  <td style={{ padding: '10px 14px', fontWeight: 500, color: 'var(--text-primary)' }}>
                     {row.fromStop}
                   </td>
-                  <td style={{ padding: '10px 14px', color: '#334155' }}>
+                  <td style={{ padding: '10px 14px', color: 'var(--text-muted)' }}>
                     {row.toStop}
                   </td>
                   <td style={{ padding: '10px 14px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ fontWeight: 700, color: badgeColor, minWidth: '40px' }}>
+                      <span style={{ fontWeight: 700, color: badgeColor, minWidth: '38px' }} className="tabular-nums">
                         {row.peakLoadPct}%
                       </span>
-                      <div style={{ flex: 1, height: '6px', background: '#E2E8F0', borderRadius: '3px', overflow: 'hidden' }}>
-                        <div style={{
-                          height: '100%',
-                          width: `${Math.min(100, row.peakLoadPct)}%`,
-                          background: badgeColor,
-                          borderRadius: '3px'
-                        }} />
+                      <div style={{ flex: 1, height: '5px', background: 'var(--border-line)', borderRadius: '3px', overflow: 'hidden' }}>
+                        <div
+                          style={{
+                            height: '100%',
+                            width: `${Math.min(100, row.peakLoadPct)}%`,
+                            background: badgeColor,
+                            borderRadius: '3px'
+                          }}
+                        />
                       </div>
                     </div>
                   </td>
                   <td style={{ padding: '10px 14px' }}>
-                    <span style={{
-                      display: 'inline-block',
-                      padding: '2px 8px',
-                      borderRadius: '4px',
-                      fontSize: '11px',
-                      fontWeight: 700,
-                      color: badgeColor,
-                      background: badgeBg
-                    }}>
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        padding: '2px 8px',
+                        borderRadius: '999px',
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        color: badgeColor,
+                        background: badgeBg
+                      }}
+                    >
                       {row.level === 'RED' ? 'Crowded (>95%)' : row.level === 'AMBER' ? 'Standing Room' : 'Seats Available'}
                     </span>
                   </td>
                   <td style={{ padding: '10px 14px' }}>
-                    <span style={{
-                      fontWeight: 700,
-                      fontSize: '12px',
-                      color: row.extraBuses > 0 ? '#DC2626' : '#16A34A',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px'
-                    }}>
+                    <span
+                      style={{
+                        fontWeight: 600,
+                        fontSize: '11.5px',
+                        color: row.extraBuses > 0 ? '#DC2626' : '#16A34A',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px'
+                      }}
+                    >
                       {row.extraBuses > 0 ? `+${row.extraBuses} buses/hr` : 'Adequate'}
                     </span>
                   </td>
@@ -278,10 +306,10 @@ export function RankedBottlenecksTable({
                         onSelectStretch(row);
                       }}
                       style={{
-                        background: isSelected ? '#2563EB' : '#F1F5F9',
-                        color: isSelected ? '#FFFFFF' : '#2563EB',
-                        border: '1px solid #CBD5E1',
-                        borderRadius: '4px',
+                        background: isSelected ? 'var(--btn-bg)' : 'var(--bg-subtle)',
+                        color: isSelected ? 'var(--btn-text)' : 'var(--text-primary)',
+                        border: '1px solid var(--border-line)',
+                        borderRadius: '6px',
                         padding: '3px 8px',
                         fontSize: '11px',
                         fontWeight: 600,
@@ -300,3 +328,5 @@ export function RankedBottlenecksTable({
     </div>
   );
 }
+
+export default RankedBottlenecksTable;

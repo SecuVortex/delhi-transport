@@ -180,8 +180,10 @@ export function DelhiLeafletMap({
         } catch {}
       }
 
-      // Invalidate size on data load
-      setTimeout(() => map.invalidateSize(), 100);
+      // Invalidate size once after 180ms page entrance transition completes
+      setTimeout(() => {
+        try { map.invalidateSize(); } catch {}
+      }, 200);
       return;
     }
 
@@ -290,7 +292,9 @@ export function DelhiLeafletMap({
       }
     }
 
-    setTimeout(() => map.invalidateSize(), 100);
+    setTimeout(() => {
+      try { map.invalidateSize(); } catch {}
+    }, 200);
   }, [origin, destination, stretches, legs, bottlenecks, crowdingPill, mode]);
 
   return (

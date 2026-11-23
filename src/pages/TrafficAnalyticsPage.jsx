@@ -196,25 +196,25 @@ export function TrafficAnalyticsPage({ onOpenProofModal }) {
       )}
 
       {/* 3. Embedded Interactive Leaflet Bottleneck Map */}
-      <div className="ui-card" style={{ padding: '0', overflow: 'hidden', marginBottom: '20px' }}>
+      <div className="ui-card bottleneck-map-container" style={{ padding: '0', overflow: 'hidden', marginBottom: '20px', borderRadius: 'var(--card-radius, 12px)', border: '1px solid var(--border-line)' }}>
         <div style={{
-          padding: '12px 18px',
-          borderBottom: '1px solid #E2E8F0',
+          padding: '14px 18px',
+          borderBottom: '1px solid var(--border-line)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          background: '#F8FAFC'
+          background: 'var(--bg-subtle)'
         }}>
           <div>
-            <div style={{ fontSize: '13.5px', fontWeight: 700, color: '#0F172A' }}>
+            <div style={{ fontSize: '13.5px', fontWeight: 700, color: 'var(--text-primary)' }}>
               Interactive Delhi Corridor Bottleneck Map
             </div>
-            <div style={{ fontSize: '11.5px', color: '#64748B' }}>
+            <div style={{ fontSize: '11.5px', color: 'var(--text-muted)' }}>
               Leaflet visualization of critical stretches colored by load ratio. Click any stretch to zoom and inspect.
             </div>
           </div>
           {isLoading && (
-            <span style={{ fontSize: '11px', color: '#2563EB', fontWeight: 600 }}>
+            <span style={{ fontSize: '11px', color: 'var(--text-primary)', fontWeight: 600 }}>
               Updating map layers...
             </span>
           )}
