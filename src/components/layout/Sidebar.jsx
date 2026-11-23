@@ -1,18 +1,38 @@
 import React from 'react';
-import { PRIMARY_NAV_ITEMS, FOOTER_NAV_ITEMS } from '../../constants/navigation.js';
+import { useSettings } from '../../context/SettingsContext.jsx';
+
+const COMMUTER_NAV_ITEMS = [
+  { id: 'journey', key: 'commuter_dashboard', defaultLabel: 'Commuter Dashboard', icon: 'Route' },
+  { id: 'live-map', key: 'live_route_map', defaultLabel: 'Live Route Map', icon: 'Map' },
+  { id: 'routes', key: 'bus_routes', defaultLabel: 'Bus Routes', icon: 'Bus' },
+  { id: 'help', key: 'help_guide', defaultLabel: 'Help / Crowding Guide', icon: 'HelpCircle' },
+  { id: 'settings', key: 'settings', defaultLabel: 'Settings', icon: 'Settings' }
+];
+
+const OPERATOR_NAV_ITEMS = [
+  { id: 'analytics', key: 'operator_dashboard', defaultLabel: 'Operator Dashboard', icon: 'BarChart3' },
+  { id: 'overview', key: 'operations_overview', defaultLabel: 'Operations Overview', icon: 'LayoutDashboard' },
+  { id: 'live-map', key: 'live_map', defaultLabel: 'Live Map', icon: 'Map' },
+  { id: 'validation', key: 'validation_proof', defaultLabel: 'Validation & Proof', icon: 'ShieldCheck' },
+  { id: 'settings', key: 'settings', defaultLabel: 'Settings', icon: 'Settings' }
+];
 
 /**
  * Persistent Left Sidebar Component
- * Supports expanded and collapsed states with strict border and color discipline.
+ * Supports expanded and collapsed states, switching cleanly between Commuter and Operator profiles.
  */
 export function Sidebar({
   activePage,
   onNavigate,
+  activeProfile = 'commuter',
   isCollapsed,
   onToggleCollapse,
   isMobileOpen,
   onCloseMobile
 }) {
+  const { t } = useSettings();
+  const navItems = activeProfile === 'operator' ? OPERATOR_NAV_ITEMS : COMMUTER_NAV_ITEMS;
+
   return (
     <aside
       className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isMobileOpen ? 'mobile-open' : ''}`}
@@ -22,7 +42,7 @@ export function Sidebar({
         <div
           className="sidebar-logo"
           onClick={() => {
-            onNavigate('overview');
+            onNavigate(activeProfile === 'operator' ? 'overview' : 'journey');
             if (isMobileOpen) onCloseMobile();
           }}
           style={{ cursor: 'pointer' }}
@@ -40,7 +60,9 @@ export function Sidebar({
           {!isCollapsed && (
             <div className="sidebar-logo-info">
               <div className="sidebar-logo-text">MetroTransit</div>
-              <div className="sidebar-logo-sub">Mobility Intelligence</div>
+              <div className="sidebar-logo-sub">
+                {activeProfile === 'operator' ? 'Operations Intelligence' : t('everyday_commuter')}
+              </div>
             </div>
           )}
         </div>
@@ -61,10 +83,15 @@ export function Sidebar({
 
       <div className="sidebar-content">
         <nav className="sidebar-nav-group" aria-label="Primary Navigation">
-          {!isCollapsed && <div className="sidebar-nav-label">Navigation</div>}
+          {!isCollapsed && (
+            <div className="sidebar-nav-label">
+              {activeProfile === 'operator' ? t('operator_portal') : t('commuter_portal')}
+            </div>
+          )}
 
-          {PRIMARY_NAV_ITEMS.map((item) => {
+          {navItems.map((item) => {
             const isActive = activePage === item.id;
+            const label = t(item.key) || item.defaultLabel;
             return (
               <button
                 key={item.id}
@@ -74,10 +101,10 @@ export function Sidebar({
                   onNavigate(item.id);
                   if (isMobileOpen) onCloseMobile();
                 }}
-                aria-label={item.label}
+                aria-label={label}
               >
                 <NavIcon name={item.icon} />
-                {!isCollapsed && <span className="nav-text">{item.label}</span>}
+                {!isCollapsed && <span className="nav-text">{label}</span>}
                 {!isCollapsed && item.badge && (
                   <span
                     className="badge-count"
@@ -93,31 +120,29 @@ export function Sidebar({
       </div>
 
       <div className="sidebar-footer">
-        {FOOTER_NAV_ITEMS.map((item) => {
-          const isActive = activePage === item.id;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              className={`nav-item ${isActive ? 'active' : ''}`}
-              onClick={() => {
-                onNavigate(item.id);
-                if (isMobileOpen) onCloseMobile();
-              }}
-              aria-label={item.label}
-            >
-              <NavIcon name={item.icon} />
-              {!isCollapsed && <span className="nav-text">{item.label}</span>}
-            </button>
-          );
-        })}
-
         {!isCollapsed && (
-          <div style={{ padding: '8px 12px', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '10px', borderTop: '1px solid var(--color-border)' }}>
-            <div className="user-avatar-sm">AT</div>
+          <div style={{
+            padding: '8px 12px',
+            marginTop: '4px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            borderTop: '1px solid var(--color-border)'
+          }}>
+            <div className="user-avatar-sm" style={{
+              background: activeProfile === 'operator' ? '#0F172A' : '#2563EB',
+              color: '#FFFFFF',
+              fontWeight: 700
+            }}>
+              {activeProfile === 'operator' ? 'DP' : 'EC'}
+            </div>
             <div className="sidebar-logo-info">
-              <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text)' }}>Transit Operator</div>
-              <div style={{ fontSize: '11px', color: 'var(--color-text-secondary)' }}>Demo Session</div>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text)' }}>
+                {activeProfile === 'operator' ? t('dtc_planner') : t('everyday_commuter')}
+              </div>
+              <div style={{ fontSize: '11px', color: 'var(--color-text-secondary)' }}>
+                {activeProfile === 'operator' ? 'Network Intelligence' : 'Delhi Metro & Bus'}
+              </div>
             </div>
           </div>
         )}
@@ -174,6 +199,14 @@ function NavIcon({ name }) {
         <path d="M18 17V9" />
         <path d="M13 17V5" />
         <path d="M8 17v-3" />
+      </svg>
+    );
+  }
+  if (name === 'ShieldCheck' || name === 'CheckCircle') {
+    return (
+      <svg className="lucide" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <polyline points="9 12 11 14 15 10" />
       </svg>
     );
   }

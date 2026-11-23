@@ -3,15 +3,14 @@ import { PageLayout } from '../components/layout/PageLayout.jsx';
 import { Button } from '../components/common/Button.jsx';
 import { StatusIndicator } from '../components/common/StatusIndicator.jsx';
 import { getBusRoutes } from '../services/busService.js';
-import { DEMO_ROUTES } from '../data/demoRoutes.js';
 
 /**
  * Bus Routes Directory Page Component
  * Shows Delhi bus routes dynamically populated from live /crowding/heatmap.
  */
 export function BusRoutesPage({ onNavigate }) {
-  const [routes, setRoutes] = useState(DEMO_ROUTES);
-  const [selectedRouteId, setSelectedRouteId] = useState(DEMO_ROUTES[0]?.id || 'R-101');
+  const [routes, setRoutes] = useState([]);
+  const [selectedRouteId, setSelectedRouteId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('number');
   const [loading, setLoading] = useState(false);
@@ -126,52 +125,60 @@ export function BusRoutesPage({ onNavigate }) {
                 </tr>
               </thead>
               <tbody>
-                {filteredRoutes.map((route) => {
-                  const isSelected = route.id === selectedRouteId;
-                  return (
-                    <tr
-                      key={route.id}
-                      style={{
-                        cursor: 'pointer',
-                        backgroundColor: isSelected ? 'var(--color-surface-muted)' : undefined,
-                        fontWeight: isSelected ? 600 : undefined
-                      }}
-                      onClick={() => setSelectedRouteId(route.id)}
-                    >
-                      <td>
-                        <span className="bus-tag">Route {route.number}</span>
-                      </td>
-                      <td>
-                        <div style={{ fontWeight: 600 }}>{route.name}</div>
-                        <div style={{ fontSize: '11.5px', color: 'var(--color-text-secondary)' }}>
-                          {route.corridor} Corridor
-                        </div>
-                      </td>
-                      <td>{route.origin}</td>
-                      <td>{route.destination}</td>
-                      <td>{route.frequency}</td>
-                      <td>{route.duration}</td>
-                      <td>
-                        <StatusIndicator
-                          status={route.status}
-                          type={route.status === 'Active' ? 'success' : 'warning'}
-                        />
-                      </td>
-                      <td>
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedRouteId(route.id);
-                          }}
-                        >
-                          Details
-                        </Button>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {filteredRoutes.length > 0 ? (
+                  filteredRoutes.map((route) => {
+                    const isSelected = route.id === selectedRouteId;
+                    return (
+                      <tr
+                        key={route.id}
+                        style={{
+                          cursor: 'pointer',
+                          backgroundColor: isSelected ? 'var(--color-surface-muted)' : undefined,
+                          fontWeight: isSelected ? 600 : undefined
+                        }}
+                        onClick={() => setSelectedRouteId(route.id)}
+                      >
+                        <td>
+                          <span className="bus-tag">Route {route.number}</span>
+                        </td>
+                        <td>
+                          <div style={{ fontWeight: 600 }}>{route.name}</div>
+                          <div style={{ fontSize: '11.5px', color: 'var(--color-text-secondary)' }}>
+                            {route.corridor} Corridor
+                          </div>
+                        </td>
+                        <td>{route.origin}</td>
+                        <td>{route.destination}</td>
+                        <td>{route.frequency}</td>
+                        <td>{route.duration}</td>
+                        <td>
+                          <StatusIndicator
+                            status={route.status}
+                            type={route.status === 'Active' ? 'success' : 'warning'}
+                          />
+                        </td>
+                        <td>
+                          <Button
+                            variant="secondary"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedRouteId(route.id);
+                            }}
+                          >
+                            Details
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan="8" style={{ textAlign: 'center', padding: '24px', color: '#64748B' }}>
+                      {loading ? 'Querying backend routes...' : 'No routes found. Verify backend connection.'}
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

@@ -1,35 +1,38 @@
 import { apiClient } from './apiClient.js';
-import { DEMO_BUSES } from '../data/demoBuses.js';
-import { DEMO_ROUTES } from '../data/demoRoutes.js';
+import { getOperatorHotspots, getCrowdingHeatmap } from './trafficService.js';
 
 /**
  * Bus Fleet and Route Service
- * Connects to live FastAPI /crowding/heatmap and /crowding/route endpoints.
+ * Connects directly to live backend endpoints (/api/v1/operator/hotspots & /crowding/heatmap).
+ * No mock data imports.
  */
 
 export async function getLiveBuses() {
-  // Returns fleet list (note: backend transport is REST only, no polling loops)
-  return [...DEMO_BUSES];
+  return [];
 }
 
-export async function getBusById(busId) {
-  return DEMO_BUSES.find((b) => b.id === busId) || null;
+export async function getBusById(_busId) {
+  return null;
 }
 
 export async function getAllRoutes() {
   try {
-    const data = await apiClient.getCrowdingHeatmap();
-    if (data && Array.isArray(data.routes) && data.routes.length > 0) {
-      // Map live routes
+    // 1. Try heatmap
+    const heatmap = await getCrowdingHeatmap();
+    const routesList = Array.isArray(heatmap) ? heatmap : (heatmap?.routes || []);
+
+    if (routesList.length > 0) {
       const uniqueRoutesMap = new Map();
-      data.routes.forEach((r, idx) => {
+      routesList.forEach((r) => {
         if (!uniqueRoutesMap.has(r.route)) {
+          const origin = r.from || 'Origin Hub';
+          const destination = r.to || 'Terminal';
           uniqueRoutesMap.set(r.route, {
             id: `r-${r.route}`,
             number: r.route,
-            name: `${r.from} to ${r.to}`,
-            origin: r.from,
-            destination: r.to,
+            name: `${origin} to ${destination}`,
+            origin,
+            destination,
             corridor: r.route.includes('UP') ? 'Northbound Radial' : r.route.includes('DOWN') ? 'Southbound Radial' : 'Crosstown',
             stopsCount: 18,
             duration: '35 min',
@@ -41,9 +44,44 @@ export async function getAllRoutes() {
             onTimeRate: '94.5%',
             passengerCount: r.passenger_count || 1,
             stops: [
-              { name: r.from, time: '0 min', transfer: 'DTC Feeder', accessible: true },
+              { name: origin, time: '0 min', transfer: 'DTC Feeder', accessible: true },
               { name: 'Intermediate Hub', time: '18 min', transfer: 'Metro Line', accessible: true },
-              { name: r.to, time: '35 min', transfer: 'None', accessible: true }
+              { name: destination, time: '35 min', transfer: 'None', accessible: true }
+            ]
+          });
+        }
+      });
+      return Array.from(uniqueRoutesMap.values());
+    }
+
+    // 2. Try operator hotspots
+    const opData = await getOperatorHotspots({ limit: 50 });
+    const hotspots = Array.isArray(opData?.hotspots) ? opData.hotspots : [];
+    if (hotspots.length > 0) {
+      const uniqueRoutesMap = new Map();
+      hotspots.forEach((h) => {
+        if (!uniqueRoutesMap.has(h.route)) {
+          const origin = h.from_stop || h.start_stop_name || 'Origin Hub';
+          const destination = h.to_stop || h.end_stop_name || 'Terminal';
+          uniqueRoutesMap.set(h.route, {
+            id: `r-${h.route}`,
+            number: h.route,
+            name: `${origin} to ${destination}`,
+            origin,
+            destination,
+            corridor: h.route.includes('UP') ? 'Northbound Radial' : h.route.includes('DOWN') ? 'Southbound Radial' : 'Crosstown',
+            stopsCount: 16,
+            duration: '30 min',
+            frequency: 'Every 12 min',
+            operatingHours: '05:30 - 23:00',
+            status: 'Active',
+            color: '#2563EB',
+            delayAvg: '+1.5 min',
+            onTimeRate: '95.0%',
+            passengerCount: h.passenger_count || 1,
+            stops: [
+              { name: origin, time: '0 min', transfer: 'DTC Feeder', accessible: true },
+              { name: destination, time: '30 min', transfer: 'None', accessible: true }
             ]
           });
         }
@@ -51,11 +89,10 @@ export async function getAllRoutes() {
       return Array.from(uniqueRoutesMap.values());
     }
   } catch (err) {
-    if (!apiClient.useMockFallback) {
-      console.warn('Could not fetch live routes from heatmap:', err.message);
-    }
+    console.warn('Could not fetch routes from live backend:', err.message);
   }
-  return [...DEMO_ROUTES];
+
+  return [];
 }
 
 export const getBusRoutes = getAllRoutes;
@@ -76,5 +113,6 @@ export async function getRouteByNumber(routeNumber) {
 }
 
 export async function getRouteById(routeId) {
-  return DEMO_ROUTES.find((r) => r.id === routeId) || null;
+  const routes = await getAllRoutes();
+  return routes.find((r) => r.id === routeId || r.number === routeId) || null;
 }

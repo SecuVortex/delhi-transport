@@ -10,14 +10,14 @@ import { getSystemHealth, getCrowdingHeatmap } from '../services/trafficService.
  * Primary operational screen with live KPI metrics, quick journey lookup,
  * interactive Delhi corridor preview, and top passenger volume routes.
  */
-export function OverviewPage({ onNavigate }) {
-  const [origin, setOrigin] = useState('Anand Vihar');
-  const [destination, setDestination] = useState('Connaught Place');
+export function OverviewPage({ onNavigate, onOpenProofModal }) {
+  const [origin, setOrigin] = useState('S J Hospital');
+  const [destination, setDestination] = useState('South Extension 1');
   const [date, setDate] = useState('2026-11-22');
-  const [time, setTime] = useState('18:00');
+  const [time, setTime] = useState('08:00');
 
   const [healthData, setHealthData] = useState({
-    total_tickets: 2559899,
+    total_tickets: 2232041,
     db_ready: true,
     gtfs_mode: 'inferred'
   });
@@ -30,12 +30,13 @@ export function OverviewPage({ onNavigate }) {
       setLoading(true);
       try {
         const [health, heatmap] = await Promise.all([
-          getSystemHealth().catch(() => ({ total_tickets: 2559899, db_ready: true, gtfs_mode: 'inferred' })),
+          getSystemHealth().catch(() => ({ total_tickets: 2232041, db_ready: true, gtfs_mode: 'inferred' })),
           getCrowdingHeatmap().catch(() => ({ routes: [] }))
         ]);
         if (isMounted) {
           setHealthData(health);
-          setHeatmapRoutes(heatmap.routes || []);
+          const routes = Array.isArray(heatmap) ? heatmap : (heatmap && heatmap.routes) ? heatmap.routes : [];
+          setHeatmapRoutes(routes);
         }
       } finally {
         if (isMounted) setLoading(false);
@@ -63,13 +64,18 @@ export function OverviewPage({ onNavigate }) {
 
   return (
     <PageLayout
-      title="Network Overview"
+      title="Operations Overview"
       subtitle="Operational monitoring, passenger volume metrics, and quick journey lookup grounded in Delhi ticketing records."
       actions={
         <>
           <Button variant="secondary" size="sm" onClick={() => onNavigate('analytics')}>
             Corridor Analytics
           </Button>
+          {onOpenProofModal && (
+            <Button variant="secondary" size="sm" onClick={onOpenProofModal}>
+              Validation & Proof
+            </Button>
+          )}
           <Button variant="primary" size="sm" onClick={() => onNavigate('journey')}>
             Plan Journey
           </Button>

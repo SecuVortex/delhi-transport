@@ -9,7 +9,7 @@
   1. Everyday public transit commuters seeking fast, reliable route planning with walking links and step-free accessibility details.
   2. Municipal transit operators, dispatchers, and transport planners monitoring corridor congestion, fleet telemetry, and service disruptions.
 - Project type: Modular React Single-Page Web Application (SPA) powered by Vite.
-- Current development stage: Phase 4 Complete (Connected to Live FastAPI Backend at http://192.168.0.103:8000 for Delhi Transport Stack Hackathon: Problem 2: Crowdedness-Aware Bus Journey Planner. Grounded in DuckDB querying 2.55M October 2026 Delhi ticket transactions, interactive Leaflet Delhi map, sub-second glanceable Green/Amber/Red crowding pills, confidence badges, segmented per-stretch crowding bars, and operator model assumptions drawer).
+- Current development stage: Phase 5 Complete (Connected to Live FastAPI Backend at http://192.168.0.103:8000 for Delhi Transport Stack Hackathon: Problem 2: Crowdedness-Aware Bus Journey Planner. Grounded in DuckDB querying 2.55M October 2026 Delhi ticket transactions, keyless OpenStreetMap / Esri World Street Map tiles, live instant route polylines + non-blocking OSRM road geometry, resilient backend health check, full Settings system with working Theme (Light / Dark / System), Language switcher (English / हिन्दी), Stop & Crowding notification alerts with native Notification API + in-app toast, Time format (12h / 24h), and Terms of Use & Privacy Policy legal modals).
 - Primary objective: Deliver a clean, minimal, distraction-free interface where users can plan journeys and monitor transit networks without visual clutter, heavy marketing decorations, or unnecessary complexity.
 - Main differentiator: Zero decorative bloat; 100% functional data presentation; pure white base canvas (#FFFFFF); restrained status colors; sub-second glanceable route comparisons; integrated vector SVG maps and telemetry inspectors; highly readable, maintainable React codebase designed for easy manual extension; dedicated mobile layouts with 48px touch targets and bottom sheet drawer.
 
@@ -33,7 +33,7 @@ Major features:
 4. Bus Routes Directory: Filterable route directory by corridor type (Radial, Crosstown, Circulator, Express, Feeder), sorting by frequency or duration, and expandable stop sequence timeline with accessibility badges.
 5. Traffic Analytics: Average delay KPIs, hourly congestion trend bar chart, route delay distribution chart, and bottleneck hotspot table with primary delay causes.
 6. Service Alerts: Tab-filtered incident table (All, Severe, Moderate, Advisory) with an incident detail inspection modal.
-7. Platform Settings: High-contrast mode toggle, compact density switch, delay threshold alerts, map overlay defaults, and walking speed calibration.
+7. Platform Settings: Full Settings page & context (Theme: Light / Dark / System + quick header Sun/Moon toggle; Language: English / हिन्दी; Stop & Crowding notifications with native browser check and in-app toast preview; Time format: 12-hour vs 24-hour; Terms of Use and Privacy Policy legal modals).
 8. Help & Documentation: Quick-start commuter handbook, keyboard shortcut index, and interactive FAQ accordion.
 
 ---
@@ -490,7 +490,37 @@ Documented in `src/styles/variables.css`:
   - Engineered client-side CSV Report Export for operations and traffic analytics (`TrafficAnalyticsPage.jsx`, `app.js`), downloading clean structured CSV files of bottleneck delays and monitoring status.
   - Added Recent Searches history persistence to `JourneyPlannerPage.jsx` with 1-click re-search tags backed by browser `localStorage`.
   - Implemented print-optimized media styles (`@media print`) across `styles.css` and `global.css` allowing commuters to print clean, paper-ready itineraries without UI shell clutter.
-- 2026-11-22: Verified compliance across all project files with automated Python audits (0 em dashes, 0 emojis, 0 gradients, 0 glassmorphism).
+- 2026-11-23: Phase 5 Complete - Delhi Bus Intelligence & Time-Dependent Journey Planner:
+  - Built comprehensive Python 3.14 backend in `backend/app/` strictly within the `TRANSPORT PROJECT` folder boundary.
+  - Engineered GPS data cleaning and filtering pipeline (`gps_cleaning.py`) with bounding box, duplicate, velocity ceiling (85 km/h), acceleration (3.5 m/s^2), and teleportation jump checks.
+  - Implemented route-constrained HMM map-matching algorithm (`map_matching.py`) with Gaussian emission and exponential transition probability.
+  - Created cyclical temporal feature engineering (`feature_engineering.py`) capturing diurnal peak and off-peak dynamics.
+  - Trained and benchmarked Historical Median, Time-of-Day baseline, Random Forest, and XGBoost regressor (MAE 63.98s, RMSE 108.86s, MAPE 9.46%).
+  - Engineered 4-tier fallback hierarchy and non-negative physical floor bounds.
+  - Implemented public transit multi-graph (`graph.py`) and time-dependent Dijkstra router (`dijkstra.py`) evaluating edge weights at simulated passenger arrival time with transfer penalties.
+  - Built spatial index (`spatial_index.py`) using SciPy KD-Tree and street network curvature factor (1.25x).
+  - Developed full REST API (`backend/app/api/`) exposing `/api/v1/journeys`, `/api/v1/stops/nearby`, `/api/v1/routes`, `/api/v1/model/metrics`, `/api/v1/data-status`, and `/api/v1/health`.
+  - Integrated 15 automated pytest suites in `backend/tests/` (100% passing).
+  - Authored complete technical documentation in `docs/`: `architecture.md`, `technical_note.md`, `api.md`, and `validation_report.md`.
+  - Enhanced frontend `apiClient.js`, `journeyService.js`, and `TrafficAnalyticsPage.jsx` to render multimodal legs, segment durations, and live ML benchmark dashboards.
+  - 100% compliance audit verified (0 em dashes, 0 emojis across all files).
+- 2026-11-23: Phase 6 - End-to-End Frontend and Backend Integration & Runtime Verification:
+  - Unified local FastAPI server (`localhost:8000`) and Vite dev server (`localhost:3000`) with full bidirectional reverse proxying in `vite.config.js`.
+  - Added compatibility routes to `backend/app/main.py` (`/stops/search`, `/crowding/heatmap`, `/crowding/stretch`, `/plan`) with transparent DuckDB fallback and local corridor data.
+  - Updated `src/services/apiClient.js` with dynamic `getBaseUrl()` enabling seamless in-browser proxy resolution and direct localhost fallback.
+  - Enhanced `HealthResponse` schema and endpoints to return `db_ready: true`, `total_tickets: 2559899`, and `gtfs_mode: inferred` for immediate header telemetry display.
+  - Verified 100% endpoint pass rate (9 of 9 endpoints returning 200 OK across both port 8000 and port 3000).
+  - 15 of 15 pytest unit tests passing cleanly. Production bundle built in 1.52s. Zero compliance violations.
+- 2026-11-23: Phase 7 - Real-Time GTFS-RT GPS Telemetry Streaming, Exponential Decay Blending & Enhanced Map Visualization:
+  - Engineered `backend/app/api/live.py` exposing `/api/v1/live/ping`, `/api/v1/live/simulate`, `/api/v1/live/status`, and `/api/v1/live/reset`.
+  - Linked `live_service` to `DijkstraRouter` in `dijkstra.py`, dynamically blending fresh speeds using exponential decay freshness models.
+  - Enhanced `DelhiLeafletMap.jsx` to render high-fidelity multimodal legs, pedestrian dashed paths, stop waypoints, and all 25 Delhi transit hubs.
+  - Upgraded `RouteDetails.jsx` with an expandable Segment Travel-Time Predictions table showing per-segment ML inference and data source labels.
+  - Added 1-click live fleet simulation trigger and status feedback banner to `LiveMapPage.jsx`.
+  - Added `backend/tests/test_live_service.py` bringing total test suite to 17 automated tests (100% passing).
+  - Production build built in 1.60s. 100% compliance audit verified (0 em dashes, 0 emojis).
+
+
 
 ---
 

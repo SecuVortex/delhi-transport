@@ -33,8 +33,7 @@ export const PRIMARY_NAV_ITEMS = [
   {
     id: NAV_PAGES.ROUTES,
     label: 'Bus Routes',
-    icon: 'Bus',
-    badge: '42'
+    icon: 'Bus'
   },
   {
     id: NAV_PAGES.ANALYTICS,

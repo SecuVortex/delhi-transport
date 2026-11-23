@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageLayout } from '../components/layout/PageLayout.jsx';
 import { Button } from '../components/common/Button.jsx';
 import { JourneySearch } from '../components/journey/JourneySearch.jsx';
 import { RouteList } from '../components/journey/RouteList.jsx';
 import { RouteDetails } from '../components/journey/RouteDetails.jsx';
-import { DelhiLeafletMap } from '../components/map/DelhiLeafletMap.jsx';
+import { CommuterMap } from '../components/commuter/CommuterMap.jsx';
 import { useJourneyPlanner } from '../hooks/useJourneyPlanner.js';
 
 const RECENT_SEARCHES_KEY = 'metrotransit_recent_searches';
 
 const DEFAULT_RECENT = [
-  { origin: 'Anand Vihar', destination: 'Connaught Place' },
-  { origin: 'Kapashera Border', destination: 'Nehru Place Terminal' },
-  { origin: 'Rohini Sector 21', destination: 'Lajpat Nagar' }
+  { origin: 'Anand Vihar ISBT', destination: 'Mandi House Roundabout' },
+  { origin: 'Mall Road Ring Road', destination: 'Model Town-Ii' },
+  { origin: 'Red Fort', destination: 'Mahipal Pur Extension' },
+  { origin: 'Dtc Apartments / Dtc Colony Pitam Pura', destination: 'Karampura Terminal' },
+  { origin: 'S J Hospital', destination: 'South Extension 1' }
 ];
 
 /**
@@ -20,7 +22,7 @@ const DEFAULT_RECENT = [
  * Two-panel layout: route options and itinerary on the left, interactive Delhi Leaflet map on the right,
  * with recent searches history, 1-click Demo Preset, and live crowding indicators.
  */
-export function JourneyPlannerPage() {
+export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
   const {
     origin,
     setOrigin,
@@ -49,7 +51,20 @@ export function JourneyPlannerPage() {
     error
   } = useJourneyPlanner();
 
+  // If a stop was selected from Header Global Search, populate it
+  useEffect(() => {
+    if (initialStop) {
+      if (!origin || origin === initialStop) {
+        setOrigin(initialStop);
+      } else {
+        setDestination(initialStop);
+      }
+      if (onClearInitialStop) onClearInitialStop();
+    }
+  }, [initialStop, origin, setOrigin, setDestination, onClearInitialStop]);
+
   const [showModelDrawer, setShowModelDrawer] = useState(false);
+  const [selectedStretch, setSelectedStretch] = useState(null);
   const [recentSearches, setRecentSearches] = useState(() => {
     try {
       const saved = localStorage.getItem(RECENT_SEARCHES_KEY);
@@ -79,7 +94,7 @@ export function JourneyPlannerPage() {
   const applyRecentSearch = (item) => {
     setOrigin(item.origin);
     setDestination(item.destination);
-    executeSearch();
+    executeSearch({ origin: item.origin, destination: item.destination });
   };
 
   const handlePrintItinerary = () => {
@@ -196,10 +211,19 @@ export function JourneyPlannerPage() {
         onDemoPreset={loadDemoPreset}
       />
 
-      {/* Error / Fallback Banner */}
+      {/* Error / Offline Retry Banner */}
       {error && (
-        <div style={{ padding: '10px 14px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '6px', color: '#B91C1C', fontSize: '12.5px', marginBottom: '14px' }}>
-          <strong>Notice:</strong> {error}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', background: '#FEF2F2', border: '1px solid #FECACA', borderRadius: '6px', color: '#B91C1C', fontSize: '12.5px', marginBottom: '14px' }}>
+          <div>
+            <strong>Backend Error:</strong> {error}
+          </div>
+          <button
+            type="button"
+            onClick={executeSearch}
+            style={{ background: '#DC2626', color: '#FFFFFF', border: 'none', borderRadius: '4px', padding: '4px 10px', fontSize: '12px', cursor: 'pointer', fontWeight: 600 }}
+          >
+            Retry Connection
+          </button>
         </div>
       )}
 
@@ -228,19 +252,17 @@ export function JourneyPlannerPage() {
       <div className="planner-layout">
         {/* Left Panel: Alternatives & Itinerary */}
         <div className="planner-sidebar">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
-              {loading ? 'Evaluating Delhi Bus Schedules...' : `${routes.length} Recommended Route Options`}
-            </span>
-            <span style={{ fontSize: '11px', color: 'var(--color-text-secondary)' }}>
-              Sorted by: {priority}
-            </span>
-          </div>
-
           <RouteList
             routes={routes}
             selectedIndex={selectedIndex}
-            onSelectIndex={setSelectedIndex}
+            onSelectIndex={(idx) => {
+              setSelectedIndex(idx);
+              setSelectedStretch(null);
+            }}
+            onSelectStretch={(stretch) => setSelectedStretch(stretch)}
+            loading={loading}
+            priority={priority}
+            onDemoPreset={loadDemoPreset}
           />
 
           <RouteDetails routeOption={selectedRoute} />
@@ -248,11 +270,14 @@ export function JourneyPlannerPage() {
 
         {/* Right Panel: Synchronized Delhi Leaflet Map */}
         <div className="planner-map-container" style={{ minHeight: '440px', height: '100%', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--color-border)' }}>
-          <DelhiLeafletMap
+          <CommuterMap
             origin={origin}
             destination={destination}
+            selectedRoute={selectedRoute}
             stretches={selectedRoute?.stretches || []}
-            crowdingPill={selectedRoute?.crowding_pill || 'GREEN'}
+            selectedStretch={selectedStretch}
+            onSelectStretch={(stretch) => setSelectedStretch(stretch)}
+            height="100%"
           />
         </div>
       </div>

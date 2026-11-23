@@ -5,7 +5,7 @@ import React from 'react';
  * 4 live KPI cards reflecting backend system health and ticketing volume.
  */
 export function OverviewMetrics({
-  totalTickets = 2559899,
+  totalTickets = 2232041,
   gtfsMode = 'inferred',
   dbReady = true,
   monitoredRoutes = 2259

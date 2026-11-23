@@ -1,26 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PageLayout } from '../components/layout/PageLayout.jsx';
 import { Button } from '../components/common/Button.jsx';
 import { Modal } from '../components/common/Modal.jsx';
 import { StatusIndicator } from '../components/common/StatusIndicator.jsx';
-import { DEMO_ALERTS } from '../data/demoAlerts.js';
+import { getTrafficAlerts } from '../services/trafficService.js';
 
 /**
  * Service Alerts & Incidents Page Component
+ * Connects directly to live traffic intelligence service and high-congestion stretches.
  */
 export function AlertsPage() {
+  const [alerts, setAlerts] = useState([]);
   const [filter, setFilter] = useState('all');
   const [activeAlert, setActiveAlert] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const filteredAlerts = DEMO_ALERTS.filter((alert) => {
+  const fetchAlerts = () => {
+    setLoading(true);
+    getTrafficAlerts()
+      .then((data) => {
+        if (Array.isArray(data)) setAlerts(data);
+      })
+      .catch(() => setAlerts([]))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchAlerts();
+  }, []);
+
+  const filteredAlerts = alerts.filter((alert) => {
     if (filter === 'all') return true;
     return alert.severity.toLowerCase() === filter.toLowerCase();
   });
+
+  const severeCount = alerts.filter((a) => a.severity.toLowerCase() === 'severe').length;
+  const moderateCount = alerts.filter((a) => a.severity.toLowerCase() === 'moderate').length;
+  const advisoryCount = alerts.filter((a) => a.severity.toLowerCase() === 'advisory').length;
 
   return (
     <PageLayout
       title="Service Alerts & Incidents"
       subtitle="Track road closures, construction detours, weather conditions, and transit delays."
+      actions={
+        <Button variant="secondary" size="sm" onClick={fetchAlerts} disabled={loading}>
+          {loading ? 'Refreshing...' : 'Refresh Alerts'}
+        </Button>
+      }
     >
       {/* Tab Filter Bar */}
       <div className="alerts-filter-bar">
@@ -30,28 +56,28 @@ export function AlertsPage() {
             className={`tab-btn ${filter === 'all' ? 'active' : ''}`}
             onClick={() => setFilter('all')}
           >
-            All Incidents ({DEMO_ALERTS.length})
+            All Incidents ({alerts.length})
           </button>
           <button
             type="button"
             className={`tab-btn ${filter === 'severe' ? 'active' : ''}`}
             onClick={() => setFilter('severe')}
           >
-            Severe (1)
+            Severe ({severeCount})
           </button>
           <button
             type="button"
             className={`tab-btn ${filter === 'moderate' ? 'active' : ''}`}
             onClick={() => setFilter('moderate')}
           >
-            Moderate (2)
+            Moderate ({moderateCount})
           </button>
           <button
             type="button"
             className={`tab-btn ${filter === 'advisory' ? 'active' : ''}`}
             onClick={() => setFilter('advisory')}
           >
-            Advisories (2)
+            Advisories ({advisoryCount})
           </button>
         </div>
       </div>
@@ -72,36 +98,44 @@ export function AlertsPage() {
               </tr>
             </thead>
             <tbody>
-              {filteredAlerts.map((alert) => (
-                <tr key={alert.id}>
-                  <td style={{ fontWeight: 600 }}>{alert.type}</td>
-                  <td>{alert.corridor}</td>
-                  <td>
-                    <div style={{ display: 'flex', gap: '4px' }}>
-                      {alert.affectedRoutes.map((r) => (
-                        <span key={r} className="bus-tag">
-                          {r}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td>
-                    <StatusIndicator status={alert.severity} type={alert.severityClass} />
-                  </td>
-                  <td style={{ color: 'var(--color-text-secondary)' }}>{alert.reportedTime}</td>
-                  <td>
-                    <StatusIndicator
-                      status={alert.status}
-                      type={alert.status === 'Active' ? 'warning' : 'neutral'}
-                    />
-                  </td>
-                  <td>
-                    <Button variant="secondary" size="sm" onClick={() => setActiveAlert(alert)}>
-                      View Details
-                    </Button>
+              {filteredAlerts.length > 0 ? (
+                filteredAlerts.map((alert) => (
+                  <tr key={alert.id}>
+                    <td style={{ fontWeight: 600 }}>{alert.type}</td>
+                    <td>{alert.corridor}</td>
+                    <td>
+                      <div style={{ display: 'flex', gap: '4px' }}>
+                        {alert.affectedRoutes.map((r) => (
+                          <span key={r} className="bus-tag">
+                            {r}
+                          </span>
+                        ))}
+                      </div>
+                    </td>
+                    <td>
+                      <StatusIndicator status={alert.severity} type={alert.severityClass} />
+                    </td>
+                    <td style={{ color: 'var(--color-text-secondary)' }}>{alert.reportedTime}</td>
+                    <td>
+                      <StatusIndicator
+                        status={alert.status}
+                        type={alert.status === 'Active' ? 'warning' : 'neutral'}
+                      />
+                    </td>
+                    <td>
+                      <Button variant="secondary" size="sm" onClick={() => setActiveAlert(alert)}>
+                        View Details
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" style={{ textAlign: 'center', padding: '24px', color: '#64748B' }}>
+                    {loading ? 'Checking for active corridor disruptions...' : 'No active disruptions reported on monitored corridors.'}
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

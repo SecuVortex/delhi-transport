@@ -1903,11 +1903,131 @@ html, body {
 /* Leaflet Container Overrides */
 .leaflet-container {
   font-family: var(--font-family) !important;
-  background: #F8FAFC !important;
+  background: #FFFFFF !important;
+}
+
+.leaflet-container img {
+  max-width: none !important;
 }
 
 .leaflet-popup-content-wrapper {
   border-radius: 6px !important;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
   padding: 4px !important;
+}
+
+/* ==========================================================================
+   Comprehensive Dark Mode Styles & Component Overrides
+   ========================================================================== */
+html.dark,
+html[data-theme='dark'],
+.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+html.dark .ui-card,
+html.dark .card,
+html.dark .sidebar,
+html.dark .top-header,
+html.dark .bottom-nav,
+html.dark .popover-menu,
+html.dark .modal-container,
+html.dark .autocomplete-dropdown {
+  background-color: var(--color-surface-muted) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+html.dark .nav-item {
+  color: var(--color-text-secondary);
+}
+
+html.dark .nav-item:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text);
+}
+
+html.dark .nav-item.active {
+  background-color: var(--color-surface-hover);
+  color: var(--color-primary);
+  border-color: var(--color-border);
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea,
+html.dark .form-select,
+html.dark .form-input {
+  background-color: var(--color-background) !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+html.dark table th {
+  background-color: var(--color-background) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+html.dark table td {
+  border-color: var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+html.dark table tr:hover td {
+  background-color: var(--color-surface-hover) !important;
+}
+
+html.dark .leaflet-container {
+  background: #1e293b !important;
+}
+
+html.dark .leaflet-popup-content-wrapper,
+html.dark .leaflet-popup-tip {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155;
+}
+
+html.dark .leaflet-popup-content {
+  color: #f8fafc !important;
+}
+
+html.dark .leaflet-popup-content div {
+  color: #f8fafc !important;
+}
+
+html.dark .leaflet-popup-content span[style*="color: #64748B"] {
+  color: #94a3b8 !important;
+}
+
+html.dark .leaflet-control-layers {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+html.dark .leaflet-control-layers label {
+  color: #f8fafc !important;
+}
+
+html.dark .autocomplete-item {
+  color: var(--color-text);
+  border-bottom: 1px solid var(--color-border);
+}
+
+html.dark .autocomplete-item:hover {
+  background: var(--color-surface-hover);
+  color: var(--color-primary);
+}
+
+html.dark .toast-notice {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
 }

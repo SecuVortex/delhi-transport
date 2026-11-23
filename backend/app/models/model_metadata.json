@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "training_date": "2026-11-23",
+  "target_variable": "observed_segment_time_seconds",
+  "training_dataset_period": "2026-10-01 to 2026-10-10",
+  "validation_dataset_period": "2026-10-11 to 2026-10-12",
+  "test_dataset_period": "2026-10-13 to 2026-10-14",
+  "total_observations": 30702,
+  "feature_columns": [
+    "segment_distance_km",
+    "hour_sin",
+    "hour_cos",
+    "day_sin",
+    "day_cos",
+    "is_weekend",
+    "is_peak",
+    "is_morning_peak",
+    "is_evening_peak",
+    "scheduled_travel_time_seconds"
+  ],
+  "feature_importance": {
+    "segment_distance_km": 0.4089,
+    "hour_sin": 0.0205,
+    "hour_cos": 0.0238,
+    "day_sin": 0.0081,
+    "day_cos": 0.0012,
+    "is_weekend": 0.009,
+    "is_peak": 0.0844,
+    "is_morning_peak": 0.0055,
+    "is_evening_peak": 0.053,
+    "scheduled_travel_time_seconds": 0.3856
+  },
+  "models_comparison": [
+    {
+      "model_name": "Historical Segment Median",
+      "mae_seconds": 132.43,
+      "rmse_seconds": 220.62,
+      "mape_percent": 18.54,
+      "observations_count": 4386
+    },
+    {
+      "model_name": "Time-of-Day Baseline (Hourly)",
+      "mae_seconds": 63.27,
+      "rmse_seconds": 112.24,
+      "mape_percent": 8.9,
+      "observations_count": 4386
+    },
+    {
+      "model_name": "Random Forest Regressor",
+      "mae_seconds": 72.94,
+      "rmse_seconds": 122.12,
+      "mape_percent": 10.7,
+      "observations_count": 4386
+    },
+    {
+      "model_name": "XGBoost Regressor (Time-Dependent)",
+      "mae_seconds": 63.98,
+      "rmse_seconds": 108.86,
+      "mape_percent": 9.46,
+      "observations_count": 4386
+    }
+  ],
+  "active_model": "XGBoost Regressor (Time-Dependent)"
+}
