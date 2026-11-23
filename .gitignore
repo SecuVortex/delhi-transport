@@ -12,7 +12,8 @@ dist-ssr/
 *.local
 
 # Environment variables
-# Keep .env.example tracked, ignore personal local configs
+# Keep .env.example tracked, ignore actual env and personal local configs
+.env
 .env*.local
 
 # Vite cache
