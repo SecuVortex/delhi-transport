@@ -46,7 +46,6 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
     setSelectedIndex,
     swapLocations,
     executeSearch,
-    loadDemoPreset,
     loading,
     error
   } = useJourneyPlanner();

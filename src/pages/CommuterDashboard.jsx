@@ -4,7 +4,7 @@ import { JourneySearch } from '../components/journey/JourneySearch.jsx';
 import { RouteList } from '../components/journey/RouteList.jsx';
 import { RouteDetails } from '../components/journey/RouteDetails.jsx';
 import { CommuterMap } from '../components/commuter/CommuterMap.jsx';
-import { planJourney, getVerifiedDemoPreset } from '../services/journeyService.js';
+import { planJourney } from '../services/journeyService.js';
 
 const RECENT_SEARCHES_KEY = 'delhi_commuter_recent_searches';
 const DEFAULT_RECENT = [
@@ -115,33 +115,7 @@ export function CommuterDashboard({
     }
   };
 
-  const loadDemoPreset = async () => {
-    let presetOrigin = 'Anand Vihar';
-    let presetDest = 'Connaught Place';
-    let presetTime = '08:00';
-    try {
-      const preset = await getVerifiedDemoPreset();
-      if (preset?.origin && preset?.destination) {
-        presetOrigin = preset.origin;
-        presetDest = preset.destination;
-        presetTime = preset.departTime || '08:00';
-      }
-    } catch {
-      // fallback
-    }
-    setOrigin(presetOrigin);
-    setDestination(presetDest);
-    setTime(presetTime);
-    setDayType('weekday');
-    setPriority('fastest');
-    executeSearch({
-      origin: presetOrigin,
-      destination: presetDest,
-      time: presetTime,
-      dayType: 'weekday',
-      priority: 'fastest'
-    });
-  };
+
 
   const applyRecentSearch = (item) => {
     setOrigin(item.origin);
