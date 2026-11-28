@@ -199,7 +199,7 @@ export function CommuterDashboard({
             gridTemplateColumns: 'minmax(380px, 460px) 1fr',
             gap: '16px',
             alignItems: 'start',
-            marginTop: '14px'
+            marginTop: '12px'
           }}
           className="commuter-2panel-grid"
         >

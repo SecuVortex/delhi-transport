@@ -2,15 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSettings } from '../../context/SettingsContext.jsx';
 import { searchDelhiTransit, splitHighlightParts } from '../../utils/fuzzySearch.js';
 
-const POPULAR_DELHI_STOPS = [
-  'Anand Vihar ISBT',
-  'Mandi House Roundabout',
-  'Mall Road Ring Road',
-  'Model Town Ring Road',
-  'Red Fort',
-  'Karampura Terminal'
-];
-
 const POPULAR_DTC_ROUTES = [
   { route: '740UP', from: 'Anand Vihar ISBT', to: 'Mandi House Roundabout', corridor: 'Anand Vihar ISBT → Mandi House' },
   { route: '433UP', from: 'ITO Delhi Gate', to: 'Mandi House Roundabout', corridor: 'New Delhi Station → Badarpur Border' },
@@ -234,18 +225,6 @@ export function JourneySearch({
   const handleSwapClick = () => {
     setSwapRotation((prev) => prev + 180);
     if (onSwap) onSwap();
-  };
-
-  const handleChipClick = (station) => {
-    if (!origin || origin === 'Anand Vihar') {
-      if (station !== destination) {
-        onOriginChange(station);
-      } else {
-        onDestinationChange(station);
-      }
-    } else {
-      onDestinationChange(station);
-    }
   };
 
   const handleFormSubmit = (e) => {
@@ -832,55 +811,17 @@ export function JourneySearch({
         )}
       </div>
 
-      {/* 3. Delhi Hub Chips */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-          gap: '8px',
-          marginTop: '10px'
-        }}
-      >
-        <span className="meta-label" style={{ color: 'var(--text-muted)' }}>
-          {t('delhi_hubs') || 'Delhi Hubs'}:
-        </span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-          {POPULAR_DELHI_STOPS.map((station) => {
-            const isSelected = origin === station || destination === station;
-            return (
-              <button
-                key={station}
-                type="button"
-                onClick={() => handleChipClick(station)}
-                className={`chip ${isSelected ? 'active' : ''}`}
-                title={`Select ${station}`}
-                style={{
-                  height: '28px',
-                  padding: '4px 12px',
-                  fontSize: '11px',
-                  borderRadius: '999px'
-                }}
-              >
-                {station}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 4. Sort Bar (Directly before Route Results) */}
+      {/* 3. Sort Bar (Flows cleanly straight into Route Results) */}
       {onPriorityChange && (
         <div
+          className="wimt-sort-bar"
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '8px',
-            marginTop: '10px',
-            paddingTop: '10px',
-            borderTop: '1px solid var(--border-line)'
+            marginTop: '10px'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

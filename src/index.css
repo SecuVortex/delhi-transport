@@ -883,6 +883,17 @@ html[data-theme='dark'] .wimt-journey-container .wimt-schedule-control:focus-vis
   box-shadow: 0 0 0 1px var(--text-primary) !important;
 }
 
+/* Tighten vertical flow from JourneySearch + Sort bar straight into Route Results */
+.wimt-journey-container + .planner-layout {
+  margin-top: -8px;
+}
+
+@media (max-width: 768px) {
+  .wimt-journey-container + .planner-layout {
+    margin-top: -6px;
+  }
+}
+
 /* Live Map Responsive Grid Layout */
 .live-map-grid {
   display: grid;
