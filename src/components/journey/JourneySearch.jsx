@@ -167,10 +167,7 @@ export function JourneySearch({
   onSelectRoute,
   priority = 'fastest',
   onPriorityChange,
-  loading = false,
-  recentSearches,
-  onApplyRecentSearch,
-  onClearRecentSearches
+  loading = false
 }) {
   const { t } = useSettings();
   const [originResults, setOriginResults] = useState(null);
@@ -184,43 +181,6 @@ export function JourneySearch({
   // Secondary Quick Bus Route Lookup Bar state
   const [routeQuery, setRouteQuery] = useState('');
   const [showRouteDrop, setShowRouteDrop] = useState(false);
-
-  // Collapsible Recent Queries drawer state
-  const [isRecentOpen, setIsRecentOpen] = useState(false);
-  const [localRecentSearches, setLocalRecentSearches] = useState(() => {
-    try {
-      const saved = localStorage.getItem('metrotransit_recent_searches');
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
-  });
-
-  const effectiveRecent = recentSearches !== undefined ? recentSearches : localRecentSearches;
-
-  const handleRecentClick = (item) => {
-    if (onApplyRecentSearch) {
-      onApplyRecentSearch(item);
-    } else {
-      if (onOriginChange) onOriginChange(item.origin);
-      if (onDestinationChange) onDestinationChange(item.destination);
-      if (onSearch) {
-        onSearch({ origin: item.origin, destination: item.destination });
-      }
-    }
-  };
-
-  const handleClearRecent = () => {
-    if (onClearRecentSearches) {
-      onClearRecentSearches();
-    } else {
-      try {
-        localStorage.removeItem('metrotransit_recent_searches');
-      } catch {}
-      setLocalRecentSearches([]);
-    }
-    setIsRecentOpen(false);
-  };
 
   const originRef = useRef(null);
   const destRef = useRef(null);
@@ -318,12 +278,12 @@ export function JourneySearch({
   });
 
   return (
-    <div className="wimt-journey-container" style={{ marginBottom: '16px' }}>
-      {/* 1. Iconic "Where is my Train" Unified Card */}
+    <div className="wimt-journey-container" style={{ marginBottom: 0 }}>
+      {/* 1. Iconic "Where is my Train" Unified Card (Single Clean Surface Container) */}
       <div
         className="ui-card wimt-card"
         style={{
-          padding: '18px 20px',
+          padding: '16px 18px',
           backgroundColor: 'var(--bg-card, #ffffff)',
           border: '1px solid var(--border-line, #e2e2df)',
           borderRadius: 'var(--card-radius, 12px)',
@@ -332,13 +292,11 @@ export function JourneySearch({
         }}
       >
         <form onSubmit={handleFormSubmit}>
-          {/* Main Origin & Destination Unified Box with Left Connector Rail */}
+          {/* Main Origin & Destination Stops Group (No Nested Inner Box Border) */}
           <div
+            className="wimt-stops-group"
             style={{
               position: 'relative',
-              borderRadius: '10px',
-              border: '1px solid var(--border-line)',
-              backgroundColor: 'var(--bg-card)',
               overflow: 'visible'
             }}
           >
@@ -407,6 +365,7 @@ export function JourneySearch({
             {/* Top Row: From Stop (Origin) */}
             <div ref={originRef} style={{ position: 'relative', width: '100%' }}>
               <div
+                className="wimt-stop-row"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -419,6 +378,7 @@ export function JourneySearch({
                 <input
                   ref={originInputRef}
                   id="journey-origin"
+                  className="wimt-stop-input"
                   type="text"
                   value={origin}
                   onChange={(e) => {
@@ -431,8 +391,9 @@ export function JourneySearch({
                   aria-label="Origin bus stop"
                   style={{
                     border: 'none',
-                    background: 'transparent',
                     outline: 'none',
+                    boxShadow: 'none',
+                    background: 'transparent',
                     width: '100%',
                     fontSize: '13.5px',
                     fontFamily: 'Helvetica, Arial, sans-serif',
@@ -489,8 +450,8 @@ export function JourneySearch({
               )}
             </div>
 
-            {/* Single Crisp Hairline Divider separating From and To */}
-            <div style={{ height: '1px', backgroundColor: 'var(--border-line)', width: '100%' }} />
+            {/* Single Inset Hairline Divider separating From and To (Clear of Left Connector Rail) */}
+            <div className="wimt-stops-divider" aria-hidden="true" />
 
             {/* Floating Circular Swap Button (Overlapping divider line at right: 44px) */}
             <button
@@ -529,6 +490,7 @@ export function JourneySearch({
             {/* Bottom Row: To Stop (Destination) */}
             <div ref={destRef} style={{ position: 'relative', width: '100%' }}>
               <div
+                className="wimt-stop-row"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -541,6 +503,7 @@ export function JourneySearch({
                 <input
                   ref={destInputRef}
                   id="journey-dest"
+                  className="wimt-stop-input"
                   type="text"
                   value={destination}
                   onChange={(e) => {
@@ -553,8 +516,9 @@ export function JourneySearch({
                   aria-label="Destination bus stop"
                   style={{
                     border: 'none',
-                    background: 'transparent',
                     outline: 'none',
+                    boxShadow: 'none',
+                    background: 'transparent',
                     width: '100%',
                     fontSize: '13.5px',
                     fontFamily: 'Helvetica, Arial, sans-serif',
@@ -625,16 +589,15 @@ export function JourneySearch({
             <div style={{ position: 'relative' }}>
               <select
                 id="journey-daytype"
-                className="form-select"
+                className="form-select wimt-schedule-control"
                 value={dayType}
                 onChange={(e) => onDayTypeChange && onDayTypeChange(e.target.value)}
                 aria-label="Day Type"
                 style={{
                   width: '100%',
                   height: '42px',
-                  backgroundColor: 'var(--bg-card)',
-                  border: '1px solid var(--border-line)',
-                  borderRadius: 'var(--input-radius, 8px)',
+                  border: 'none',
+                  borderRadius: '8px',
                   fontSize: '12.5px',
                   fontFamily: 'Helvetica, Arial, sans-serif',
                   fontWeight: 500,
@@ -657,13 +620,12 @@ export function JourneySearch({
                 value={time}
                 onChange={(e) => onTimeChange && onTimeChange(e.target.value)}
                 aria-label="Departure Time in IST"
-                className="tabular-nums"
+                className="tabular-nums wimt-schedule-control"
                 style={{
                   width: '100%',
                   height: '42px',
-                  backgroundColor: 'var(--bg-card)',
-                  border: '1px solid var(--border-line)',
-                  borderRadius: 'var(--input-radius, 8px)',
+                  border: 'none',
+                  borderRadius: '8px',
                   fontSize: '13px',
                   fontFamily: 'Helvetica, Arial, sans-serif',
                   fontWeight: 500,
@@ -718,7 +680,7 @@ export function JourneySearch({
         ref={routeRef}
         className="quick-route-lookup-bar"
         style={{
-          marginTop: '10px',
+          marginTop: '8px',
           padding: '6px 10px 6px 14px',
           backgroundColor: 'var(--bg-card)',
           border: '1px solid var(--border-line)',
@@ -743,6 +705,7 @@ export function JourneySearch({
 
         <input
           type="text"
+          className="wimt-route-input"
           value={routeQuery}
           onChange={(e) => {
             setRouteQuery(e.target.value);
@@ -753,8 +716,9 @@ export function JourneySearch({
           style={{
             flex: 1,
             border: 'none',
-            background: 'transparent',
             outline: 'none',
+            boxShadow: 'none',
+            background: 'transparent',
             fontSize: '12.5px',
             color: 'var(--text-primary)',
             padding: '6px 0',
@@ -875,7 +839,7 @@ export function JourneySearch({
           alignItems: 'center',
           flexWrap: 'wrap',
           gap: '8px',
-          marginTop: '12px'
+          marginTop: '10px'
         }}
       >
         <span className="meta-label" style={{ color: 'var(--text-muted)' }}>
@@ -905,144 +869,7 @@ export function JourneySearch({
         </div>
       </div>
 
-      {/* 4. Recent Queries (Collapsible Horizontal Drawer, placed directly before Sort Bar) */}
-      {effectiveRecent.length > 0 && (
-        <div
-          className="recent-queries-drawer-wrapper"
-          style={{
-            marginTop: '12px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            flexWrap: 'nowrap',
-            overflowX: 'auto',
-            scrollbarWidth: 'none',
-            padding: '2px 0'
-          }}
-        >
-          {/* Default Collapsed Toggle Pill: Recent Queries (N) ▸ */}
-          <button
-            type="button"
-            onClick={() => setIsRecentOpen(!isRecentOpen)}
-            aria-expanded={isRecentOpen}
-            aria-label={`Toggle Recent Queries (${effectiveRecent.length})`}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              height: '30px',
-              padding: '4px 14px',
-              borderRadius: '999px',
-              fontSize: '11.5px',
-              fontWeight: 600,
-              backgroundColor: isRecentOpen ? 'var(--btn-bg)' : 'var(--bg-subtle)',
-              color: isRecentOpen ? 'var(--btn-text)' : 'var(--text-muted)',
-              border: '1px solid var(--border-line)',
-              cursor: 'pointer',
-              flexShrink: 0,
-              transition: 'all 200ms cubic-bezier(0.16, 1, 0.3, 1)'
-            }}
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10" />
-              <polyline points="12 6 12 12 16 14" />
-            </svg>
-            <span>Recent Queries ({effectiveRecent.length})</span>
-            <svg
-              width="10"
-              height="10"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              style={{
-                transform: isRecentOpen ? 'rotate(90deg)' : 'rotate(0deg)',
-                transition: 'transform 200ms cubic-bezier(0.16, 1, 0.3, 1)'
-              }}
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
-
-          {/* Smoothly expanding single horizontal swipeable row holding all recent query pills side-by-side */}
-          {isRecentOpen && (
-            <div
-              className="flex flex-nowrap items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar snap-x"
-              style={{
-                display: 'flex',
-                flexWrap: 'nowrap',
-                alignItems: 'center',
-                gap: '8px',
-                overflowX: 'auto',
-                whiteSpace: 'nowrap',
-                scrollbarWidth: 'none',
-                WebkitOverflowScrolling: 'touch',
-                animation: 'horizontalDrawerOpen 200ms cubic-bezier(0.16, 1, 0.3, 1)'
-              }}
-            >
-              {effectiveRecent.map((item, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => handleRecentClick(item)}
-                  title={`Find routes: ${item.origin} to ${item.destination}`}
-                  className="chip snap-start"
-                  style={{
-                    height: '28px',
-                    padding: '4px 12px',
-                    fontSize: '11px',
-                    borderRadius: '999px',
-                    backgroundColor: 'var(--bg-card)',
-                    color: 'var(--text-primary)',
-                    border: '1px solid var(--border-line)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    flexShrink: 0,
-                    cursor: 'pointer',
-                    transition: 'all 150ms ease'
-                  }}
-                >
-                  <span style={{ fontWeight: 500 }}>{item.origin}</span>
-                  <span style={{ color: 'var(--text-muted)', fontSize: '10px' }}>&rarr;</span>
-                  <span style={{ fontWeight: 500 }}>{item.destination}</span>
-                </button>
-              ))}
-
-              <button
-                type="button"
-                onClick={handleClearRecent}
-                title="Clear all recent searches"
-                style={{
-                  height: '26px',
-                  padding: '2px 10px',
-                  fontSize: '10.5px',
-                  fontWeight: 600,
-                  borderRadius: '999px',
-                  backgroundColor: 'transparent',
-                  color: 'var(--text-muted)',
-                  border: '1px dashed var(--border-line)',
-                  cursor: 'pointer',
-                  flexShrink: 0,
-                  transition: 'all 150ms ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#DC2626';
-                  e.currentTarget.style.borderColor = '#DC2626';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = 'var(--text-muted)';
-                  e.currentTarget.style.borderColor = 'var(--border-line)';
-                }}
-              >
-                Clear
-              </button>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* 5. Sort Bar (Directly below Recent Queries, right before Route Results) */}
+      {/* 4. Sort Bar (Directly before Route Results) */}
       {onPriorityChange && (
         <div
           style={{
@@ -1051,7 +878,7 @@ export function JourneySearch({
             justifyContent: 'space-between',
             flexWrap: 'wrap',
             gap: '8px',
-            marginTop: '12px',
+            marginTop: '10px',
             paddingTop: '10px',
             borderTop: '1px solid var(--border-line)'
           }}
@@ -1149,19 +976,6 @@ export function JourneySearch({
           </div>
         </div>
       )}
-
-      <style>{`
-        @keyframes horizontalDrawerOpen {
-          from {
-            opacity: 0;
-            transform: translateX(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }

@@ -6,15 +6,6 @@ import { RouteDetails } from '../components/journey/RouteDetails.jsx';
 import { CommuterMap } from '../components/commuter/CommuterMap.jsx';
 import { planJourney } from '../services/journeyService.js';
 
-const RECENT_SEARCHES_KEY = 'delhi_commuter_recent_searches';
-const DEFAULT_RECENT = [
-  { origin: 'Anand Vihar', destination: 'Connaught Place' },
-  { origin: 'Mall Road Ring Road', destination: 'Model Town-Ii' },
-  { origin: 'Red Fort', destination: 'Mahipal Pur Extension' },
-  { origin: 'Dtc Apartments / Dtc Colony Pitam Pura', destination: 'Karampura Terminal' },
-  { origin: 'S J Hospital', destination: 'South Extension 1' }
-];
-
 /**
  * CommuterDashboard Component
  * Dedicated Everyday Commuter Dashboard with zero operator clutter.
@@ -46,15 +37,6 @@ export function CommuterDashboard({
   const [selectedStretch, setSelectedStretch] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const [recentSearches, setRecentSearches] = useState(() => {
-    try {
-      const saved = localStorage.getItem(RECENT_SEARCHES_KEY);
-      return saved ? JSON.parse(saved) : DEFAULT_RECENT;
-    } catch {
-      return DEFAULT_RECENT;
-    }
-  });
 
   const swapLocations = () => {
     const nextOrigin = destination;
@@ -98,37 +80,6 @@ export function CommuterDashboard({
   useEffect(() => {
     executeSearch();
   }, [priority, dayType]);
-
-  const handleSearchWithHistory = () => {
-    executeSearch();
-    if (origin && destination) {
-      setRecentSearches((prev) => {
-        const filtered = prev.filter(
-          (s) => !(s.origin === origin && s.destination === destination)
-        );
-        const updated = [{ origin, destination }, ...filtered].slice(0, 5);
-        try {
-          localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
-        } catch {}
-        return updated;
-      });
-    }
-  };
-
-
-
-  const applyRecentSearch = (item) => {
-    setOrigin(item.origin);
-    setDestination(item.destination);
-    executeSearch({ origin: item.origin, destination: item.destination });
-  };
-
-  const clearRecentSearches = () => {
-    setRecentSearches([]);
-    try {
-      localStorage.removeItem(RECENT_SEARCHES_KEY);
-    } catch {}
-  };
 
   const selectedRoute = routes[selectedIndex] || routes[0] || null;
 
@@ -201,11 +152,8 @@ export function CommuterDashboard({
           priority={priority}
           onPriorityChange={setPriority}
           onSwap={swapLocations}
-          onSearch={handleSearchWithHistory}
+          onSearch={executeSearch}
           loading={loading}
-          recentSearches={recentSearches}
-          onApplyRecentSearch={applyRecentSearch}
-          onClearRecentSearches={clearRecentSearches}
         />
 
         {/* Error Notice */}
@@ -250,7 +198,8 @@ export function CommuterDashboard({
             display: 'grid',
             gridTemplateColumns: 'minmax(380px, 460px) 1fr',
             gap: '16px',
-            alignItems: 'start'
+            alignItems: 'start',
+            marginTop: '14px'
           }}
           className="commuter-2panel-grid"
         >

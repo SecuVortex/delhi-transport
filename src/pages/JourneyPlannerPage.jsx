@@ -7,20 +7,10 @@ import { RouteDetails } from '../components/journey/RouteDetails.jsx';
 import { CommuterMap } from '../components/commuter/CommuterMap.jsx';
 import { useJourneyPlanner } from '../hooks/useJourneyPlanner.js';
 
-const RECENT_SEARCHES_KEY = 'metrotransit_recent_searches';
-
-const DEFAULT_RECENT = [
-  { origin: 'Anand Vihar ISBT', destination: 'Mandi House Roundabout' },
-  { origin: 'Mall Road Ring Road', destination: 'Model Town-Ii' },
-  { origin: 'Red Fort', destination: 'Mahipal Pur Extension' },
-  { origin: 'Dtc Apartments / Dtc Colony Pitam Pura', destination: 'Karampura Terminal' },
-  { origin: 'S J Hospital', destination: 'South Extension 1' }
-];
-
 /**
  * Journey Planner Page Component
  * Two-panel layout: route options and itinerary on the left, interactive Delhi Leaflet map on the right,
- * with recent searches history, 1-click Demo Preset, and live crowding indicators.
+ * with live crowding indicators.
  */
 export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
   const {
@@ -64,44 +54,6 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
 
   const [showModelDrawer, setShowModelDrawer] = useState(false);
   const [selectedStretch, setSelectedStretch] = useState(null);
-  const [recentSearches, setRecentSearches] = useState(() => {
-    try {
-      const saved = localStorage.getItem(RECENT_SEARCHES_KEY);
-      return saved ? JSON.parse(saved) : DEFAULT_RECENT;
-    } catch {
-      return DEFAULT_RECENT;
-    }
-  });
-
-  const handleSearchWithHistory = () => {
-    executeSearch();
-
-    if (origin && destination) {
-      setRecentSearches((prev) => {
-        const filtered = prev.filter(
-          (s) => !(s.origin === origin && s.destination === destination)
-        );
-        const updated = [{ origin, destination }, ...filtered].slice(0, 5);
-        try {
-          localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updated));
-        } catch {}
-        return updated;
-      });
-    }
-  };
-
-  const applyRecentSearch = (item) => {
-    setOrigin(item.origin);
-    setDestination(item.destination);
-    executeSearch({ origin: item.origin, destination: item.destination });
-  };
-
-  const clearRecentSearches = () => {
-    setRecentSearches([]);
-    try {
-      localStorage.removeItem(RECENT_SEARCHES_KEY);
-    } catch {}
-  };
 
   const handlePrintItinerary = () => {
     window.print();
@@ -198,7 +150,7 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
         </div>
       )}
 
-      {/* Main Search Bar with Integrated Collapsible Recent Queries Drawer & Sort Bar */}
+      {/* Main Search Bar with Integrated Sort Bar */}
       <JourneySearch
         origin={origin}
         onOriginChange={setOrigin}
@@ -213,10 +165,7 @@ export function JourneyPlannerPage({ initialStop, onClearInitialStop }) {
         priority={priority}
         onPriorityChange={setPriority}
         onSwap={swapLocations}
-        onSearch={handleSearchWithHistory}
-        recentSearches={recentSearches}
-        onApplyRecentSearch={applyRecentSearch}
-        onClearRecentSearches={clearRecentSearches}
+        onSearch={executeSearch}
       />
 
       {/* Error / Offline Retry Banner */}

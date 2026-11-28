@@ -765,6 +765,115 @@ html[data-theme='dark'] .shimmer-skeleton {
   border-color: var(--text-muted) !important;
 }
 
+/* Remove inner input borders/outlines completely inside unified search card & route bar */
+.wimt-journey-container input.wimt-stop-input,
+.wimt-journey-container input.wimt-stop-input:hover,
+.wimt-journey-container input.wimt-stop-input:focus,
+.wimt-journey-container input.wimt-stop-input:focus-visible,
+html.dark .wimt-journey-container input.wimt-stop-input,
+html.dark .wimt-journey-container input.wimt-stop-input:hover,
+html.dark .wimt-journey-container input.wimt-stop-input:focus,
+html.dark .wimt-journey-container input.wimt-stop-input:focus-visible,
+html[data-theme='dark'] .wimt-journey-container input.wimt-stop-input,
+html[data-theme='dark'] .wimt-journey-container input.wimt-stop-input:hover,
+html[data-theme='dark'] .wimt-journey-container input.wimt-stop-input:focus,
+html[data-theme='dark'] .wimt-journey-container input.wimt-stop-input:focus-visible,
+.quick-route-lookup-bar input.wimt-route-input,
+.quick-route-lookup-bar input.wimt-route-input:hover,
+.quick-route-lookup-bar input.wimt-route-input:focus,
+.quick-route-lookup-bar input.wimt-route-input:focus-visible,
+html.dark .quick-route-lookup-bar input.wimt-route-input,
+html.dark .quick-route-lookup-bar input.wimt-route-input:hover,
+html.dark .quick-route-lookup-bar input.wimt-route-input:focus,
+html.dark .quick-route-lookup-bar input.wimt-route-input:focus-visible,
+html[data-theme='dark'] .quick-route-lookup-bar input.wimt-route-input,
+html[data-theme='dark'] .quick-route-lookup-bar input.wimt-route-input:hover,
+html[data-theme='dark'] .quick-route-lookup-bar input.wimt-route-input:focus,
+html[data-theme='dark'] .quick-route-lookup-bar input.wimt-route-input:focus-visible {
+  border: none !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Subtle full-row focus highlight instead of a skinny inner input rectangle */
+.wimt-stop-row {
+  border-radius: 8px;
+  transition: background-color 150ms ease;
+}
+
+.wimt-stop-row:focus-within {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+html.dark .wimt-stop-row:focus-within,
+html[data-theme='dark'] .wimt-stop-row:focus-within {
+  background-color: rgba(255, 255, 255, 0.045);
+}
+
+/* Single inset hairline separator between Origin and Destination (clear of left connector rail) */
+.wimt-stops-divider {
+  height: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-left: 44px;
+  margin-right: 12px;
+}
+
+html.dark .wimt-stops-divider,
+html[data-theme='dark'] .wimt-stops-divider {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Soft-filled borderless surfaces for Weekday Schedule and Time controls */
+.wimt-journey-container .wimt-schedule-control,
+html.dark .wimt-journey-container .wimt-schedule-control,
+html[data-theme='dark'] .wimt-journey-container .wimt-schedule-control {
+  border: none !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+
+.wimt-journey-container .wimt-schedule-control {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  color: var(--text-primary, #151413) !important;
+}
+
+.wimt-journey-container .wimt-schedule-control:hover {
+  background-color: rgba(0, 0, 0, 0.065) !important;
+}
+
+.wimt-journey-container .wimt-schedule-control:focus,
+.wimt-journey-container .wimt-schedule-control:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.14) !important;
+  background-color: rgba(0, 0, 0, 0.055) !important;
+}
+
+html.dark .wimt-journey-container .wimt-schedule-control,
+html[data-theme='dark'] .wimt-journey-container .wimt-schedule-control {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  color: var(--text-primary, #f4f4f5) !important;
+}
+
+html.dark .wimt-journey-container .wimt-schedule-control:hover,
+html[data-theme='dark'] .wimt-journey-container .wimt-schedule-control:hover {
+  background-color: rgba(255, 255, 255, 0.09) !important;
+}
+
+html.dark .wimt-journey-container .wimt-schedule-control:focus,
+html.dark .wimt-journey-container .wimt-schedule-control:focus-visible,
+html[data-theme='dark'] .wimt-journey-container .wimt-schedule-control:focus,
+html[data-theme='dark'] .wimt-journey-container .wimt-schedule-control:focus-visible {
+  outline: none !important;
+  border: none !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.22) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
 .quick-route-lookup-bar {
   transition: border-color 150ms ease, box-shadow 150ms ease;
 }
